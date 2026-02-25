@@ -1,4 +1,3 @@
-
 const response = require("../controllers/response.js");
 const initModels = require("../models/init-models.js").initModels;
 
@@ -41,12 +40,12 @@ class UserService {
     const result = await User.findAll();
     return result;
   }
-  async getUserById() {
+  async getUserById(id_user) {
     const result = await User.findByPk(id_user);
     return result;
   }
-  async updatePassword() {}
-  async deleteUser() {
+  async updatePassword(id, user) {}
+  async deleteUser(id_user) {
     const numFilas = await User.destroy({
       where: { id_user: id_user },
     });
