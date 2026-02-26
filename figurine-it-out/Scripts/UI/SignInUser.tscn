@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://defeli8kopud0"]
+[gd_scene load_steps=2 format=3 uid="uid://d0yk4mr8xvpdf"]
 
-[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_pphxq"]
-[ext_resource type="Script" uid="uid://dy8u35mqowrm" path="res://Scripts/UI/UILogic/Login.gd" id="1_qva5b"]
+[ext_resource type="Script" uid="uid://dq7mty7gvvoue" path="res://Scripts/UI/UILogic/Signin.gd" id="1_b7y8g"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -19,17 +18,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -130.0
-offset_top = -124.0
+offset_top = -174.0
 offset_right = 130.0
-offset_bottom = -93.0
+offset_bottom = -143.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_neighbor_top = NodePath("../Confirm")
-focus_neighbor_bottom = NodePath("../Password")
-focus_next = NodePath("../Password")
-focus_previous = NodePath("../Confirm")
-theme = ExtResource("1_pphxq")
 placeholder_text = "User"
+max_length = 50
+
+[node name="Email" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -74.0
+offset_right = 130.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Email"
 max_length = 50
 
 [node name="Password" type="LineEdit" parent="."]
@@ -40,19 +50,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -130.0
-offset_top = -24.0
+offset_top = 26.0
 offset_right = 130.0
-offset_bottom = 7.0
+offset_bottom = 57.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_pphxq")
 placeholder_text = "Password"
 max_length = 50
 virtual_keyboard_type = 6
 secret = true
 secret_character = "*"
 
-[node name="Confirm" type="Button" parent="." node_paths=PackedStringArray("user", "password")]
+[node name="Confirm" type="Button" parent="." node_paths=PackedStringArray("user", "email", "password")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -60,12 +69,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = 76.0
+offset_top = 126.0
 offset_right = 100.0
-offset_bottom = 116.0
+offset_bottom = 166.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_pphxq")
-script = ExtResource("1_qva5b")
+text = "Crear usuario"
+script = ExtResource("1_b7y8g")
 user = NodePath("../User")
+email = NodePath("../Email")
 password = NodePath("../Password")

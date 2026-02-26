@@ -2,6 +2,8 @@ const response = require("../controllers/response.js");
 const initModels = require("../models/init-models.js").initModels;
 
 const sequelize = require("../config/sequelize.js");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
@@ -9,7 +11,7 @@ const models = initModels(sequelize);
 const User = models.user;
 
 class UserService {
-  async signin() {
+  async signin(req, res) {
     const { name, password } = req.body;
 
     try {

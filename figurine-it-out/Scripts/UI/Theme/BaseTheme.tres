@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c86spvbvmqcjp"]
+
+[ext_resource type="StyleBox" uid="uid://m4jijy0eidp1" path="res://Scripts/UI/Theme/UIOutsideGameLineEditFocused.tres" id="1_h063j"]
+[ext_resource type="StyleBox" uid="uid://dlxxnb623ylt1" path="res://Scripts/UI/Theme/UIOutsideGameLineEdit.tres" id="2_r400c"]
+
+[resource]
+Button/styles/focus = ExtResource("1_h063j")
+Button/styles/hover = ExtResource("2_r400c")
+Button/styles/normal = ExtResource("2_r400c")
+FlatButton/styles/focus = ExtResource("1_h063j")
+FlatButton/styles/normal = ExtResource("2_r400c")
+FlatButton/styles/pressed = ExtResource("1_h063j")
+LineEdit/colors/caret_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+LineEdit/colors/font_color = Color(0.06469673, 0.06469645, 0.06469651, 1)
+LineEdit/colors/font_placeholder_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+LineEdit/colors/font_selected_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+LineEdit/colors/selection_color = Color(0.105882354, 0.46666667, 1, 0.7647059)
+LineEdit/styles/focus = ExtResource("1_h063j")
+LineEdit/styles/normal = ExtResource("2_r400c")

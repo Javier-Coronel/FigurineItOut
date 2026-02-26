@@ -11,7 +11,8 @@ func _ready() -> void:
 
 ## Called when trying to connect with the server to pass information
 func try_request(type: HTTPClient.Method, rute: String, body: String, ) -> void:
-	request(rute, [], type, body)
+	var headers = ["Content-Type: application/json"]
+	request(rute, headers, type, body)
 	pass
 
 func _http_request_completed(result, response_code, headers, body):

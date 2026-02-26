@@ -3,7 +3,7 @@ const userService = require("../services/userService");
 class UserController {
     async signin(req, res){
         try {
-            
+            userService.signin(req, res)
         } catch (error) {
             
         }

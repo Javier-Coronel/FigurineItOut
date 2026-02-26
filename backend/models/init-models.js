@@ -5,9 +5,9 @@ const _player = require("./player");
 function initModels(sequelize) {
     const user = _user(sequelize, DataTypes);
     const player = _player(sequelize, DataTypes);
-    //proveedor.belongsTo(empresa, {foreignKey: "empresaIdEmpresa"});
-    //empresa.hasMany(proveedor, { as: "proveedor"});
     
+    //user.sync({ alter: true })
+    //player.sync({ alter: true })
     return {
         user,
         player

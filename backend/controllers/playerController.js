@@ -2,11 +2,8 @@ const playerService = require("../services/playerService");
 
 class PlayerController {
     async createPlayer(req, res){
-        try {
-            
-        } catch (error) {
-            
-        }
+        console.log(req)
+        await playerService.createPlayer(req.body,res)
     }
     async getAllPlayers(req, res){
         try {
