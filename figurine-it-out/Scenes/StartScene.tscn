@@ -10,5 +10,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dgtb2")
-onNotValidCookieScene = "uid://d0yk4mr8xvpdf"
+onNotValidCookieScene = "uid://defeli8kopud0"
 onValidCookieScene = "uid://cya61jdi28ux"
