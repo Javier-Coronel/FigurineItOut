@@ -86,4 +86,4 @@ text = "Dont have an account?"
 underline = 1
 structured_text_bidi_override = 5
 script = ExtResource("3_hgoiy")
-sceneToGo = "uid://d0yk4mr8xvpdf"
+sceneToGo = "SignInUser"

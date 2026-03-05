@@ -104,4 +104,4 @@ text = "Do you already have an account?"
 underline = 1
 structured_text_bidi_override = 5
 script = ExtResource("3_2qd2y")
-sceneToGo = "uid://defeli8kopud0"
+sceneToGo = "LogInUser"

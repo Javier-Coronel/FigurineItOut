@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cya61jdi28ux"]
+[gd_scene load_steps=2 format=3 uid="uid://cya61jdi28ux"]
+
+[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_1x17j"]
 
 [node name="LoggedUser" type="Control"]
 layout_mode = 3
@@ -7,3 +9,57 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="StartGame" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_1x17j")
+text = "Start a game"
+
+[node name="SearchGame" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_1x17j")
+text = "Search for games"
+
+[node name="SearchObjects" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_1x17j")
+text = "Models library"
+
+[node name="Tutorial" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_1x17j")
+text = "Tutorial"
+
+[node name="MenuButton" type="MenuButton" parent="."]
+layout_mode = 1
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 75.0
+offset_bottom = 75.0
+theme = ExtResource("1_1x17j")
+text = "sdf"
+item_count = 3
+popup/item_0/text = "Settings"
+popup/item_0/id = 1
+popup/item_1/text = "Exit to desktop"
+popup/item_1/id = 0
+popup/item_2/text = "Log out"
+popup/item_2/id = 2
