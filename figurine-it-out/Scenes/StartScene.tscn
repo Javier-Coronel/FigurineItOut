@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfhtmt5hfgpwf"]
+
+[ext_resource type="Script" uid="uid://c6lj56ewslbuk" path="res://Scripts/Start.gd" id="1_dgtb2"]
+
+[node name="StartScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dgtb2")
+onNotValidCookieScene = "uid://d0yk4mr8xvpdf"
+onValidCookieScene = "uid://cya61jdi28ux"

@@ -5,6 +5,7 @@ const sequelize = require("../config/sequelize.js");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
+const config = require("../config/config");
 
 const models = initModels(sequelize);
 
@@ -29,6 +30,28 @@ class UserService {
           .status(401)
           .json(response.error("Wrong password"));
       }
+
+      // Generar el token JWT
+      const token = jwt.sign(
+        {
+          sub: user.id,
+          name: user.username,
+          email: user.email,
+          role: user.role,
+        },
+       config.secretKey,
+        { expiresIn: "7d" }
+      );
+      // Añadimos el token a la respuesta, se tratara en el cliente
+      user.dataValues.cookie = {
+        token: token,
+        httpOnly: true, // Evita que JavaScript acceda a la cookie
+        secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
+        sameSite: process.env.NODE_ENV === 'production' ? "strict" : 'Lax', // Protección CSRF // Lax en desarrollo
+        maxAge: 1000 /*milisegundos*/ * 60 /*segundos*/ * 60 /*minutos*/ * 24 /*horas*/ * 7 /*dias*/, // 7 dias en milisegundos
+        // domain: "localhost",
+      }
+
       //Eliminar la contraseña del objeto de respuesta
       delete user.dataValues.password;
 

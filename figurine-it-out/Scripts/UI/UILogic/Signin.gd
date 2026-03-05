@@ -18,10 +18,10 @@ func trySignin() -> void:
 	print(createUser)
 	
 	ApiRequester.request(
-		(func (res):
+		(func (result, response_code, headers, body):
 			var data = JSON.new()
-			data.parse(res.get_string_from_utf8())
-			print(res.get_string_from_utf8())
+			data.parse(body.get_string_from_utf8())
+			print(body.get_string_from_utf8())
 			print(data.data["message"])
 			disabled = false
 			text = ""),

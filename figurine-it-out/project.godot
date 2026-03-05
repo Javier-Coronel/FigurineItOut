@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FigurineItOut"
-run/main_scene="res://Scripts/UI/LogInUser.tscn"
+run/main_scene="uid://cfhtmt5hfgpwf"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -19,5 +19,5 @@ func _http_request_completed(result, response_code, headers, body):
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_error("Ha habido un error.")
 	print(response_code)
-	functionToCall.call(body)
+	functionToCall.call(result, response_code, headers, body)
 	queue_free()

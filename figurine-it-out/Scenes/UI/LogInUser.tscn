@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://defeli8kopud0"]
+[gd_scene load_steps=4 format=3 uid="uid://defeli8kopud0"]
 
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_pphxq"]
 [ext_resource type="Script" uid="uid://dy8u35mqowrm" path="res://Scripts/UI/UILogic/Login.gd" id="1_qva5b"]
+[ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_hgoiy"]
 
-[node name="Control" type="Control"]
+[node name="LogInUser" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,10 +25,6 @@ offset_right = 130.0
 offset_bottom = -93.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_neighbor_top = NodePath("../Confirm")
-focus_neighbor_bottom = NodePath("../Password")
-focus_next = NodePath("../Password")
-focus_previous = NodePath("../Confirm")
 theme = ExtResource("1_pphxq")
 placeholder_text = "User"
 max_length = 50
@@ -66,6 +63,27 @@ offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_pphxq")
+text = "Log in"
 script = ExtResource("1_qva5b")
 user = NodePath("../User")
 password = NodePath("../Password")
+
+[node name="ToRegister" type="LinkButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -203.0
+offset_top = -44.0
+offset_right = -3.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pphxq")
+text = "Dont have an account?"
+underline = 1
+structured_text_bidi_override = 5
+script = ExtResource("3_hgoiy")
+sceneToGo = "uid://d0yk4mr8xvpdf"

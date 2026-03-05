@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0yk4mr8xvpdf"]
+[gd_scene load_steps=4 format=3 uid="uid://d0yk4mr8xvpdf"]
 
 [ext_resource type="Script" uid="uid://dq7mty7gvvoue" path="res://Scripts/UI/UILogic/Signin.gd" id="1_b7y8g"]
+[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="2_lj24t"]
+[ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_2qd2y"]
 
-[node name="Control" type="Control"]
+[node name="SignInUser" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +25,7 @@ offset_right = 130.0
 offset_bottom = -143.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_lj24t")
 placeholder_text = "User"
 max_length = 50
 
@@ -39,6 +42,7 @@ offset_right = 130.0
 offset_bottom = -43.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_lj24t")
 placeholder_text = "Email"
 max_length = 50
 
@@ -55,6 +59,7 @@ offset_right = 130.0
 offset_bottom = 57.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_lj24t")
 placeholder_text = "Password"
 max_length = 50
 virtual_keyboard_type = 6
@@ -74,8 +79,29 @@ offset_right = 100.0
 offset_bottom = 166.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_lj24t")
 text = "Crear usuario"
 script = ExtResource("1_b7y8g")
 user = NodePath("../User")
 email = NodePath("../Email")
 password = NodePath("../Password")
+
+[node name="ToRegister" type="LinkButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -263.0
+offset_top = -44.0
+offset_right = -3.9995117
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_lj24t")
+text = "Do you already have an account?"
+underline = 1
+structured_text_bidi_override = 5
+script = ExtResource("3_2qd2y")
+sceneToGo = "uid://defeli8kopud0"
