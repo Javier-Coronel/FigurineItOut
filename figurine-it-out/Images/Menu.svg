@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="101.00001mm"
+   height="101mm"
+   viewBox="0 0 101.00002 101"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0.5,0.50000001)">
+    <circle
+       style="fill:#3d3dff;fill-opacity:1;stroke:#101010;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:5.9;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path3"
+       r="50"
+       cy="50"
+       cx="50" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:5.9;paint-order:markers fill stroke"
+       id="rect1"
+       width="60"
+       height="15"
+       x="20"
+       y="20"
+       rx="7.5"
+       ry="7.5" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:5.9;paint-order:markers fill stroke"
+       id="rect2"
+       width="60"
+       height="15"
+       x="20"
+       y="65"
+       rx="7.5"
+       ry="7.5" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:5.9;paint-order:markers fill stroke"
+       id="rect3"
+       width="60"
+       height="15"
+       x="20"
+       y="42.5"
+       rx="7.5"
+       ry="7.5" />
+  </g>
+</svg>
