@@ -55,11 +55,23 @@ class UserService {
       //Eliminar la contraseña del objeto de respuesta
       delete user.dataValues.password;
 
+      res.cookie("token", token, {
+        httpOnly: true, // Evita que JavaScript acceda a la cookie
+        secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
+        sameSite: process.env.NODE_ENV === 'production' ? "strict" : 'Lax', // Protección CSRF // Lax en desarrollo
+        maxAge: 3600000, // 1 hora en milisegundos
+        // domain: "localhost",
+      });
+
       return res.status(200).json(response.exito(user, "Succesfull login"));
     } catch (err) {
       console.error(err);
       return res.status(500).json(response.error("Internal server error"));
     }
+  }
+  async signout(req, res) {
+    res.clearCookie('token', { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    res.status(200).json(response.exito( null, "Succesfull logout"));
   }
   async getAllUsers() {
     const result = await User.findAll();

@@ -31,6 +31,7 @@ func tryLogin() -> void:
 				cookie.set_value("cookie", "secure", data.data["data"]["cookie"]["secure"])
 				cookie.set_value("cookie", "sameSite", data.data["data"]["cookie"]["sameSite"])
 				cookie.save("user://logincookie.ini")
+				get_tree().change_scene_to_file(SceneManager.Scenes["LoggedUser"])
 				
 			disabled = false
 			text = ""),

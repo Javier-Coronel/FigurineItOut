@@ -8,6 +8,13 @@ class UserController {
             
         }
     }
+    async signout(req, res){
+        try {
+            userService.signout(req, res)
+        } catch (error) {
+            
+        }
+    }
     async getAllUsers(req, res){
         try {
             

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cya61jdi28ux"]
+[gd_scene load_steps=4 format=3 uid="uid://cya61jdi28ux"]
 
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_1x17j"]
 [ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="2_1x17j"]
+[ext_resource type="Script" uid="uid://pdm0fm7ojbmq" path="res://Scenes/UI/DropdownMenu.gd" id="3_f3u84"]
 
 [node name="LoggedUser" type="Control"]
 layout_mode = 3
@@ -65,3 +66,6 @@ popup/item_1/text = "Exit to desktop"
 popup/item_1/id = 0
 popup/item_2/text = "Log out"
 popup/item_2/id = 2
+script = ExtResource("3_f3u84")
+logoutIndex = 2
+settingsIndex = 1
