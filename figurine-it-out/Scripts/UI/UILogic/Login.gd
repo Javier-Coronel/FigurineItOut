@@ -9,7 +9,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func tryLogin() -> void:
-	if !(checkUser() || checkPassword()):	return
+	if !(checkUser() || checkPassword()): return
 	disabled = true
 	text = "Espera"
 	var createUser = JSON.stringify({"name": user.text, "password": password.text})
@@ -17,7 +17,7 @@ func tryLogin() -> void:
 	print(createUser)
 	
 	ApiRequester.request(
-		(func (result, response_code, headers, body):
+		(func (_result, response_code, _headers, body):
 			var data = JSON.new()
 			data.parse(body.get_string_from_utf8())
 			print(body.get_string_from_utf8())
@@ -30,8 +30,8 @@ func tryLogin() -> void:
 				cookie.set_value("cookie", "httpOnly", data.data["data"]["cookie"]["httpOnly"])
 				cookie.set_value("cookie", "secure", data.data["data"]["cookie"]["secure"])
 				cookie.set_value("cookie", "sameSite", data.data["data"]["cookie"]["sameSite"])
-				cookie.save("user://logincookie.ini")
-				get_tree().change_scene_to_file(SceneManager.Scenes["LoggedUser"])
+				cookie.save(ResourceManager.getTokenLocalization())#"user://logincookie.ini")
+				get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
 				
 			disabled = false
 			text = ""),

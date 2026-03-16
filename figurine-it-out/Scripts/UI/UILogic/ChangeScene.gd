@@ -10,6 +10,11 @@ func _ready() -> void:
 		pressed.connect(goto)
 
 func goto(goingTo: String = sceneToGo):
-	if goingTo == null: pass
-	get_tree().change_scene_to_file(SceneManager.Scenes[sceneToGo])
+	
+	if goingTo == null: 
+		return
+	elif goingTo == "exit": 
+		get_tree().quit()
+		return
+	get_tree().change_scene_to_file(ResourceManager.Scenes[sceneToGo])
 	

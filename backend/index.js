@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const playerRoutes = require("./routes/playerRoutes");
+const ws = require("./webSocketServer");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,4 +19,5 @@ if (process.env.NODE_ENV !== "test") {
     console.log("Servidor activo en el puerto ", port);
   });
 }
+ws.run()
 module.exports = app;

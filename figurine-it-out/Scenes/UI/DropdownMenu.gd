@@ -24,15 +24,15 @@ func popupHandler(id:int):
 
 func logout():
 	ApiRequester.request(
-		(func(result, response_code, headers, body):
+		(func(_result, _response_code, _headers, _body):
 			var logInCookie := ConfigFile.new()
-			var err = logInCookie.load("user://logincookie.ini")
+			var err = logInCookie.load(ResourceManager.getTokenLocalization())
 			# Check that the file exists
 			if(err!=OK):
 				return false
 			logInCookie.erase_section("cookie")
-			logInCookie.save("user://logincookie.ini")
-			get_tree().change_scene_to_file(SceneManager.Scenes["LogInUser"])),
+			logInCookie.save(ResourceManager.getTokenLocalization())
+			get_tree().change_scene_to_file(ResourceManager.Scenes["LogInUser"])),
 		HTTPClient.METHOD_POST,
 		"users/signout",
 		""

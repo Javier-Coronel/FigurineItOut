@@ -18,7 +18,7 @@ func trySignin() -> void:
 	print(createUser)
 	
 	ApiRequester.request(
-		(func (result, response_code, headers, body):
+		(func (_result, _response_code, _headers, body):
 			var data = JSON.new()
 			data.parse(body.get_string_from_utf8())
 			print(body.get_string_from_utf8())
