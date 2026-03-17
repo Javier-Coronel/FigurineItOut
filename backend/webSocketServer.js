@@ -30,15 +30,12 @@ function Socket() {
       partyId = rooms.length-1
     } else if (req.url.includes("join")) {
       let data = {};
-      console.log(req.url)
       req.url
         .replace("/path?", "")
         .split("&")
-        .forEach((i) => (data[req.url.split("=")[0]] = req.url.split("=")[1]));
-        console.log(data)
-      if (rooms[parseInt(data["join"])]) {
-        rooms[parseInt(data["join"])].users.append(ws);
-        console.log("joined on " + data["join"]);
+        .forEach((i) => (data[i.split("=")[0]] = i.split("=")[1]));
+      if (rooms[Number.parseInt(data["join"])]) {
+        rooms[Number.parseInt(data["join"])].users.push(ws);
         partyId = parseInt(data["join"])
         console.log(rooms)
       }
