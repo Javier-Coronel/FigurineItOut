@@ -3,7 +3,7 @@ const partyService = require("../services/partyService");
 class PartyController {
     async createParty(req, res){
         console.log(req)
-        await partyService.createParty(req.body,res)
+        return await partyService.createParty(req.body,res)
     }
     async getAllPartys(req, res){
         try {
@@ -19,10 +19,10 @@ class PartyController {
             
         }
     }
-    async addUserToParty(req, res){
+    async addUserToParty(user, party){
         try {
             
-            await partyService.createParty(req.body,res)
+            await partyService.addUser(req.body,res)
         } catch (error) {
             
         }

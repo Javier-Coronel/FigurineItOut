@@ -30,7 +30,6 @@ class UserService {
           .status(401)
           .json(response.error("Wrong password"));
       }
-
       // Generar el token JWT
       const token = jwt.sign(
         {

@@ -28,13 +28,7 @@ module.exports = function (sequelize, DataTypes) {
           unique: true,
           using: "BTREE",
           fields: [{ name: "id_party" }],
-        },
-        {
-          name: "id_user",
-          unique: true,
-          using: "BTREE",
-          fields: [{ name: "id_user" }],
-        },
+        }
       ],
     },
   );
