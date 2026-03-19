@@ -13,10 +13,6 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.DATE,
         allowNull: true
       },
-      ended_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      }
     },
     {
       sequelize,

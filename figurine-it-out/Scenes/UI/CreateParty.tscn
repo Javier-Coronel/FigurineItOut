@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3bfq1uuv3f6h"]
+
+[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_w5tm4"]
+
+[node name="CreateParty" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrivateRoom" type="CheckButton" parent="."]
+layout_mode = 1
+offset_left = 185.0
+offset_top = 141.0
+offset_right = 351.0
+offset_bottom = 183.0
+theme = ExtResource("1_w5tm4")
+theme_override_font_sizes/font_size = 20
+text = "Private"
+
+[node name="CustomDataset" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -37.5
+offset_right = 150.0
+offset_bottom = 37.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_w5tm4")
+theme_override_font_sizes/font_size = 36
+text = "Custom dataset"
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -393.0
+offset_top = -180.0
+offset_right = -44.0
+offset_bottom = -61.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_w5tm4")
+theme_override_font_sizes/font_size = 75
+text = "Start"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+oversampling_override = 1.0
+title = "Open a File"
+ok_button_text = "Select this file"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.csv")

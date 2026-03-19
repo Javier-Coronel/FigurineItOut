@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cya61jdi28ux"]
+[gd_scene load_steps=5 format=3 uid="uid://cya61jdi28ux"]
 
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_1x17j"]
 [ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="2_1x17j"]
+[ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="2_l1wu7"]
 [ext_resource type="Script" uid="uid://pdm0fm7ojbmq" path="res://Scenes/UI/DropdownMenu.gd" id="3_f3u84"]
 
 [node name="LoggedUser" type="Control"]
@@ -28,6 +29,8 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
 text = "Start a game"
+script = ExtResource("2_l1wu7")
+sceneToGo = "CreateParty"
 
 [node name="SearchGame" type="Button" parent="GridContainer"]
 layout_mode = 2
@@ -35,6 +38,8 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
 text = "Search for games"
+script = ExtResource("2_l1wu7")
+sceneToGo = "PartySelector"
 
 [node name="SearchObjects" type="Button" parent="GridContainer"]
 layout_mode = 2
@@ -42,6 +47,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
 text = "Models library"
+script = ExtResource("2_l1wu7")
 
 [node name="Tutorial" type="Button" parent="GridContainer"]
 layout_mode = 2
@@ -49,6 +55,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
 text = "Tutorial"
+script = ExtResource("2_l1wu7")
 
 [node name="MenuButton" type="MenuButton" parent="."]
 layout_mode = 1

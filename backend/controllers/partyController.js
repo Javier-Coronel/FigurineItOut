@@ -22,7 +22,7 @@ class PartyController {
     async addUserToParty(user, party){
         try {
             
-            await partyService.addUser(req.body,res)
+            await partyService.addUserToParty(req.body,res)
         } catch (error) {
             
         }
