@@ -21,8 +21,7 @@ class PartyService {
     }
   }
   async addUserToParty(user, party){
-        PlayedParty.create({id_player: user.sub, id_party: party})
-    
+    PlayedParty.create({id_player: user.sub, id_party: party})
   }
 }
 

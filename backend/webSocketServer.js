@@ -10,7 +10,7 @@ const userController = require("./controllers/userController");
 function Socket() {
   const port = process.env.WSPORT || 8090;
   const mainGuessList = [];
-
+  
   fs.readFile(
     "./public/Pictionary_Data_From_coffeecoders10.csv",
     "utf8",
@@ -36,10 +36,16 @@ function Socket() {
       });
       parser.write(data)
       parser.end()
-      console.log(mainGuessList)
     },
   );
-  
+  const codeCharacters = []
+  for (let i = 0; i < 10; i++) {
+    codeCharacters[i] = i;
+  }
+  for (let i = 0; i < 26; i++) {
+    codeCharacters[i+10] = String.fromCharCode(65 + i);
+  }
+  console.log(codeCharacters)
   const wss = new WebSocketServer({ port: port });
 
   /**
@@ -67,24 +73,38 @@ function Socket() {
         );
 
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
-        if (err || decoded.sub) {
+        if (err) {
           ws.close(1008, "An error ocured with the login data");
           return;
         }
 
         if (req.url.includes("create")) {
           let partyCreated = await partyController.createParty();
-          if ((partyCreated = -1)) partys.set(partyCreated, { users: [ws], CurrentCreator: ws });
+          if ((partyCreated == -1)) {
+            ws.close(1008, "Unnable to create party, try again later");
+            return
+          }
+
+          partys.set(partyCreated, { users: [ws], CurrentCreator: ws });
           partyId = partyCreated;
           partyController.addUserToParty(decoded,partyId)
+          let dataToSend = {"partyId": partyId}
           if (req.url.includes("private")) {
-            // we will need to send the key later
+            let code = ""
+            for (let i = 0; i < 6; i++) {
+              code += codeCharacters[Math.floor(Math.random() * codeCharacters.length)]
+            }
+            dataToSend.partyCode = code
           }
           if (req.url.includes("custom")) {
             // we will add custom sets later
           }
+          ws.send(JSON.stringify(dataToSend));
         } else if (data["join"]) {
           if (partys[Number.parseInt(data["join"])]) {
+            if (partys[Number.parseInt(data["join"])].partyCode) {
+              
+            }
             partys[Number.parseInt(data["join"])].users.push(ws);
             partyId = parseInt(data["join"]);
             partyController.addUserToParty(decoded,partyId)
