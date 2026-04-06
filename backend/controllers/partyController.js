@@ -1,9 +1,8 @@
 const partyService = require("../services/partyService");
 
 class PartyController {
-    async createParty(req, res){
-        console.log(req)
-        return await partyService.createParty(req.body,res)
+    async createParty(){
+        return await partyService.createParty()
     }
     async getAllPartys(req, res){
         try {

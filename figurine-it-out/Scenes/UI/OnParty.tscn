@@ -6,7 +6,7 @@
 
 [node name="OnParty" type="Node3D"]
 
-[node name="GuesserUI" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="GuesserUI"]
+[node name="GuesserUI" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/GuesserUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -24,7 +32,7 @@ offset_left = -425.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="CommentInput" type="LineEdit" parent="GuesserUI/Panel"]
+[node name="CommentInput" type="LineEdit" parent="UI/GuesserUI/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -40,7 +48,7 @@ grow_vertical = 2
 theme = ExtResource("1_xtk6r")
 placeholder_text = "Is..."
 
-[node name="SendTryOfGuess" type="Button" parent="GuesserUI/Panel"]
+[node name="SendTryOfGuess" type="Button" parent="UI/GuesserUI/Panel"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -56,7 +64,37 @@ theme = ExtResource("1_xtk6r")
 text = "Send"
 script = ExtResource("2_ur5e5")
 
-[node name="PartyCode" type="RichTextLabel" parent="GuesserUI/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/GuesserUI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11100001
+anchor_top = 0.142
+anchor_right = 0.9110001
+anchor_bottom = 0.80600005
+offset_left = -0.17500305
+offset_top = -0.01600647
+offset_right = -0.17501831
+offset_bottom = -0.2880249
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CommentContainer" type="VBoxContainer" parent="UI/GuesserUI/Panel/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("3_adj23")
+
+[node name="CreatorUI" type="Control" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PartyCode" type="RichTextLabel" parent="UI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -73,26 +111,6 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 2
 justification_flags = 171
-
-[node name="ScrollContainer" type="ScrollContainer" parent="GuesserUI/Panel"]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 92.0
-offset_right = 387.0
-offset_bottom = 522.0
-
-[node name="CommentContainer" type="VBoxContainer" parent="GuesserUI/Panel/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-script = ExtResource("3_adj23")
-
-[node name="CreatorUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 1, 1, 1)

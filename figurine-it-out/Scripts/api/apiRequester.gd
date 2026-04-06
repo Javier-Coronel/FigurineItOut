@@ -1,6 +1,6 @@
 extends Node
 
-static var baseURL: String = "http://localhost"
+static var baseURL: String = "localhost"
 
 #region APIRest part
 
@@ -10,7 +10,7 @@ func request(functionToCall: Callable, type: HTTPClient.Method, rute: String, bo
 	var newRequest = HTTPRequestSimplifier.new()
 	newRequest.functionToCall = functionToCall
 	add_child(newRequest)
-	newRequest.try_request(type, baseURL+apiRestPort+rute, body)
+	newRequest.try_request(type, "http://"+baseURL+apiRestPort+rute, body)
 	pass
 
 #endregion
@@ -20,12 +20,12 @@ func request(functionToCall: Callable, type: HTTPClient.Method, rute: String, bo
 var socket = WebSocketPeer.new()
 @export var webSocketPort = ":8090"
 func createRoom(private: bool = false, custom: String = ""):
-	var info = "/path?create" + ("&private" if private else "") + (("&custom=" + custom) if custom!="" else "")
+	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom) if custom!="" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
 	
 
 func joinRoom(id: int, code: String = ""):
-	var info = "/path?join=" + str(id) + (("&code="+code) if code != "" else "")
+	var info = "/path?join=" + str(id) + ("&user="+ResourceManager.getToken()) + (("&code="+code) if code != "" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
 
 func sendData(data, binary: bool = false):
@@ -61,9 +61,12 @@ func _process(delta):
 
 func getPacketsOfType(type:String)->Array[Variant]:
 	var packets = []
+	var pos:int = 0
 	for i in unprocesedPackets:
 		var data = JSON.parse_string(i.get_string_from_utf8())
 		if(data["type"] == type):
+			unprocesedPackets.remove_at(pos)
 			packets.append(data)
+		pos+=1
 	return packets
 #endregion

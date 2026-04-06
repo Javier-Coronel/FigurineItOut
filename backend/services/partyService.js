@@ -11,7 +11,7 @@ const Party = models.party;
 const PlayedParty = models.PlayedParty;
 
 class PartyService {
-  async createParty(party, res) {
+  async createParty() {
     try {
       const partyResult = await Party.create();
       return partyResult.id_party;

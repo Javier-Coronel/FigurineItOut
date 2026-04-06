@@ -6,7 +6,18 @@ const fs = require("node:fs");
 const { parse } = require("csv-parse");
 const partyController = require("./controllers/partyController");
 const userController = require("./controllers/userController");
-
+/**
+  * Each key will be the id of a room
+  * Each item will contain:
+  * * RoomCode?: keycode to enter the room.
+  * * Users: the websockets to wich the data will be sended to.
+  * * CurrentCreator: the websocket of the player thats currently modeling an object.
+  * * CurrentConcept: the current concept thats currently being modeled.
+  * * ObjectProgression: the steps that the current player modeling has done.
+  * * Time: the time left for the current player.
+  * * List?: the custom list of wich the conceps to figure will come.
+  */
+  const partys = new Map();
 function Socket() {
   const port = process.env.WSPORT || 8090;
   const mainGuessList = [];
@@ -45,20 +56,9 @@ function Socket() {
   for (let i = 0; i < 26; i++) {
     codeCharacters[i + 10] = String.fromCharCode(65 + i);
   }
-  console.log(codeCharacters);
   const wss = new WebSocketServer({ port: port });
 
-  /**
-   * Each item will contain:
-   * * RoomCode?: keycode to enter the room.
-   * * Users: the websockets to wich the data will be sended to.
-   * * CurrentCreator: the websocket of the player thats currently modeling an object.
-   * * CurrentConcept: the current concept thats currently being modeled.
-   * * ObjectProgression: the steps that the current player modeling has done.
-   * * Time: the time left for the current player.
-   * * List?: the custom list of wich the conceps to figure will come.
-   */
-  const partys = new Map();
+  
 
   wss.on("connection", async function connection(ws, req) {
     let partyId = -1;
@@ -73,13 +73,10 @@ function Socket() {
           (i) =>
             (data[i.split("=")[0]] = i.split("=")[1] ? i.split("=")[1] : ""),
         );
-
+        console.log(data)
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
+        
         if (err) {
-          ws.close(1008, "An error ocured with the login data");
-          return;
-        }
-        if (data["user"]) {
           ws.close(1008, "An error ocured with the login data");
           return;
         }
@@ -142,7 +139,7 @@ function Socket() {
       const clients = partys[partyId].users;
       let jsonData = JSON.stringify(data);
 
-      clients.forEach(function each(client) {
+      clients.forEach(function (client) {
         if (client.readyState === WebSocket.OPEN) {
           switch (jsonData.type) {
             case "comment":
@@ -162,8 +159,6 @@ function Socket() {
             default:
               break;
           }
-
-          client.send(data, { binary: isBinary });
         }
       });
     });
@@ -175,8 +170,7 @@ function Socket() {
       }
       console.log("Socket closed with reason " + reason);
     });
-    ws.send(partyId);
   });
 }
-
+module.exports.partys = partys
 module.exports.run = Socket;
