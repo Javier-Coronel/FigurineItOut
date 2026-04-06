@@ -95,7 +95,7 @@ function Socket() {
           partyId = partyCreated;
           player = decoded.name;
           partyController.addUserToParty(decoded, partyId);
-          let dataToSend = { partyId: partyId };
+          let dataToSend = { type: "partyInfo", "partyId": partyId };
           if (req.url.includes("private")) {
             let code = "";
             for (let i = 0; i < 6; i++) {
@@ -148,11 +148,11 @@ function Socket() {
             case "comment":
               if (jsonData.comment == partys[partyId].CurrentConcept) {
                 client.send(
-                  JSON.stringify({ type: "solved", by: player, concept: partys[partyId].CurrentConcept }),
+                  JSON.stringify({ "type": "solved", "by": player, "concept": partys[partyId].CurrentConcept }),
                 );
               } else {
                 client.send(
-                  JSON.stringify({ type: "comment", text: jsonData.text }),
+                  JSON.stringify({ "type": "comment", "text": jsonData.text, "player": player}),
                 );
               }
 

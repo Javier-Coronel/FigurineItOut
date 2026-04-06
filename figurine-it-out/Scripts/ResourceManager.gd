@@ -9,6 +9,8 @@ static var Scenes := {
 	"CreateParty": "res://Scenes/UI/CreateParty.tscn",
 	"PartySelector": "res://Scenes/UI/PartySelector.tscn",
 	"OnParty": "res://Scenes/UI/OnParty.tscn",
+	"Comment":"res://Scenes/UI/Comment.tscn",
+	"OwnComment":"res://Scenes/UI/OwnComment.tscn",
 }
 
 static func getTokenLocalization()->String:

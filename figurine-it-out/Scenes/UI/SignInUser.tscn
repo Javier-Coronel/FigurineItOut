@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://d0yk4mr8xvpdf"]
 
 [ext_resource type="Script" uid="uid://dq7mty7gvvoue" path="res://Scripts/UI/UILogic/Signin.gd" id="1_b7y8g"]
-[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="2_lj24t"]
+[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="2_lj24t"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_2qd2y"]
 
 [node name="SignInUser" type="Control"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3bfq1uuv3f6h"]
+[gd_scene load_steps=3 format=3 uid="uid://d3bfq1uuv3f6h"]
 
-[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/BaseTheme.tres" id="1_w5tm4"]
+[ext_resource type="Script" uid="uid://dorgy0abp56a6" path="res://Scripts/UI/UILogic/CreateParty.gd" id="1_cg2px"]
+[ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_w5tm4"]
 
 [node name="CreateParty" type="Control"]
 layout_mode = 3
@@ -9,23 +10,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cg2px")
 
 [node name="PrivateRoom" type="CheckButton" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.13700001
-anchor_top = 0.13700001
-anchor_right = 0.13700001
-anchor_bottom = 0.13700001
-offset_left = -82.824005
-offset_top = -20.776009
-offset_right = 83.175995
-offset_bottom = 21.223991
+anchor_left = 0.187
+anchor_top = 0.22700001
+anchor_right = 0.187
+anchor_bottom = 0.22700001
+offset_left = -83.42401
+offset_top = -21.096008
+offset_right = 82.57599
+offset_bottom = 20.903992
 theme = ExtResource("1_w5tm4")
 theme_override_font_sizes/font_size = 20
 text = "Private"
 
 [node name="CustomDataset" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -43,25 +47,28 @@ theme_override_font_sizes/font_size = 36
 text = "Custom dataset"
 
 [node name="Start" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.81000006
-anchor_top = 0.814
-anchor_right = 0.81000006
-anchor_bottom = 0.814
-offset_left = -174.12006
-offset_top = -59.471985
-offset_right = 174.87994
-offset_bottom = 59.528015
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -393.0
+offset_top = -180.0
+offset_right = -44.0
+offset_bottom = -61.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_w5tm4")
 theme_override_font_sizes/font_size = 75
 text = "Start"
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="DatasetSelectorDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 oversampling_override = 1.0
 title = "Open a File"
+initial_position = 2
 ok_button_text = "Select this file"
 file_mode = 0
 access = 2

@@ -1,8 +1,8 @@
 extends Node
 
-#region APIRest part
-
 static var baseURL: String = "http://localhost"
+
+#region APIRest part
 
 static var apiRestPort: String = ":3000/api/"
 
@@ -22,6 +22,7 @@ var socket = WebSocketPeer.new()
 func createRoom(private: bool = false, custom: String = ""):
 	var info = "/path?create" + ("&private" if private else "") + (("&custom=" + custom) if custom!="" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
+	
 
 func joinRoom(id: int, code: String = ""):
 	var info = "/path?join=" + str(id) + (("&code="+code) if code != "" else "")
@@ -32,7 +33,8 @@ func sendData(data, binary: bool = false):
 	else: socket.send_text(data)
 
 var time: float = 0
-var step: float = 0.25
+var step: float = 0.1
+var unprocesedPackets: Array = []
 func _process(delta):
 	time += delta
 	if socket.get_requested_url() != "" && time>step:
@@ -41,12 +43,13 @@ func _process(delta):
 		var state = socket.get_ready_state()
 		if state == WebSocketPeer.STATE_OPEN:
 			while socket.get_available_packet_count():
-				var curPacket = socket.get_packet()
-				print("Packet: ", curPacket)
+				unprocesedPackets.append( socket.get_packet())
+				print(unprocesedPackets[unprocesedPackets.size()-1])
 				
 		elif state == WebSocketPeer.STATE_CONNECTING:
 			while socket.get_available_packet_count():
-				print("Packet: ", socket.get_packet())
+				unprocesedPackets.append( socket.get_packet())
+				print(unprocesedPackets[unprocesedPackets.size()-1])
 		elif state == WebSocketPeer.STATE_CLOSING:
 			# Keep polling to achieve proper close.
 			pass
@@ -55,4 +58,12 @@ func _process(delta):
 			var reason = socket.get_close_reason()
 			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 			set_process(false) # Stop processing.
+
+func getPacketsOfType(type:String)->Array[Variant]:
+	var packets = []
+	for i in unprocesedPackets:
+		var data = JSON.parse_string(i.get_string_from_utf8())
+		if(data["type"] == type):
+			packets.append(data)
+	return packets
 #endregion

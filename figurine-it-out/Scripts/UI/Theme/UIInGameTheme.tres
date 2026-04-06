@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dlnasitjitlca"]
+
+[ext_resource type="StyleBox" uid="uid://crkwl8npew32c" path="res://Scripts/UI/Theme/UIInGameLineEditFocused.tres" id="1_jc3ma"]
+[ext_resource type="StyleBox" uid="uid://b8vi1ewrr1jci" path="res://Scripts/UI/Theme/UIInGameLineEdit.tres" id="1_loqfk"]
+
+[resource]
+LineEdit/colors/caret_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+LineEdit/colors/font_color = Color(0.06469673, 0.06469645, 0.06469651, 1)
+LineEdit/colors/font_placeholder_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+LineEdit/colors/font_selected_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+LineEdit/colors/selection_color = Color(0.105882354, 0.46666667, 1, 0.7647059)
+LineEdit/styles/focus = ExtResource("1_jc3ma")
+LineEdit/styles/normal = ExtResource("1_loqfk")
+LineEdit/styles/read_only = ExtResource("1_loqfk")
