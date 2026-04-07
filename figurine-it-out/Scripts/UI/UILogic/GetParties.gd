@@ -7,10 +7,17 @@ func _ready() -> void:
 		(func(_result, _response_code, _headers, body):
 			var data = JSON.new()
 			data.parse(body.get_string_from_utf8())
-			for i in data:
+			print(body.get_string_from_utf8())
+			print(data.data)
+			for i in data.data:
+				print(i)
 				var buttonToAdd = Button.new()
-				buttonToAdd.text = i
-				buttonToAdd.pressed.
+				buttonToAdd.text = str(int(i))
+				buttonToAdd.pressed.connect(
+					func():
+						ApiRequester.joinRoom(int(i))
+						)
+				add_child(buttonToAdd)
 			)
 		,HTTPClient.METHOD_GET,
 		"currentParties",

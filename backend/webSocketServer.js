@@ -17,7 +17,7 @@ const userController = require("./controllers/userController");
   * * Time: the time left for the current player.
   * * List?: the custom list of wich the conceps to figure will come.
   */
-  const partys = new Map();
+const partys = new Map();
 function Socket() {
   const port = process.env.WSPORT || 8090;
   const mainGuessList = [];
@@ -73,7 +73,7 @@ function Socket() {
           (i) =>
             (data[i.split("=")[0]] = i.split("=")[1] ? i.split("=")[1] : ""),
         );
-        console.log(data)
+      console.log(data["user"], "  ", req.url)
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
         
         if (err) {
@@ -87,10 +87,11 @@ function Socket() {
             ws.close(1008, "Unnable to create party, try again later");
             return;
           }
-
+          console.log(partyCreated)
           partys.set(partyCreated, { users: [ws], CurrentCreator: ws });
           partyId = partyCreated;
           player = decoded.name;
+          console.log(player, decoded)
           partyController.addUserToParty(decoded, partyId);
           let dataToSend = { type: "partyInfo", "partyId": partyId };
           if (req.url.includes("private")) {
@@ -108,18 +109,20 @@ function Socket() {
           }
           ws.send(JSON.stringify(dataToSend));
         } else if (data["join"]) {
-          if (partys[Number.parseInt(data["join"])]) {
-            if (partys[Number.parseInt(data["join"])].partyCode) {
+          if (partys.get(Number.parseInt(data["join"]))) {
+            if (partys.get(Number.parseInt(data["join"])).partyCode) {
               if (
                 !data["code"] ||
-                partys[Number.parseInt(data["join"])].partyCode != data["code"]
+                partys.get(Number.parseInt(data["join"])).partyCode != data["code"]
               ) {
                 ws.close(1008, "Not gived correct password");
                 return;
               }
             }
-            partys[Number.parseInt(data["join"])].users.push(ws);
+            partys.get(Number.parseInt(data["join"])).users.push(ws);
             partyId = parseInt(data["join"]);
+            player = decoded.name;
+            console.log(player, decoded)
             partyController.addUserToParty(decoded, partyId);
           }
         } else {
@@ -136,20 +139,20 @@ function Socket() {
     ws.on("error", console.error);
 
     ws.on("message", function message(data, isBinary) {
-      const clients = partys[partyId].users;
-      let jsonData = JSON.stringify(data);
-
+      const clients = partys.get(partyId).users;
+      let jsonData = JSON.parse(data.toString());
       clients.forEach(function (client) {
         if (client.readyState === WebSocket.OPEN) {
           switch (jsonData.type) {
             case "comment":
-              if (jsonData.comment == partys[partyId].CurrentConcept) {
+              if (jsonData.comment == partys.get(partyId).CurrentConcept) {
                 client.send(
-                  JSON.stringify({ "type": "solved", "by": player, "concept": partys[partyId].CurrentConcept }),
+                  JSON.stringify({ "type": "solved", "by": player, "concept": partys.get(partyId).CurrentConcept }),
                 );
               } else {
+                if(client!=ws)
                 client.send(
-                  JSON.stringify({ "type": "comment", "text": jsonData.text, "player": player}),
+                  JSON.stringify({ "type": "comment", "text": jsonData.comment, "player": player}),
                 );
               }
 
@@ -164,13 +167,21 @@ function Socket() {
     });
 
     ws.on("close", function close(code, reason) {
-      partys[partyId].users.splice(partys[partyId].users.indexOf(ws));
-      if (partys[partyId].users.length == 0) {
+      console.log(partys.get(partyId))
+      partys.get(partyId).users.splice(partys.get(partyId).users.indexOf(ws));
+      if (partys.get(partyId).users.length == 0) {
         partys.delete(partyId);
       }
       console.log("Socket closed with reason " + reason);
     });
   });
 }
-module.exports.partys = partys
+function getParties(req,res){
+  let parties = []
+  for (const i of partys.keys()){
+    parties.push(i)
+  }
+  res.status(200).json(parties)
+}
+module.exports.partys = getParties;
 module.exports.run = Socket;

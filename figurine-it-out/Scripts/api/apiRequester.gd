@@ -22,11 +22,13 @@ var socket = WebSocketPeer.new()
 func createRoom(private: bool = false, custom: String = ""):
 	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom) if custom!="" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
+	get_tree().change_scene_to_file(ResourceManager.Scenes["OnParty"])
 	
 
 func joinRoom(id: int, code: String = ""):
 	var info = "/path?join=" + str(id) + ("&user="+ResourceManager.getToken()) + (("&code="+code) if code != "" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
+	get_tree().change_scene_to_file(ResourceManager.Scenes["OnParty"])
 
 func sendData(data, binary: bool = false):
 	if (binary): socket.send(data)

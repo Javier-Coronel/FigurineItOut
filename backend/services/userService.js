@@ -33,10 +33,9 @@ class UserService {
       // Generar el token JWT
       const token = jwt.sign(
         {
-          sub: user.id,
-          name: user.username,
-          email: user.email,
-          role: user.role,
+          "sub": user.id_user,
+          "name": user.name,
+          "email": user.email,
         },
        config.secretKey,
         { expiresIn: "7d" }
