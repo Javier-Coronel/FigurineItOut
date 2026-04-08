@@ -30,6 +30,11 @@ func joinRoom(id: int, code: String = ""):
 	socket.connect_to_url(baseURL+webSocketPort+info)
 	get_tree().change_scene_to_file(ResourceManager.Scenes["OnParty"])
 
+func exitRoom():
+	socket.close()
+	get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
+	socket = WebSocketPeer.new()
+
 func sendData(data, binary: bool = false):
 	if (binary): socket.send(data)
 	else: socket.send_text(data)
@@ -46,20 +51,20 @@ func _process(delta):
 		if state == WebSocketPeer.STATE_OPEN:
 			while socket.get_available_packet_count():
 				unprocesedPackets.append( socket.get_packet())
-				print(unprocesedPackets[unprocesedPackets.size()-1])
 				
 		elif state == WebSocketPeer.STATE_CONNECTING:
 			while socket.get_available_packet_count():
 				unprocesedPackets.append( socket.get_packet())
-				print(unprocesedPackets[unprocesedPackets.size()-1])
 		elif state == WebSocketPeer.STATE_CLOSING:
 			# Keep polling to achieve proper close.
 			pass
 		elif state == WebSocketPeer.STATE_CLOSED:
 			var code = socket.get_close_code()
 			var reason = socket.get_close_reason()
+			#TODO: add a notification what the reason was
 			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
-			set_process(false) # Stop processing.
+			get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
+			socket = WebSocketPeer.new()
 
 func getPacketsOfType(type:String)->Array[Variant]:
 	var packets = []

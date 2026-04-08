@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bivvdtfd58jxi"]
+[gd_scene load_steps=7 format=3 uid="uid://bivvdtfd58jxi"]
 
 [ext_resource type="Theme" uid="uid://dlnasitjitlca" path="res://Scripts/UI/Theme/UIInGameTheme.tres" id="1_xtk6r"]
 [ext_resource type="Script" uid="uid://bb4e3iaddyinl" path="res://Scripts/UI/UILogic/sendTryOfGuess.gd" id="2_ur5e5"]
 [ext_resource type="Script" uid="uid://dg1g7a61184fi" path="res://Scripts/UI/UILogic/CommentsGetter.gd" id="3_adj23"]
+[ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="4_5efl4"]
+[ext_resource type="Script" uid="uid://eptl6y5h12ce" path="res://Scripts/UI/UILogic/PartyCodeGetter.gd" id="4_y1c2c"]
+[ext_resource type="Script" uid="uid://bmqke576uv1kt" path="res://Scripts/UI/UILogic/InsideGameMenu.gd" id="5_kbsgb"]
 
 [node name="OnParty" type="Node3D"]
 
@@ -104,13 +107,43 @@ anchor_bottom = 1.0
 offset_left = -205.0
 offset_top = -36.0
 offset_right = -21.0
+offset_bottom = -12.0
 grow_horizontal = 0
 grow_vertical = 0
+focus_mode = 2
 text = "Party code"
 fit_content = true
 scroll_active = false
+autowrap_mode = 0
+context_menu_enabled = true
 horizontal_alignment = 2
 justification_flags = 171
+selection_enabled = true
+script = ExtResource("4_y1c2c")
+
+[node name="MenuButton" type="MenuButton" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = 108.0
+grow_horizontal = 0
+icon = ExtResource("4_5efl4")
+icon_alignment = 1
+expand_icon = true
+item_count = 3
+popup/item_0/text = "See players"
+popup/item_0/id = 0
+popup/item_1/text = "Settings"
+popup/item_1/id = 1
+popup/item_2/text = "Exit"
+popup/item_2/id = 2
+script = ExtResource("5_kbsgb")
+settingsIndex = 1
+exitIndex = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 1, 1, 1)

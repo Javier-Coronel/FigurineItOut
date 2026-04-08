@@ -9,10 +9,12 @@ static var Scenes := {
 	"CreateParty": "res://Scenes/UI/CreateParty.tscn",
 	"PartySelector": "res://Scenes/UI/PartySelector.tscn",
 	"OnParty": "res://Scenes/UI/OnParty.tscn",
-	"Comment":"res://Scenes/UI/Comment.tscn",
-	"OwnComment":"res://Scenes/UI/OwnComment.tscn",
 }
-
+static var Objects:={
+	"Comment":"res://Objects/Comment.tscn",
+	"OwnComment":"res://Objects/OwnComment.tscn",
+	"InstantiableButton":"res://Objects/InstantiableButton.tscn"
+}
 static func getTokenLocalization()->String:
 	if(OS.is_debug_build()):
 		return "user://logincookie" + OS.get_cmdline_args()[2] + ".ini"

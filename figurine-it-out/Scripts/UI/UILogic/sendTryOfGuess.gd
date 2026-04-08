@@ -1,5 +1,5 @@
 extends Button
-var ownComment = load(ResourceManager.Scenes["OwnComment"])
+var ownComment = load(ResourceManager.Objects["OwnComment"])
 func _ready():
 	pressed.connect(postGuess)
 

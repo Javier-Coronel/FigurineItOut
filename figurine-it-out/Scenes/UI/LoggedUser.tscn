@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_1x17j"]
 [ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="2_1x17j"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="2_l1wu7"]
-[ext_resource type="Script" uid="uid://pdm0fm7ojbmq" path="res://Scenes/UI/DropdownMenu.gd" id="3_f3u84"]
+[ext_resource type="Script" uid="uid://pdm0fm7ojbmq" path="res://Scripts/UI/UILogic/OutsideGameMenu.gd" id="3_f3u84"]
 
 [node name="LoggedUser" type="Control"]
 layout_mode = 3
