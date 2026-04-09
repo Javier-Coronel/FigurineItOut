@@ -60,6 +60,27 @@ function Socket() {
   }
   const wss = new WebSocketServer({ port: port });
 
+  function newConcept(partyId) {
+    let conceptList = partys.get(partyId).list
+      ? partys.get(partyId).list
+      : mainGuessList;
+    partys.get(partyId).currentConcept =
+      conceptList[Math.floor(Math.random() * conceptList.length)];
+    partys.get(partyId).ObjectProgression = [];
+    partys.get(partyId).currentCreator =
+      partys.get(partyId).users[
+        Math.floor(Math.random() * partys.get(partyId).users.length)
+      ];
+    partys
+      .get(partyId)
+      .currentCreator.send(
+        JSON.stringify({
+          type: "beCreator",
+          concept: partys.get(partyId).currentConcept,
+        }),
+      );
+  }
+
   wss.on("connection", async function connection(ws, req) {
     let partyId = -1;
     let player = "";
@@ -85,7 +106,11 @@ function Socket() {
             ws.close(1008, "Unnable to create party, try again later");
             return;
           }
-          partys.set(partyCreated, { users: [ws], currentCreator: ws, roundsLeft:10, });
+          partys.set(partyCreated, {
+            users: [ws],
+            currentCreator: ws,
+            roundsLeft: 10,
+          });
           partyId = partyCreated;
           player = decoded.name;
           partyController.addUserToParty(decoded, partyId);
@@ -104,8 +129,7 @@ function Socket() {
           if (req.url.includes("custom")) {
             // we will add custom sets later
           }
-          let conceptList = (partys.get(partyId).list?partys.get(partyId).list:mainGuessList)
-          partys.get(partyId).currentConcept = conceptList[Math.floor(Math.random() * conceptList.length)];
+          newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));
         } else if (data["join"]) {
           if (partys.get(Number.parseInt(data["join"]))) {
@@ -143,20 +167,26 @@ function Socket() {
       clients.forEach(function (client) {
         if (client.readyState === WebSocket.OPEN) {
           switch (jsonData.type) {
-            /** 
+            /**
              * comment: envia un comentario
              * editModel: modifica el modelo
-             * 
-            */
+             *
+             */
             case "comment":
-              if (jsonData.comment == partys.get(partyId).CurrentConcept) {
+              if (jsonData.comment == partys.get(partyId).currentConcept) {
+                let dataToSave = JSON.stringify(
+                  partys.get(partyId).ObjectProgression,
+                );
+                //TODO save object
+                partys.get(partyId).ObjectProgression = [];
                 client.send(
                   JSON.stringify({
                     type: "solved",
                     by: player,
-                    concept: partys.get(partyId).CurrentConcept,
+                    concept: partys.get(partyId).currentConcept,
                   }),
                 );
+                newConcept(partyId)
               } else {
                 if (client != ws)
                   client.send(
@@ -170,6 +200,12 @@ function Socket() {
 
               break;
             case "editModel":
+              if (partys.get(partyId).currentCreator == ws) {
+                partys.get(partyId).ObjectProgression.push(jsonData.change);
+                if (client != ws) {
+                  client.send(jsonData);
+                }
+              }
               break;
             default:
               break;
@@ -179,7 +215,7 @@ function Socket() {
     });
 
     ws.on("close", function close(code, reason) {
-      if (partyId!=-1) {
+      if (partyId != -1) {
         console.log(partys.get(partyId));
         partys
           .get(partyId)

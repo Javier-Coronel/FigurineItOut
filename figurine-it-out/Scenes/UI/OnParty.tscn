@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bivvdtfd58jxi"]
+[gd_scene load_steps=8 format=3 uid="uid://bivvdtfd58jxi"]
 
+[ext_resource type="Script" uid="uid://bu7j100it1ky1" path="res://Scripts/Game/RoomLogic.gd" id="1_c18ex"]
 [ext_resource type="Theme" uid="uid://dlnasitjitlca" path="res://Scripts/UI/Theme/UIInGameTheme.tres" id="1_xtk6r"]
 [ext_resource type="Script" uid="uid://bb4e3iaddyinl" path="res://Scripts/UI/UILogic/sendTryOfGuess.gd" id="2_ur5e5"]
 [ext_resource type="Script" uid="uid://dg1g7a61184fi" path="res://Scripts/UI/UILogic/CommentsGetter.gd" id="3_adj23"]
@@ -8,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bmqke576uv1kt" path="res://Scripts/UI/UILogic/InsideGameMenu.gd" id="5_kbsgb"]
 
 [node name="OnParty" type="Node3D"]
+script = ExtResource("1_c18ex")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -18,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GuesserUI" type="Control" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +37,24 @@ anchor_bottom = 1.0
 offset_left = -425.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="ObjectToGuessInfo" type="LineEdit" parent="UI/GuesserUI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 85.0
+offset_top = -610.0
+offset_right = -140.0
+offset_bottom = -560.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_xtk6r")
+text = "Is..."
+alignment = 1
+editable = false
 
 [node name="CommentInput" type="LineEdit" parent="UI/GuesserUI/Panel"]
 unique_name_in_owner = true
@@ -88,14 +109,136 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 script = ExtResource("3_adj23")
 
+[node name="TimeLeft" type="LineEdit" parent="UI/GuesserUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 170.0
+offset_top = 38.0
+offset_right = -623.17456
+offset_bottom = 88.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_xtk6r")
+text = "10:00"
+alignment = 1
+editable = false
+
 [node name="CreatorUI" type="Control" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ObjectToGuessInfo" type="LineEdit" parent="UI/CreatorUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 0.63100004
+anchor_bottom = 1.0
+offset_left = 102.0
+offset_top = -72.0
+offset_right = -127.91205
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_xtk6r")
+text = "Is..."
+alignment = 1
+editable = false
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+virtual_keyboard_show_on_focus = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+
+[node name="TimeLeft" type="LineEdit" parent="UI/CreatorUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.63100004
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 115.08795
+offset_top = -72.0
+offset_right = -135.0
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_xtk6r")
+text = "10:00"
+alignment = 1
+editable = false
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+virtual_keyboard_show_on_focus = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+
+[node name="MeshEditionButtonsContainer" type="VBoxContainer" parent="UI/CreatorUI"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 504.0
+
+[node name="SelectButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AddButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MovementButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RotateButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScaleButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PaintButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GeometriCreatorButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectionButtonsContainer" type="HBoxContainer" parent="UI/CreatorUI"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 32.0
+offset_right = 300.0
+offset_bottom = 64.0
+
+[node name="VertexButton" type="Button" parent="UI/CreatorUI/SelectionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EdgeButton" type="Button" parent="UI/CreatorUI/SelectionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FaceButton" type="Button" parent="UI/CreatorUI/SelectionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ObjectButton" type="Button" parent="UI/CreatorUI/SelectionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PartyCode" type="RichTextLabel" parent="UI"]
 layout_mode = 1
