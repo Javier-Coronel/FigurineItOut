@@ -13,5 +13,16 @@ func _process(delta: float) -> void:
 	time+=delta
 	if(time>step):
 		time=0
-		ApiRequester.getPacketsOfType("")
+		var solved = ApiRequester.getPacketsOfType("solved")
+		if(solved.size()!=0):
+			%GuesserUI.visible = true
+			%CreatorUI.visible = false
+			%GuesserUI.get_node("Comments/ObjectToGuessInfo").text = solved[0]["concept"]
+		
+		var beCreator = ApiRequester.getPacketsOfType("beCreator")
+		if(beCreator.size()!=0):
+			%GuesserUI.visible = false
+			%CreatorUI.visible = true
+			%CreatorUI.get_node("ObjectToGuessInfo").text = beCreator[0]["concept"]
+		
 	

@@ -164,6 +164,7 @@ function Socket() {
     ws.on("message", function message(data, isBinary) {
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
+      console.log(clients.length)
       clients.forEach(function (client) {
         if (client.readyState === WebSocket.OPEN) {
           switch (jsonData.type) {
