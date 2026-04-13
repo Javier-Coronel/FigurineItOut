@@ -66,7 +66,7 @@ function Socket() {
       : mainGuessList;
     partys.get(partyId).currentConcept =
       conceptList[Math.floor(Math.random() * conceptList.length)];
-    partys.get(partyId).ObjectProgression = [];
+    partys.get(partyId).objectProgression = [];
     partys.get(partyId).currentCreator =
       partys.get(partyId).users[
         Math.floor(Math.random() * partys.get(partyId).users.length)
@@ -147,6 +147,7 @@ function Socket() {
             partyId = parseInt(data["join"]);
             player = decoded.name;
             partyController.addUserToParty(decoded, partyId);
+            ws.send(JSON.stringify({type: "partyStart", "objectProgression":partys.get(partyId).objectProgression}))
           }
         } else {
           console.error("client not stated as creating or joining");
@@ -176,10 +177,10 @@ function Socket() {
             case "comment":
               if (jsonData.comment == partys.get(partyId).currentConcept) {
                 let dataToSave = JSON.stringify(
-                  partys.get(partyId).ObjectProgression,
+                  partys.get(partyId).objectProgression,
                 );
                 //TODO save object
-                partys.get(partyId).ObjectProgression = [];
+                partys.get(partyId).objectProgression = [];
                 client.send(
                   JSON.stringify({
                     type: "solved",
@@ -202,7 +203,7 @@ function Socket() {
               break;
             case "editModel":
               if (partys.get(partyId).currentCreator == ws) {
-                partys.get(partyId).ObjectProgression.push(jsonData.change);
+                partys.get(partyId).objectProgression.push(jsonData.change);
                 if (client != ws) {
                   client.send(jsonData);
                 }
