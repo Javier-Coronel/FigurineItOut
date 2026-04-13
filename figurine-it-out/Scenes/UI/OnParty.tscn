@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://bb4e3iaddyinl" path="res://Scripts/UI/UILogic/sendTryOfGuess.gd" id="2_ur5e5"]
 [ext_resource type="Script" uid="uid://dg1g7a61184fi" path="res://Scripts/UI/UILogic/CommentsGetter.gd" id="3_adj23"]
 [ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="4_5efl4"]
-[ext_resource type="Script" uid="uid://eptl6y5h12ce" path="res://Scripts/UI/UILogic/PartyCodeGetter.gd" id="4_y1c2c"]
 [ext_resource type="Script" uid="uid://bmqke576uv1kt" path="res://Scripts/UI/UILogic/InsideGameMenu.gd" id="5_kbsgb"]
+[ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="7_c18ex"]
 
 [node name="OnParty" type="Node3D"]
 script = ExtResource("1_c18ex")
@@ -21,6 +21,7 @@ grow_vertical = 2
 
 [node name="GuesserUI" type="Control" parent="UI"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,7 +125,6 @@ editable = false
 
 [node name="CreatorUI" type="Control" parent="UI"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,9 +194,12 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AddButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+[node name="AddButton" type="MenuButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+item_count = 1
+popup/item_0/text = "Add "
+popup/item_0/id = 0
 
 [node name="MovementButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -242,6 +245,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PartyCode" type="RichTextLabel" parent="UI"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -263,7 +267,6 @@ context_menu_enabled = true
 horizontal_alignment = 2
 justification_flags = 171
 selection_enabled = true
-script = ExtResource("4_y1c2c")
 
 [node name="MenuButton" type="MenuButton" parent="UI"]
 layout_mode = 1
@@ -291,3 +294,7 @@ exitIndex = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 1, 1, 1)
+
+[node name="Model" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_c18ex")

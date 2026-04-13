@@ -15,6 +15,7 @@ const userController = require("./controllers/userController");
  * * CurrentConcept: the current concept thats currently being modeled.
  * * ObjectProgression: the steps that the current player modeling has done.
  * * Time: the time left for the current player.
+ * * OnTimeRunOut: the timeout function that contains what will happen after no one could guess the object on time.
  * * RoundsLeft: the rounds that have left to finish the game, at start must be 10.
  * * List?: the custom list of wich the conceps to figure will come.
  */
@@ -22,6 +23,7 @@ const userController = require("./controllers/userController");
 const partys = new Map();
 function Socket() {
   const port = process.env.WSPORT || 8090;
+  const defaultTimer = 10 * 60 * 1000;
   const mainGuessList = [];
 
   fs.readFile(
@@ -71,16 +73,41 @@ function Socket() {
       partys.get(partyId).users[
         Math.floor(Math.random() * partys.get(partyId).users.length)
       ];
-    partys
-      .get(partyId)
-      .currentCreator.send(
+    partys.get(partyId).time = Date.now();
+    partys.get(partyId).onTimeRunOut = setTimeout(() => {
+      console.log("asd")
+      solvedConcept(partyId);
+      newConcept(partyId);
+    }, defaultTimer);
+    partys.get(partyId).currentCreator.send(
+      JSON.stringify({
+        type: "beCreator",
+        concept: partys.get(partyId).currentConcept,
+        time: partys.get(partyId).time,
+      }),
+    );
+    partys.get(partyId).users.forEach(function (client) {
+      client.send(
         JSON.stringify({
-          type: "beCreator",
-          concept: partys.get(partyId).currentConcept,
+          type: "timeLeft",
+          time: partys.get(partyId).time,
         }),
       );
+    });
   }
-
+  function solvedConcept(partyId, solver = false) {
+    let dataToSave = JSON.stringify(partys.get(partyId).objectProgression);
+    //TODO save object
+    
+    let dataToSend = {
+      type: "solved",
+      concept: partys.get(partyId).currentConcept,
+    };
+    if (solver) dataToSend.by = solver;
+    partys.get(partyId).users.forEach(function (client) {
+      client.send(JSON.stringify(dataToSend));
+    });
+  }
   wss.on("connection", async function connection(ws, req) {
     let partyId = -1;
     let player = "";
@@ -127,7 +154,7 @@ function Socket() {
             dataToSend.partyCode = code;
           }
           if (req.url.includes("custom")) {
-            // we will add custom sets later
+            //TODO: add custom sets
           }
           newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));
@@ -147,7 +174,15 @@ function Socket() {
             partyId = parseInt(data["join"]);
             player = decoded.name;
             partyController.addUserToParty(decoded, partyId);
-            ws.send(JSON.stringify({type: "partyStart", "objectProgression":partys.get(partyId).objectProgression}))
+            let dataToSend = {
+              type: "partyStart",
+              objectProgression: partys.get(partyId).objectProgression,
+              partyId: partyId,
+              time: partys.get(partyId).time,
+            };
+            if (partys.get(partyId).partyCode)
+              dataToSend.partyCode = partys.get(partyId).partyCode;
+            ws.send(JSON.stringify(dataToSend));
           }
         } else {
           console.error("client not stated as creating or joining");
@@ -165,31 +200,21 @@ function Socket() {
     ws.on("message", function message(data, isBinary) {
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
-      console.log(clients.length)
-      clients.forEach(function (client) {
-        if (client.readyState === WebSocket.OPEN) {
-          switch (jsonData.type) {
-            /**
-             * comment: envia un comentario
-             * editModel: modifica el modelo
-             *
-             */
-            case "comment":
-              if (jsonData.comment == partys.get(partyId).currentConcept) {
-                let dataToSave = JSON.stringify(
-                  partys.get(partyId).objectProgression,
-                );
-                //TODO save object
-                partys.get(partyId).objectProgression = [];
-                client.send(
-                  JSON.stringify({
-                    type: "solved",
-                    by: player,
-                    concept: partys.get(partyId).currentConcept,
-                  }),
-                );
-                newConcept(partyId)
-              } else {
+      console.log(clients.length);
+      if (client.readyState === WebSocket.OPEN) {
+        switch (jsonData.type) {
+          /**
+           * comment: envia un comentario
+           * editModel: modifica el modelo
+           *
+           */
+          case "comment":
+            if (jsonData.comment == partys.get(partyId).currentConcept) {
+              clearTimeout(partys.get(partyId).onTimeRunOut)
+              solvedConcept(partyId, player); 
+              newConcept(partyId);
+            } else {
+              clients.forEach(function (client) {
                 if (client != ws)
                   client.send(
                     JSON.stringify({
@@ -198,22 +223,24 @@ function Socket() {
                       player: player,
                     }),
                   );
-              }
+              });
+            }
 
-              break;
-            case "editModel":
-              if (partys.get(partyId).currentCreator == ws) {
-                partys.get(partyId).objectProgression.push(jsonData.change);
+            break;
+          case "editModel":
+            if (partys.get(partyId).currentCreator == ws) {
+              partys.get(partyId).objectProgression.push(jsonData.change);
+              clients.forEach(function (client) {
                 if (client != ws) {
                   client.send(jsonData);
                 }
-              }
-              break;
-            default:
-              break;
-          }
+              });
+            }
+            break;
+          default:
+            break;
         }
-      });
+      }
     });
 
     ws.on("close", function close(code, reason) {
@@ -223,6 +250,7 @@ function Socket() {
           .get(partyId)
           .users.splice(partys.get(partyId).users.indexOf(ws), 1);
         if (partys.get(partyId)?.users.length == 0) {
+          clearTimeout(partys.get(partyId).onTimeRunOut)
           partys.delete(partyId);
         }
       }
