@@ -86,12 +86,14 @@ func move(mode, parts, positionData):
 			var tempFather = Node3D.new()
 			add_child(tempFather)
 			for object in parts:
-				get_child(int(object)).reparent(tempFather)
+				print(get_child(int(parts[0])).name)
+				get_child(int(parts[0])).reparent(tempFather)
 			tempFather.position = Vector3(float(positionData["x"]),float(positionData["y"]),float(positionData["z"]))
 			for child in tempFather.get_children():
 				#var globPosition = child.global_position
 				child.reparent(self)
 				#child.position = globPosition
+			remove_child(tempFather)
 			tempFather.queue_free()
 		_:
 			pass

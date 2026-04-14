@@ -13,10 +13,26 @@ var step := 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#region testing
 	CreatorUI.get_node("MeshEditionButtonsContainer/MovementButton").pressed.connect(func ():
 		%Model.processModification({"edition":"add", "meshType": "box"})
+		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/RotateButton").pressed.connect(func ():
 		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0"], "position": {"x":"5", "y":"0", "z":"0"}})
 		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/ScaleButton").pressed.connect(func ():
+		%Model.processModification({"edition":"add", "meshType": "cone"})
+		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").pressed.connect(func ():
+		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0","1"], "position": {"x":"0", "y":"0", "z":"5"}})
+		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/GeometriCreatorButton").pressed.connect(func ():
+		%Model.processModification({"edition":"add", "meshType": "torus"})
+		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["2"], "position": {"x":"-5", "y":"0", "z":"0"}})
+		%Model.processModification({"edition":"add", "meshType": "capsule"})
+		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["2","3"], "position": {"x":"0", "y":"0", "z":"-5"}})
+		)
+	#endregion
 	PartyCode.focus_entered.connect(func ():
 		DisplayServer.clipboard_set(PartyCode.text)
 		PartyCode.release_focus()
