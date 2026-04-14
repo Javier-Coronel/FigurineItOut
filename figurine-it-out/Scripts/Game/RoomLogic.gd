@@ -5,10 +5,6 @@ extends Node3D
 @onready var PartyCode = %PartyCode
 
 var creator = false
-enum Edition {NONE, SELECT, ADD, MOVEMENT, ROTATION, SCALE, PAINT, CREATEGEOMETRY}
-var actualEdition: Edition = Edition.NONE
-enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
-var actualSelection: Selection = Selection.NONE
 
 var time := 0
 const maxTime = 10 * 60
@@ -17,6 +13,10 @@ var step := 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	CreatorUI.get_node("MeshEditionButtonsContainer/MovementButton").pressed.connect(func ():
+		%Model.processModification({"edition":"add", "meshType": "box"})
+		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0"], "position": {"x":"5", "y":"0", "z":"0"}})
+		)
 	PartyCode.focus_entered.connect(func ():
 		DisplayServer.clipboard_set(PartyCode.text)
 		PartyCode.release_focus()
