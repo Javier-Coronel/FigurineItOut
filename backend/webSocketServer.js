@@ -26,14 +26,7 @@ function Socket() {
   const defaultTimer = 10 * 60 * 1000;
   const mainGuessList = [];
 
-  fs.readFile(
-    "./public/Pictionary_Data_From_coffeecoders10.csv",
-    "utf8",
-    (err, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+  function  read(data, arrayToPush){
       const parser = parse({
         delimiter: ",",
       });
@@ -41,7 +34,7 @@ function Socket() {
         let record;
         while ((record = parser.read()) !== null) {
           record.forEach((rec) => {
-            mainGuessList.push(rec);
+            arrayToPush.push(rec);
           });
         }
       });
@@ -51,6 +44,16 @@ function Socket() {
       });
       parser.write(data);
       parser.end();
+  }
+  fs.readFile(
+    "./public/Pictionary_Data_From_coffeecoders10.csv",
+    "utf8",
+    (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      read(data, mainGuessList)
     },
   );
   const codeCharacters = [];
@@ -75,7 +78,6 @@ function Socket() {
       ];
     partys.get(partyId).time = Date.now();
     partys.get(partyId).onTimeRunOut = setTimeout(() => {
-      console.log("asd")
       solvedConcept(partyId);
       newConcept(partyId);
     }, defaultTimer);
@@ -111,7 +113,6 @@ function Socket() {
   wss.on("connection", async function connection(ws, req) {
     let partyId = -1;
     let player = "";
-
     if (req.url.includes("user")) {
       let data = {};
       req.url
@@ -123,6 +124,7 @@ function Socket() {
         );
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
         if (err) {
+          console.log(err.message)
           ws.close(1008, "An error ocured with the login data");
           return;
         }
@@ -154,7 +156,8 @@ function Socket() {
             dataToSend.partyCode = code;
           }
           if (req.url.includes("custom")) {
-            //TODO: add custom sets
+            partys.get(partyId).list = []
+            read(data["custom"], partys.get(partyId).list)
           }
           newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));
@@ -200,8 +203,6 @@ function Socket() {
     ws.on("message", function message(data, isBinary) {
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
-      console.log(clients.length);
-      if (client.readyState === WebSocket.OPEN) {
         switch (jsonData.type) {
           /**
            * comment: envia un comentario
@@ -215,7 +216,7 @@ function Socket() {
               newConcept(partyId);
             } else {
               clients.forEach(function (client) {
-                if (client != ws)
+                if (client != ws && client.readyState === WebSocket.OPEN)
                   client.send(
                     JSON.stringify({
                       type: "comment",
@@ -231,7 +232,7 @@ function Socket() {
             if (partys.get(partyId).currentCreator == ws) {
               partys.get(partyId).objectProgression.push(jsonData.change);
               clients.forEach(function (client) {
-                if (client != ws) {
+                if (client != ws && client.readyState === WebSocket.OPEN) {
                   client.send(jsonData);
                 }
               });
@@ -240,12 +241,11 @@ function Socket() {
           default:
             break;
         }
-      }
+      
     });
 
     ws.on("close", function close(code, reason) {
       if (partyId != -1) {
-        console.log(partys.get(partyId));
         partys
           .get(partyId)
           .users.splice(partys.get(partyId).users.indexOf(ws), 1);

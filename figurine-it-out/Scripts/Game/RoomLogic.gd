@@ -32,6 +32,10 @@ func _ready() -> void:
 		%Model.processModification({"edition":"add", "meshType": "capsule"})
 		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["2","3"], "position": {"x":"0", "y":"0", "z":"-5"}})
 		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/DeleteObject").pressed.connect(func ():
+		%Model.processModification({"edition":"del", "modifiedParts": ["1","3"]})
+		%Model.processModification({"edition":"del", "modifiedParts": ["0"]}))
+		
 	#endregion
 	PartyCode.focus_entered.connect(func ():
 		DisplayServer.clipboard_set(PartyCode.text)
@@ -46,9 +50,10 @@ func _process(delta: float) -> void:
 		
 		if(time != 0):
 			var dict = Time.get_time_dict_from_unix_time(int(maxTime+int(time/1000)-int(Time.get_unix_time_from_system())))
-			GuesserUI.get_node("TimeLeft").text = str((str(dict["hour"]) + " : " if dict["hour"] !=0 else "") , dict["minute"], " : ", dict["second"])
-			CreatorUI.get_node("TimeLeft").text = str((str(dict["hour"]) + " : " if dict["hour"] !=0 else "") , dict["minute"], " : ", dict["second"])
-		
+			var curtime = str((str(dict["hour"]) + " : " if dict["hour"] !=0 else "") , (("0" if dict["minute"].length()==1 else "")+dict["minute"]), " : ", ("0" if dict["second"].length()==1 else "")+dict["second"])
+			GuesserUI.get_node("TimeLeft").text = curtime
+			CreatorUI.get_node("TimeLeft").text = curtime
+	
 		var partyInfo = ApiRequester.getPacketsOfType("partyStart")
 		if(partyInfo.size()!=0):
 			partyInfo = partyInfo[0]

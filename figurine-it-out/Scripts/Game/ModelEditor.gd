@@ -11,11 +11,9 @@ var actualSelection: Selection = Selection.NONE
 
 const startingChild := 0
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -25,26 +23,53 @@ func _process(delta: float) -> void:
 
 ## Process the given data to edit the model
 func processModification(modification):
-	match modification["edition"]:
-		"add":
-			print("Addition")
-			add(modification["meshType"])
-		"move":
-			print("Moving")
-			move(modification["mode"], modification["modifiedParts"], modification["position"])
-		"rot":
-			print("Rotation")
-			rotationToMake(modification["mode"], modification["modifiedParts"], modification["rotation"])
-		"scale":
-			print("Scaling")
-			scaleToMake(modification["mode"], modification["modifiedParts"], modification["scale"])
-		"paint":
-			print("Paint")
-			paint(modification["mode"], modification["modifiedParts"], modification["color"])
-		"creageo":
-			print("CreateGeometry")
-		_:
-			print("Unknow edition")
+	if modification.get("mode", "") == "object":
+		match modification["edition"]:
+			"move":
+				print("Moving")
+				move(modification["mode"], modification["modifiedParts"], modification["position"])
+			"rot":
+				print("Rotation")
+				rotationToMake(modification["mode"], modification["modifiedParts"], modification["rotation"])
+			"scale":
+				print("Scaling")
+				scaleToMake(modification["mode"], modification["modifiedParts"], modification["scale"])
+			"paint":
+				print("Paint")
+				paint(modification["mode"], modification["modifiedParts"], modification["color"])
+			"creageo":
+				print("CreateGeometry")
+			"del":
+				print("Deleting objects")
+				delete(modification["modifiedParts"])
+			_:
+				print("Unknow edition")
+	elif modification.get("mode", "") == "vertex":
+		match modification["edition"]:
+			"move":
+				print("Moving")
+				move(modification["mode"], modification["modifiedParts"], modification["position"])
+			"rot":
+				print("Rotation")
+				rotationToMake(modification["mode"], modification["modifiedParts"], modification["rotation"])
+			"scale":
+				print("Scaling")
+				scaleToMake(modification["mode"], modification["modifiedParts"], modification["scale"])
+			"paint":
+				print("Paint")
+				paint(modification["mode"], modification["modifiedParts"], modification["color"])
+			"creageo":
+				print("CreateGeometry")
+			_:
+				print("Unknow edition")
+		pass
+	else:
+		match modification["edition"]:
+			"add":
+				print("Addition")
+				add(modification["meshType"])
+			_:
+				print("Unknow edition")
 	pass
 
 ## Adds either a box, sphere, plane, torus, cylinder, capsule or cone
@@ -97,7 +122,6 @@ func move(mode, parts, positionData):
 			tempFather.queue_free()
 		_:
 			pass
-	pass
 
 func rotationToMake(mode, parts, rotationData):
 	pass
@@ -107,6 +131,11 @@ func scaleToMake(mode, parts, scaleData):
 
 func paint(mode, parts, color):
 	pass
+
+func delete(positions):
+	positions.reverse()
+	for i in positions:
+		get_child(int(i)).queue_free()
 
 ## Destroy any son that this node has.
 func clear():
