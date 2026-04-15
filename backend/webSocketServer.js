@@ -156,8 +156,9 @@ function Socket() {
             dataToSend.partyCode = code;
           }
           if (req.url.includes("custom")) {
+            let customList=data["custom"].replaceAll(".", " ")
             partys.get(partyId).list = []
-            read(data["custom"], partys.get(partyId).list)
+            read(customList, partys.get(partyId).list)
           }
           newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));

@@ -20,7 +20,7 @@ func request(functionToCall: Callable, type: HTTPClient.Method, rute: String, bo
 var socket = WebSocketPeer.new()
 @export var webSocketPort = ":8090"
 func createRoom(private: bool = false, custom: String = ""):
-	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom.remove_chars(" ")) if custom!="" else "")
+	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom.replace(" ", ".")) if custom!="" else "")
 	socket.connect_to_url(baseURL+webSocketPort+info)
 	get_tree().change_scene_to_file(ResourceManager.Scenes["OnParty"])
 
