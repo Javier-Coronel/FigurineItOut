@@ -156,10 +156,11 @@ function Socket() {
             dataToSend.partyCode = code;
           }
           if (req.url.includes("custom")) {
-            let customList=data["custom"].replaceAll(".", " ")
+            let customList=decodeURI(data["custom"])
             partys.get(partyId).list = []
             read(customList, partys.get(partyId).list)
           }
+          partys.get(partyId).objectProgression = []
           newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));
         } else if (data["join"]) {
@@ -202,6 +203,7 @@ function Socket() {
     ws.on("error", console.error);
 
     ws.on("message", function message(data, isBinary) {
+      console.log(data.toString())
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
         switch (jsonData.type) {
@@ -231,12 +233,14 @@ function Socket() {
             break;
           case "editModel":
             if (partys.get(partyId).currentCreator == ws) {
-              partys.get(partyId).objectProgression.push(jsonData.change);
               clients.forEach(function (client) {
                 if (client != ws && client.readyState === WebSocket.OPEN) {
-                  client.send(jsonData);
+                  client.send(JSON.stringify(jsonData));
                 }
               });
+              delete jsonData.type
+              partys.get(partyId).objectProgression.push(jsonData);
+              console.log(partys.get(partyId).objectProgression)
             }
             break;
           default:

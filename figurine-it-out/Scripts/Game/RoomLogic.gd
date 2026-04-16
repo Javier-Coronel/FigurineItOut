@@ -10,9 +10,15 @@ var time := 0
 const maxTime = 10 * 60
 var timer := 0.0
 var step := 1.0
-
+const meshTypes:=["box","sphere","plane","torus","cylinder","capsule","cone"]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	CreatorUI.get_node("MeshEditionButtonsContainer/AddButton").get_popup().index_pressed.connect(
+		func (i):
+			%Model.processModification({"edition":"add", "meshType":meshTypes[i]})
+			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
+			pass
+	)
 	#region testing
 	CreatorUI.get_node("MeshEditionButtonsContainer/MovementButton").pressed.connect(func ():
 		%Model.processModification({"edition":"add", "meshType": "box"})
@@ -50,7 +56,7 @@ func _process(delta: float) -> void:
 		
 		if(time != 0):
 			var dict = Time.get_time_dict_from_unix_time(int(maxTime+int(time/1000)-int(Time.get_unix_time_from_system())))
-			var curtime = str((str(dict["hour"]) + " : " if dict["hour"] !=0 else "") , (("0" if dict["minute"].length()==1 else "")+dict["minute"]), " : ", ("0" if dict["second"].length()==1 else "")+dict["second"])
+			var curtime = str((str(dict["hour"]) + " : " if dict["hour"] !=0 else "") , (("0" if str(dict["minute"]).length()==1 else "")+str(dict["minute"])), " : ", ("0" if str(dict["second"]).length()==1 else "")+str(dict["second"]))
 			GuesserUI.get_node("TimeLeft").text = curtime
 			CreatorUI.get_node("TimeLeft").text = curtime
 	
@@ -79,6 +85,7 @@ func _process(delta: float) -> void:
 			CreatorUI.visible = false
 			creator = false
 			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = solved[0]["concept"]
+			%Model.clear()
 		
 		var beCreator = ApiRequester.getPacketsOfType("beCreator")
 		if(beCreator.size()!=0):

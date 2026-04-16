@@ -27,37 +27,34 @@ func processModification(modification):
 		match modification["edition"]:
 			"move":
 				print("Moving")
-				move(modification["mode"], modification["modifiedParts"], modification["position"])
+				moveObjects(modification["modifiedParts"], modification["position"])
 			"rot":
 				print("Rotation")
-				rotationToMake(modification["mode"], modification["modifiedParts"], modification["rotation"])
+				rotateObjects(modification["modifiedParts"], modification["rotation"])
 			"scale":
 				print("Scaling")
-				scaleToMake(modification["mode"], modification["modifiedParts"], modification["scale"])
+				scaleObjects(modification["modifiedParts"], modification["scale"])
 			"paint":
 				print("Paint")
-				paint(modification["mode"], modification["modifiedParts"], modification["color"])
+				paintObjects(modification["modifiedParts"], modification["color"])
 			"creageo":
 				print("CreateGeometry")
-			"del":
-				print("Deleting objects")
-				delete(modification["modifiedParts"])
 			_:
 				print("Unknow edition")
 	elif modification.get("mode", "") == "vertex":
 		match modification["edition"]:
 			"move":
 				print("Moving")
-				move(modification["mode"], modification["modifiedParts"], modification["position"])
+				moveVertex(modification["objects"], modification["modifiedParts"], modification["position"])
 			"rot":
 				print("Rotation")
-				rotationToMake(modification["mode"], modification["modifiedParts"], modification["rotation"])
+				rotateVertex(modification["objects"], modification["modifiedParts"], modification["rotation"])
 			"scale":
 				print("Scaling")
-				scaleToMake(modification["mode"], modification["modifiedParts"], modification["scale"])
+				scaleVertex(modification["objects"], modification["modifiedParts"], modification["scale"])
 			"paint":
 				print("Paint")
-				paint(modification["mode"], modification["modifiedParts"], modification["color"])
+				paintVertex(modification["objects"], modification["modifiedParts"], modification["color"])
 			"creageo":
 				print("CreateGeometry")
 			_:
@@ -68,6 +65,9 @@ func processModification(modification):
 			"add":
 				print("Addition")
 				add(modification["meshType"])
+			"del":
+				print("Deleting objects")
+				delete(modification["modifiedParts"])
 			_:
 				print("Unknow edition")
 	pass
@@ -79,22 +79,16 @@ func add(meshType: String):
 	match meshType:
 		"box":
 			mesh = BoxMesh.new()
-			
 		"sphere":
 			mesh = SphereMesh.new()
-			
 		"plane":
 			mesh = PlaneMesh.new()
-			
 		"torus":
 			mesh = TorusMesh.new()
-			
 		"cylinder":
 			mesh = CylinderMesh.new()
-			
 		"capsule":
 			mesh = CapsuleMesh.new()
-			
 		"cone":
 			mesh = CylinderMesh.new()
 			mesh.top_radius = 0
@@ -105,37 +99,44 @@ func add(meshType: String):
 	child.mesh = model
 	add_child(child)
 ## Moves objects or vertex to a position, if there are multiple objects or vertex the position will be the center
-func move(mode, parts, positionData):
-	match mode:
-		"object":
-			var tempFather = Node3D.new()
-			add_child(tempFather)
-			for object in parts:
-				print(get_child(int(parts[0])).name)
-				get_child(int(parts[0])).reparent(tempFather)
-			tempFather.position = Vector3(float(positionData["x"]),float(positionData["y"]),float(positionData["z"]))
-			for child in tempFather.get_children():
-				#var globPosition = child.global_position
-				child.reparent(self)
-				#child.position = globPosition
-			remove_child(tempFather)
-			tempFather.queue_free()
-		_:
-			pass
+func moveObjects(parts, positionData):
+	
+	var tempFather = Node3D.new()
+	add_child(tempFather)
+	for object in parts:
+		print(get_child(int(parts[0])+startingChild).name)
+		get_child(int(parts[0])).reparent(tempFather)
+	tempFather.position = Vector3(float(positionData["x"]),float(positionData["y"]),float(positionData["z"]))
+	for child in tempFather.get_children():
+		#var globPosition = child.global_position
+		child.reparent(self)
+		#child.position = globPosition
+	remove_child(tempFather)
+	tempFather.queue_free()
 
-func rotationToMake(mode, parts, rotationData):
+
+func rotateObjects(parts, rotationData):
 	pass
 
-func scaleToMake(mode, parts, scaleData):
+func scaleObjects(parts, scaleData):
 	pass
 
-func paint(mode, parts, color):
+func paintObjects(parts, color):
 	pass
 
 func delete(positions):
 	positions.reverse()
 	for i in positions:
 		get_child(int(i)).queue_free()
+
+func moveVertex(objects, vertex, positionData):
+	pass
+func rotateVertex(objects, vertex, rotationData):
+	pass
+func scaleVertex(objects, vertex, scaleData):
+	pass
+func paintVertex(objects, vertex, color):
+	pass
 
 ## Destroy any son that this node has.
 func clear():

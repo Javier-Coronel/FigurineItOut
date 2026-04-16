@@ -46,6 +46,22 @@ theme = ExtResource("1_w5tm4")
 theme_override_font_sizes/font_size = 36
 text = "Custom dataset"
 
+[node name="SelectedFile" type="Label" parent="CustomDataset"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -26.5
+offset_right = 133.0
+offset_bottom = -3.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.4745098, 0.4745098, 0.4745098, 1)
+horizontal_alignment = 1
+
 [node name="Start" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -70,6 +86,8 @@ oversampling_override = 1.0
 title = "Open a File"
 initial_position = 2
 ok_button_text = "Select this file"
+cancel_button_text = "Select none"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.csv")
+folder_creation_enabled = false

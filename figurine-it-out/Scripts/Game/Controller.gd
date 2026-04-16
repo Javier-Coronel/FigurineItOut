@@ -1,5 +1,10 @@
 extends Camera3D
 
+var editing = false
+var typeOfSelected: ModelEditor.Selection = ModelEditor.Selection.VERTEX
+
+
+
 func _physics_process(delta):
 	var movement = Vector3()
 	
@@ -19,4 +24,5 @@ func _physics_process(delta):
 		movement.y = -1
 	
 	position = position + (movement.rotated(Vector3.UP, rotation.y)) * delta
+
 	

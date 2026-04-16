@@ -20,8 +20,9 @@ func request(functionToCall: Callable, type: HTTPClient.Method, rute: String, bo
 var socket = WebSocketPeer.new()
 @export var webSocketPort = ":8090"
 func createRoom(private: bool = false, custom: String = ""):
-	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom.replace(" ", ".")) if custom!="" else "")
-	socket.connect_to_url(baseURL+webSocketPort+info)
+	var info = "/path?create" + ("&user="+ResourceManager.getToken()) + ("&private" if private else "") + (("&custom=" + custom.replace(" ", "%20")) if custom!="" else "")
+	var err = socket.connect_to_url(baseURL+webSocketPort+info)
+	print(err)
 	get_tree().change_scene_to_file(ResourceManager.Scenes["OnParty"])
 
 func joinRoom(id: int, code: String = ""):
@@ -35,8 +36,9 @@ func exitRoom():
 	socket = WebSocketPeer.new()
 
 func sendData(data, binary: bool = false):
-	if (binary): socket.send(data)
-	else: socket.send_text(data)
+	if socket.get_requested_url() != "":
+		if (binary): socket.send(data)
+		else: socket.send_text(data)
 
 var time: float = 0
 var step: float = 0.1

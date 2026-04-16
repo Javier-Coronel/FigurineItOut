@@ -13,7 +13,12 @@ func _ready():
 		func (file):
 			var dataset = FileAccess.open(file, FileAccess.READ)
 			customDataset = dataset.get_as_text()
-			
+			%CustomDataset.get_node("SelectedFile").text = file
+	)
+	%DatasetSelectorDialog.canceled.connect(
+		func ():
+			customDataset = ""
+			%CustomDataset.get_node("SelectedFile").text = ""
 	)
 	%Start.pressed.connect(
 		func (): 
