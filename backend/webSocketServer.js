@@ -257,6 +257,10 @@ function Socket() {
         if (partys.get(partyId)?.users.length == 0) {
           clearTimeout(partys.get(partyId).onTimeRunOut)
           partys.delete(partyId);
+        }else if(partys.get(partyId)?.currentCreator == ws){
+          clearTimeout(partys.get(partyId).onTimeRunOut)
+          solvedConcept(partyId); 
+          newConcept(partyId);
         }
       }
       console.log("Socket closed with reason " + reason);
