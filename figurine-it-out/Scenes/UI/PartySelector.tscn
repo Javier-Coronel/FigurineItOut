@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpcttsaq0jvw4"]
+[gd_scene load_steps=5 format=3 uid="uid://dpcttsaq0jvw4"]
 
 [ext_resource type="Script" uid="uid://ciwffh15s6q0j" path="res://Scripts/UI/UILogic/GetParties.gd" id="1_ckpay"]
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="2_ww30q"]
 [ext_resource type="Script" uid="uid://berkodpos4xug" path="res://Scripts/UI/UILogic/ButtonJoinPartyWithACode.gd" id="3_ug6ek"]
+[ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="4_57l3l"]
 
 [node name="PartySelector" type="Control"]
 layout_mode = 3
@@ -73,3 +74,13 @@ theme = ExtResource("2_ww30q")
 script = ExtResource("3_ug6ek")
 room = NodePath("../Room")
 password = NodePath("../Password")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 96.0
+text = "Back"
+script = ExtResource("4_57l3l")
+sceneToGo = "LoggedUser"
