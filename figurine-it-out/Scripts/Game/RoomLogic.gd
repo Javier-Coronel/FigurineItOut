@@ -69,6 +69,8 @@ func _process(delta: float) -> void:
 			var progression = partyInfo.get("objectProgression", [])
 			for i in progression:
 				%Model.processModification(i)
+			time = partyInfo.get("time", time)
+			
 		
 		var edits = ApiRequester.getPacketsOfType("editModel")
 		if edits.size() != 0:

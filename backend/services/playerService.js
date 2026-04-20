@@ -13,7 +13,6 @@ const User = models.user
 class PlayerService {
   async createPlayer(player, res) {
     try {
-        console.log(player)
       // Validar si todos los campos fueron proporcionados
       if (player == undefined || !player.name || !player.email || !player.password) {
         return res

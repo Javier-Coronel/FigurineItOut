@@ -6,11 +6,13 @@ const fs = require("node:fs");
 const { parse } = require("csv-parse");
 const partyController = require("./controllers/partyController");
 const userController = require("./controllers/userController");
+const objectService = require("./services/objectService")
 /**
  * Each key will be the id of a room
  * Each item will contain:
  * * RoomCode?: keycode to enter the room.
  * * Users: the websockets to wich the data will be sended to.
+ * * UsersNames
  * * CurrentCreator: the websocket of the player thats currently modeling an object.
  * * CurrentConcept: the current concept thats currently being modeled.
  * * ObjectProgression: the steps that the current player modeling has done.
@@ -98,9 +100,12 @@ function Socket() {
     });
   }
   function solvedConcept(partyId, solver = false) {
-    let dataToSave = JSON.stringify(partys.get(partyId).objectProgression);
-    //TODO save object
     
+    //TODO save object
+    //partys.get(partyId).objectProgression
+    //(player, party, data, name)
+    objectService.createObject(partys.get(partyId).currentCreator, partyId, partys.get(partyId).objectProgression, partys.get(partyId).currentConcept)
+
     let dataToSend = {
       type: "solved",
       concept: partys.get(partyId).currentConcept,

@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
-    "player",
+    "moderator",
     {
-      id_player: {
+      id_moderator: {
         autoIncrement: true,
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,33 +15,23 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         unique: "user",
       },
-      bannedby: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      }
     },
     {
       sequelize,
-      tableName: "player",
+      tableName: "moderator",
       timestamps: false,
       indexes: [
         {
           name: "PRIMARY",
           unique: true,
           using: "BTREE",
-          fields: [{ name: "id_player" }],
+          fields: [{ name: "id_moderator" }],
         },
         {
           name: "id_user",
           unique: true,
           using: "BTREE",
           fields: [{ name: "id_user" }],
-        },
-        {
-          name: "id_moderador",
-          unique: true,
-          using: "BTREE",
-          fields: [{ name: "bannedby" }],
         },
       ],
     },
