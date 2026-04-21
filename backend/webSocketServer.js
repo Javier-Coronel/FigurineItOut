@@ -12,7 +12,7 @@ const objectService = require("./services/objectService")
  * Each item will contain:
  * * RoomCode?: keycode to enter the room.
  * * Users: the websockets to wich the data will be sended to.
- * * UsersNames
+ * * UsersNames: the names of every player in the room.
  * * CurrentCreator: the websocket of the player thats currently modeling an object.
  * * CurrentConcept: the current concept thats currently being modeled.
  * * ObjectProgression: the steps that the current player modeling has done.
@@ -104,7 +104,11 @@ function Socket() {
     //TODO save object
     //partys.get(partyId).objectProgression
     //(player, party, data, name)
-    objectService.createObject(partys.get(partyId).currentCreator, partyId, partys.get(partyId).objectProgression, partys.get(partyId).currentConcept)
+    objectService.createObject(
+      partys.get(partyId).usersNames[partys.get(partyId).users.indexOf(partys.get(partyId).currentCreator)], 
+      partyId, 
+      partys.get(partyId).objectProgression, 
+      partys.get(partyId).currentConcept)
 
     let dataToSend = {
       type: "solved",
@@ -144,9 +148,11 @@ function Socket() {
             users: [ws],
             currentCreator: ws,
             roundsLeft: 10,
+            usersNames: []
           });
           partyId = partyCreated;
           player = decoded.name;
+          partys.get(partyId).usersNames.push(player)
           partyController.addUserToParty(decoded, partyId);
           let dataToSend = { type: "partyStart", partyId: partyId };
           if (req.url.includes("private")) {
@@ -183,6 +189,7 @@ function Socket() {
             partys.get(Number.parseInt(data["join"])).users.push(ws);
             partyId = parseInt(data["join"]);
             player = decoded.name;
+            partys.get(partyId).usersNames.push(player)
             partyController.addUserToParty(decoded, partyId);
             let dataToSend = {
               type: "partyStart",
@@ -259,6 +266,10 @@ function Socket() {
         partys
           .get(partyId)
           .users.splice(partys.get(partyId).users.indexOf(ws), 1);
+        
+        partys
+          .get(partyId)
+          .usersNames.splice(partys.get(partyId).users.indexOf(player), 1);
         if (partys.get(partyId)?.users.length == 0) {
           clearTimeout(partys.get(partyId).onTimeRunOut)
           partys.delete(partyId);

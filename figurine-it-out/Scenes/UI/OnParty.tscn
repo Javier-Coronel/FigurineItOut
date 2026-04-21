@@ -232,6 +232,20 @@ size_flags_vertical = 3
 edit_alpha = false
 edit_intensity = false
 
+[node name="PaintIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/PaintButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.9999998
+offset_top = 3.9999998
+offset_right = 339.99997
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("4_5efl4")
+
 [node name="GeometriCreatorButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3

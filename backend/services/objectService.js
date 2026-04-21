@@ -12,17 +12,28 @@ const Party = models.party;
 const Player = models.player;
 const User = models.user;
 const Moderator = models.moderator;
-
+const fs = require("node:fs");
+const path = "./public/models/"
 class ObjectService{
     async createObject(player, party, data, name) {
-        console.log("asd")
         if(data.length == 0) return
-        console.log("asd")
-        player = User.findOne({where: { name: player.player }})
-        console.log("asd")
-        let nameInfo = [player.id_player, party, name, Date.now()].join("_")
-        console.log(JSON.stringify({name: nameInfo, route: nameInfo, id_party: party, id_player: player.id_player}))
-        await Object.create({name: nameInfo, route: nameInfo, id_party: party, id_player: player.id_player})
+        let user = await User.findOne({where: { name: player }})
+        player = await Player.findOne({where: { id_user: user.id_user}})
+        let nameInfo = [name, user.name, party, Date.now()].join("_")
+        let route = path+nameInfo
+        console.log(JSON.stringify({name: nameInfo, route: route, id_party: party, id_player: player.id_player}))
+        try {
+            await fs.writeFile(route, JSON.stringify(data, null, 2), (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');});
+            await Object.create({name: nameInfo, route: route, id_party: party, id_player: player.id_player})
+        }catch(error){
+            console.log("Error saving the object", error)
+        }
+    }
+    
+    async getObjects(){
+
     }
 }
 
