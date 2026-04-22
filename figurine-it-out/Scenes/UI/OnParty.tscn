@@ -38,6 +38,7 @@ anchor_bottom = 1.0
 offset_left = -425.0
 grow_horizontal = 0
 grow_vertical = 2
+theme = ExtResource("1_xtk6r")
 
 [node name="ObjectToGuessInfo" type="LineEdit" parent="UI/GuesserUI/Comments"]
 layout_mode = 1
@@ -99,12 +100,14 @@ offset_right = -0.17501831
 offset_bottom = -126.0
 grow_horizontal = 2
 grow_vertical = 2
+follow_focus = true
 
 [node name="CommentContainer" type="VBoxContainer" parent="UI/GuesserUI/Comments/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+alignment = 2
 script = ExtResource("3_adj23")
 
 [node name="TimeLeft" type="LineEdit" parent="UI/GuesserUI"]

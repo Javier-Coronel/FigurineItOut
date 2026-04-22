@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const playerRoutes = require("./routes/playerRoutes");
+const objectRoutes = require("./routes/objectRoutes");
 const ws = require("./webSocketServer");
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/players", playerRoutes);
+app.use("/api/objects", objectRoutes);
 app.get("/api/currentParties", ws.partys)
 
 if (process.env.NODE_ENV !== "test") {

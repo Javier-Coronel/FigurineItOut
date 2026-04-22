@@ -67,6 +67,21 @@ func _process(delta):
 			var code = socket.get_close_code()
 			var reason = socket.get_close_reason()
 			#TODO: add a notification what the reason was
+			if(reason == "invalid jwt"): 
+				ApiRequester.request(
+					(func(_result, _response_code, _headers, _body):
+						var logInCookie := ConfigFile.new()
+						var err = logInCookie.load(ResourceManager.getTokenLocalization())
+						# Check that the file exists
+						if(err!=OK):
+							return false
+						logInCookie.erase_section("cookie")
+						logInCookie.save(ResourceManager.getTokenLocalization())
+						get_tree().change_scene_to_file(ResourceManager.Scenes["LogInUser"])),
+					HTTPClient.METHOD_POST,
+					"users/signout",
+					""
+				)
 			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 			get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
 			socket = WebSocketPeer.new()

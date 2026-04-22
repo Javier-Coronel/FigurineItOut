@@ -23,6 +23,12 @@ function initModels(sequelize) {
     through: PlayedParty,
     foreignKey: "id_party",
   });
+
+    object.belongsTo(player, {foreignKey: "id_player"});
+    player.hasMany(object, { foreignKey: "id_player", as: "object"});
+    
+    object.belongsTo(party, {foreignKey: "id_party"});
+    party.hasMany(object, { foreignKey: "id_party", as: "object"});
   //user.sync({ alter: true })
   //player.sync({ alter: true })
   //party.sync({ alter: true })

@@ -101,9 +101,6 @@ function Socket() {
   }
   function solvedConcept(partyId, solver = false) {
     
-    //TODO save object
-    //partys.get(partyId).objectProgression
-    //(player, party, data, name)
     objectService.createObject(
       partys.get(partyId).usersNames[partys.get(partyId).users.indexOf(partys.get(partyId).currentCreator)], 
       partyId, 
@@ -134,7 +131,8 @@ function Socket() {
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
         if (err) {
           console.log(err.message)
-          ws.close(1008, "An error ocured with the login data");
+          if(err.message == "jwt expired") ws.close(1008, "invalid jwt");  
+          else ws.close(1008, "An error ocured with the login data");
           return;
         }
 
@@ -263,6 +261,15 @@ function Socket() {
 
     ws.on("close", function close(code, reason) {
       if (partyId != -1) {
+        if (partys.get(partyId)?.users.length == 1) {
+          clearTimeout(partys.get(partyId).onTimeRunOut)
+          partys.delete(partyId);
+          return
+        }else if(partys.get(partyId)?.currentCreator == ws){
+          clearTimeout(partys.get(partyId).onTimeRunOut)
+          solvedConcept(partyId); 
+          newConcept(partyId);
+        }
         partys
           .get(partyId)
           .users.splice(partys.get(partyId).users.indexOf(ws), 1);
@@ -270,14 +277,6 @@ function Socket() {
         partys
           .get(partyId)
           .usersNames.splice(partys.get(partyId).users.indexOf(player), 1);
-        if (partys.get(partyId)?.users.length == 0) {
-          clearTimeout(partys.get(partyId).onTimeRunOut)
-          partys.delete(partyId);
-        }else if(partys.get(partyId)?.currentCreator == ws){
-          clearTimeout(partys.get(partyId).onTimeRunOut)
-          solvedConcept(partyId); 
-          newConcept(partyId);
-        }
       }
       console.log("Socket closed with reason " + reason);
     });

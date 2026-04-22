@@ -11,7 +11,7 @@ func _ready() -> void:
 			for i in data.data:
 				var nodeToAdd = button.instantiate()
 				var buttonToAdd = nodeToAdd.get_node("Button")
-				buttonToAdd.text = str(int(i))
+				buttonToAdd.text = "Nº "+str(int(i))
 				buttonToAdd.pressed.connect(
 					func():
 						ApiRequester.joinRoom(int(i))

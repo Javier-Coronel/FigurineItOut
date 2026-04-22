@@ -21,7 +21,9 @@ class PartyService {
     }
   }
   async addUserToParty(user, party){
-    PlayedParty.create({id_player: user.sub, id_party: party})
+    let check = await PlayedParty.findAll({where: {id_player: user.sub, id_party: party}})
+    if(check.length!=0) return 
+    await PlayedParty.create({id_player: user.sub, id_party: party})
   }
 }
 

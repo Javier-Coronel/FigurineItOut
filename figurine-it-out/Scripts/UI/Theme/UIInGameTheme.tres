@@ -1,8 +1,11 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dlnasitjitlca"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dlnasitjitlca"]
 
 [ext_resource type="StyleBox" uid="uid://crkwl8npew32c" path="res://Scripts/UI/Theme/UIInGameLineEditFocused.tres" id="1_jc3ma"]
 [ext_resource type="StyleBox" uid="uid://b8vi1ewrr1jci" path="res://Scripts/UI/Theme/UIInGameLineEdit.tres" id="1_loqfk"]
 [ext_resource type="StyleBox" uid="uid://doxriioqgk4fp" path="res://Scripts/UI/Theme/UIInGameLineEditReadOnly.tres" id="3_jc3ma"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jc3ma"]
+bg_color = Color(0.20392157, 0.20392157, 0.20392157, 0.39215687)
 
 [resource]
 LineEdit/colors/caret_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -14,3 +17,4 @@ LineEdit/colors/selection_color = Color(0.105882354, 0.46666667, 1, 0.7647059)
 LineEdit/styles/focus = ExtResource("1_jc3ma")
 LineEdit/styles/normal = ExtResource("1_loqfk")
 LineEdit/styles/read_only = ExtResource("3_jc3ma")
+Panel/styles/panel = SubResource("StyleBoxFlat_jc3ma")
