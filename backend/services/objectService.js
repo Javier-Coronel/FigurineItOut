@@ -52,7 +52,7 @@ class ObjectService {
       const element = values[index];
       fs.readFile(element.route, "utf8", (err, data) => {
         if (err) throw err;
-        let value = { data: JSON.parse(data), name: element.name, room  };
+        let value = { data: JSON.parse(data), name: element.name, room: element.party.id_party, userName: element.player.user.name };
         result.push(value);
         if (index == values.length - 1) {
           res.status(200).json(response.exito(result, "Objects obtained"));
@@ -67,6 +67,10 @@ class ObjectService {
       include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,
@@ -83,6 +87,10 @@ class ObjectService {
       include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,
@@ -99,6 +107,10 @@ class ObjectService {
       include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,
@@ -115,6 +127,10 @@ class ObjectService {
       include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,
@@ -135,6 +151,10 @@ class ObjectService {
       include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,
@@ -147,6 +167,10 @@ class ObjectService {
     let value = await Object.findByPk(id,{include:[{
           model: Player,
           as: 'player',
+          include:[{
+            model: User,
+            as: 'user'
+          }]
           },
         {
             model: Party,

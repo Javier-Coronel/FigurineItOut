@@ -93,7 +93,7 @@ access = 2
 filters = PackedStringArray("*.csv")
 folder_creation_enabled = false
 
-[node name="Button" type="Button" parent="."]
+[node name="Back" type="Button" parent="."]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 32.0

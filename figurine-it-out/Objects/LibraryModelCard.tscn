@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bivmutxa8jfvy"]
+
+[ext_resource type="Script" uid="uid://rej3n56b2hor" path="res://Scripts/Game/LibraryCard.gd" id="1_li8sx"]
+[ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="2_vmykk"]
+[ext_resource type="Script" uid="uid://cx7h0s4xhg6qb" path="res://Scripts/Game/Controller.gd" id="3_vmykk"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vmykk"]
+viewport_path = NodePath("SubViewport")
+
+[node name="LibraryModelCard" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_li8sx")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(300, 234)
+
+[node name="Node3D" type="Node3D" parent="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
+transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.7071068, -0.7071068, -0.5, 0.5, 1, 1, 1)
+script = ExtResource("3_vmykk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D/Camera3D"]
+transform = Transform3D(0.9848077, 0, -0.17364818, 0, 0.99999994, 0, 0.17364818, 0, 0.9848077, 0, 0, 0)
+
+[node name="Model" type="Node3D" parent="SubViewport/Node3D"]
+unique_name_in_owner = true
+script = ExtResource("2_vmykk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_vmykk")

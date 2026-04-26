@@ -9,11 +9,13 @@ static var Scenes := {
 	"CreateParty": "res://Scenes/UI/CreateParty.tscn",
 	"PartySelector": "res://Scenes/UI/PartySelector.tscn",
 	"OnParty": "res://Scenes/UI/OnParty.tscn",
+	"LibraryOfLoggedUser":"res://Scenes/UI/LibraryOfLoggedUser.tscn",
 }
 static var Objects:={
 	"Comment":"res://Objects/Comment.tscn",
 	"OwnComment":"res://Objects/OwnComment.tscn",
-	"InstantiableButton":"res://Objects/InstantiableButton.tscn"
+	"InstantiableButton":"res://Objects/InstantiableButton.tscn",
+	"LibraryModelCard":"res://Objects/LibraryModelCard.tscn",
 }
 static func getTokenLocalization()->String:
 	if(OS.is_debug_build()):
