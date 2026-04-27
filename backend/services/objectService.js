@@ -46,15 +46,23 @@ class ObjectService {
       console.log("Error saving the object", error);
     }
   }
-  objectsReader(values, res) {
+  async objectsReader(values, res) {
     let result = [];
+    let tried = 0
     for (let index = 0; index < values.length; index++) {
       const element = values[index];
-      fs.readFile(element.route, "utf8", (err, data) => {
-        if (err) throw err;
+      await fs.readFile(element.route, "utf8", async (err, data) => {
+        tried++
+        if (err) {
+          if(tried == values.length){
+            res.status(200).json(response.exito(result, "Objects obtained"));
+          }
+          throw err;
+        }
+        
         let value = { data: JSON.parse(data), name: element.name, room: element.party.id_party, userName: element.player.user.name };
         result.push(value);
-        if (index == values.length - 1) {
+        if (result.length == values.length) {
           res.status(200).json(response.exito(result, "Objects obtained"));
         }
       });
@@ -77,7 +85,7 @@ class ObjectService {
             as: 'party'
           }]
     });
-    this.objectsReader(values, res);
+    await this.objectsReader(values, res);
   }
   async getBannedObjects(page, res) {
     let values = await Object.findAll({
@@ -97,7 +105,7 @@ class ObjectService {
             as: 'party'
           }]
     });
-    this.objectsReader(values, res);
+    await this.objectsReader(values, res);
   }
   async getPlayerObjects(page, player, res) {
     let values = await Object.findAll({
@@ -117,7 +125,7 @@ class ObjectService {
             as: 'party'
           }]
     });
-    this.objectsReader(values, res);
+    await this.objectsReader(values, res);
   }
   async getPartyObjects(page, party, res) {
     let values = await Object.findAll({
@@ -137,7 +145,7 @@ class ObjectService {
             as: 'party'
           }]
     });
-    this.objectsReader(values, res);
+    await this.objectsReader(values, res);
   }
   async getAvalibleObjects(page, player, res) {
     let parties = await PlayedParty.findAll({attributes:["id_party"], where:{id_player: player}})
@@ -161,7 +169,7 @@ class ObjectService {
             as: 'party'
           }]
     });
-    this.objectsReader(values, res);
+    await this.objectsReader(values, res);
   }
   async getObject(id, res) {
     let value = await Object.findByPk(id,{include:[{

@@ -10,15 +10,18 @@ viewport_path = NodePath("SubViewport")
 [node name="LibraryModelCard" type="Control"]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 300.0
-offset_bottom = 300.0
+anchor_right = 0.26000002
+anchor_bottom = 0.46300003
+offset_right = 0.47998047
+offset_bottom = -0.024017334
 grow_horizontal = 2
-grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_li8sx")
 
 [node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(300, 234)
+own_world_3d = true
+size = Vector2i(900, 702)
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
@@ -34,7 +37,77 @@ unique_name_in_owner = true
 script = ExtResource("2_vmykk")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.78000003
+offset_bottom = -1.5258789e-05
 texture = SubResource("ViewportTexture_vmykk")
+expand_mode = 5
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.78000003
+anchor_right = 0.78000003
+anchor_bottom = 1.0
+offset_top = -1.5258789e-05
+offset_right = -1.5258789e-05
+
+[node name="Name" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.081
+anchor_top = 0.25
+anchor_right = 0.541
+anchor_bottom = 0.25
+offset_left = 0.045999527
+offset_top = -11.5
+offset_right = 107.406
+offset_bottom = 11.5
+text = "Name"
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="UserName" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16700001
+anchor_top = 0.583
+anchor_right = 0.583
+anchor_bottom = 0.583
+offset_left = -0.07800293
+offset_top = -11.478001
+offset_right = 97.578
+offset_bottom = 11.521999
+text = "User name"
+
+[node name="Save" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.78000003
+anchor_top = 0.78000003
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.5258789e-05
+offset_top = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+text = "Save"
+
+[node name="PartyCode" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.703
+anchor_right = 1.0
+anchor_bottom = 0.78000003
+offset_top = 0.099990845
+offset_bottom = -1.5258789e-05
+grow_horizontal = 0
+grow_vertical = 0
+text = "Party code"
+horizontal_alignment = 2

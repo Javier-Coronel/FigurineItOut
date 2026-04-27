@@ -16,10 +16,10 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	timer+=delta
-	if(timer>step):
-		timer=0
+#func _process(delta: float) -> void:
+#	timer+=delta
+#	if(timer>step):
+#		timer=0
 
 ## Process the given data to edit the model
 func processModification(modification):

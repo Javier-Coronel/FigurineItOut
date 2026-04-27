@@ -14,29 +14,40 @@ script = ExtResource("1_0dsjb")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
+anchors_preset = -1
+anchor_left = 0.13000001
+anchor_top = 0.22800002
+anchor_right = 0.87000006
 anchor_bottom = 1.0
-offset_left = -426.0
-offset_top = 148.0
-offset_right = 426.0
+offset_left = 0.23999023
+offset_top = 0.2559967
+offset_right = -0.24005127
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="ModelContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ModelContainer" type="VBoxContainer" parent="ScrollContainer/AspectRatioContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Back" type="Button" parent="."]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 96.0
-offset_bottom = 96.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.049000002
+anchor_right = 0.083000004
+anchor_bottom = 0.148
+offset_left = -0.25600052
+offset_top = 0.24799919
+offset_right = 0.38399506
+offset_bottom = 0.09600067
 text = "Back"
 script = ExtResource("1_ki72e")
 sceneToGo = "LoggedUser"
@@ -44,28 +55,31 @@ sceneToGo = "LoggedUser"
 [node name="PageBack" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = -96.0
-offset_right = 107.0
-offset_bottom = -32.0
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.85200006
+anchor_right = 0.093
+anchor_bottom = 0.95100003
+offset_left = -0.25600052
+offset_top = -0.0960083
+offset_right = -0.13600159
+offset_bottom = -0.24804688
 grow_vertical = 0
+disabled = true
 text = "Previous"
 
 [node name="PageNext" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -96.0
-offset_top = -96.0
-offset_right = -32.0
-offset_bottom = -32.0
+anchors_preset = -1
+anchor_left = 0.91700006
+anchor_top = 0.85200006
+anchor_right = 0.97200006
+anchor_bottom = 0.95100003
+offset_left = -0.3840332
+offset_top = -0.0960083
+offset_right = 0.25598145
+offset_bottom = -0.24804688
 grow_horizontal = 0
 grow_vertical = 0
 text = "Next"

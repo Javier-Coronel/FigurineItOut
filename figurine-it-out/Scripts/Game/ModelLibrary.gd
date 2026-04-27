@@ -10,44 +10,62 @@ func _ready() -> void:
 		func():
 		currentPage -= 1
 		updatePage()
-		if (currentPage == 0):
-			%PageBack.disabled = true
-		if (currentModels < 30):
-			%PageNext.disabled = true
-		else:
-			%PageNext.disabled = false
+		%PageBack.disabled = true if currentPage == 0 else false
 	)
 	%PageNext.pressed.connect(
 		func():
 		currentPage += 1
 		updatePage()
-		if (currentPage == 0):
-			%PageBack.disabled = true
-		if (currentModels < 30):
-			%PageNext.disabled = true
-		else:
-			%PageNext.disabled = false
+		%PageBack.disabled = true if currentPage == 0 else false
 	)
-	
 
 func updatePage():
 	var user = JSON.stringify({"user": ResourceManager.getToken()})
 	ApiRequester.request(
 		(func(_result, response_code, _headers, body):
+			currentModels = 0
+			for i in %ModelContainer.get_children():
+				i.queue_free()
 			var data = JSON.new()
 			data.parse(body.get_string_from_utf8())
 			#if(data.get("ok") == null || !data.ok):return
 			data = data.data
-			print(data["ok"])
 			if(!data["ok"]):return
-			var cont = 0
+			var curContainer
 			for i in data["data"]:
-				print(i)
+				if currentModels % 3 == 0:
+					curContainer = HBoxContainer.new()
+					curContainer.size_flags_vertical=Control.SIZE_EXPAND_FILL
+					curContainer.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+					%ModelContainer.add_child(curContainer)
+				currentModels+=1
 				var model = modelCard.instantiate()
 				model.processModel(i["data"])
-
-				%ModelContainer.add_child(model)
-
+				model.giveInfo(i["name"],i["room"],i["userName"])
+				print(i)
+				var container = MarginContainer.new()
+				
+				container.size_flags_vertical=Control.SIZE_EXPAND_FILL
+				container.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+				container.grow_vertical = Control.GROW_DIRECTION_END
+				var modelContainer = AspectRatioContainer.new()
+				container.add_child(modelContainer)
+				modelContainer.stretch_mode = AspectRatioContainer.STRETCH_WIDTH_CONTROLS_HEIGHT
+				modelContainer.alignment_vertical = AspectRatioContainer.ALIGNMENT_BEGIN
+				modelContainer.size_flags_vertical=Control.SIZE_EXPAND_FILL
+				modelContainer.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+				modelContainer.grow_vertical = Control.GROW_DIRECTION_END
+				modelContainer.add_child(model)
+				curContainer.add_child(container)
+				model.resized.connect(func(): 
+					modelContainer.custom_minimum_size.y = modelContainer.size.x
+					)
+					
+			
+			if (currentModels < 30):
+				%PageNext.disabled = true
+			else:
+				%PageNext.disabled = false
 			),
 		HTTPClient.METHOD_GET,
 		"objects/getAvalibleObjects/" + str(currentPage),

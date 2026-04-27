@@ -48,6 +48,7 @@ size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
 text = "Models library"
 script = ExtResource("2_l1wu7")
+sceneToGo = "LibraryOfLoggedUser"
 
 [node name="Tutorial" type="Button" parent="GridContainer"]
 layout_mode = 2
