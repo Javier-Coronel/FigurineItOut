@@ -10,12 +10,14 @@ func _ready() -> void:
 		func():
 		currentPage -= 1
 		updatePage()
+		get_node("ScrollContainer").scroll_vertical = 0
 		%PageBack.disabled = true if currentPage == 0 else false
 	)
 	%PageNext.pressed.connect(
 		func():
 		currentPage += 1
 		updatePage()
+		get_node("ScrollContainer").scroll_vertical = 0
 		%PageBack.disabled = true if currentPage == 0 else false
 	)
 

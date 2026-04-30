@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bivmutxa8jfvy"]
+[gd_scene load_steps=6 format=3 uid="uid://bivmutxa8jfvy"]
 
 [ext_resource type="Script" uid="uid://rej3n56b2hor" path="res://Scripts/Game/LibraryCard.gd" id="1_li8sx"]
 [ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="2_vmykk"]
 [ext_resource type="Script" uid="uid://cx7h0s4xhg6qb" path="res://Scripts/Game/Controller.gd" id="3_vmykk"]
+
+[sub_resource type="Environment" id="Environment_66nio"]
+background_mode = 1
+background_color = Color(0.2784314, 0.49803922, 0.5019608, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2784314, 0.49803922, 0.5019608, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vmykk"]
 viewport_path = NodePath("SubViewport")
@@ -26,7 +32,8 @@ size = Vector2i(900, 702)
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
-transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.7071068, -0.7071068, -0.5, 0.5, 1, 1, 1)
+transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.5, 0.5, 1, 1, 1)
+environment = SubResource("Environment_66nio")
 script = ExtResource("3_vmykk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D/Camera3D"]

@@ -67,17 +67,21 @@ function Socket() {
   }
   const wss = new WebSocketServer({ port: port });
 
-  function newConcept(partyId) {
+  function newConcept(partyId, nextCreator = false) {
     let conceptList = partys.get(partyId).list
       ? partys.get(partyId).list
       : mainGuessList;
     partys.get(partyId).currentConcept =
       conceptList[Math.floor(Math.random() * conceptList.length)];
     partys.get(partyId).objectProgression = [];
-    partys.get(partyId).currentCreator =
+    if(nextCreator){
+      partys.get(partyId).currentCreator = nextCreator
+    }else{
+      partys.get(partyId).currentCreator =
       partys.get(partyId).users[
         Math.floor(Math.random() * partys.get(partyId).users.length)
       ];
+    }
     partys.get(partyId).time = Date.now();
     partys.get(partyId).onTimeRunOut = setTimeout(() => {
       solvedConcept(partyId);
@@ -97,7 +101,16 @@ function Socket() {
           time: partys.get(partyId).time,
         }),
       );
+      if(client!=partys.get(partyId).currentCreator){
+        client.send(
+        JSON.stringify({
+          type: "hint",
+          hint: partys.get(partyId).currentConcept.length,
+        }),
+      );
+      }
     });
+
   }
   function solvedConcept(partyId, solver = false) {
     
@@ -194,6 +207,7 @@ function Socket() {
               objectProgression: partys.get(partyId).objectProgression,
               partyId: partyId,
               time: partys.get(partyId).time,
+              hint: partys.get(partyId).currentConcept.length,
             };
             if (partys.get(partyId).partyCode)
               dataToSend.partyCode = partys.get(partyId).partyCode;
@@ -226,7 +240,7 @@ function Socket() {
             if (jsonData.comment == partys.get(partyId).currentConcept) {
               clearTimeout(partys.get(partyId).onTimeRunOut)
               solvedConcept(partyId, player); 
-              newConcept(partyId);
+              newConcept(partyId, ws);
             } else {
               clients.forEach(function (client) {
                 if (client != ws && client.readyState === WebSocket.OPEN)

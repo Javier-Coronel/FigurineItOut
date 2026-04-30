@@ -15,46 +15,64 @@ grow_vertical = 2
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
+offset_left = 161.0
+offset_top = 134.0
+offset_right = -72.0
+offset_bottom = -125.0
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 30
 columns = 2
 
 [node name="StartGame" type="Button" parent="GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_1x17j")
+theme_override_font_sizes/font_size = 30
 text = "Start a game"
 script = ExtResource("2_l1wu7")
 sceneToGo = "CreateParty"
 
 [node name="SearchGame" type="Button" parent="GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_1x17j")
+theme_override_font_sizes/font_size = 30
 text = "Search for games"
 script = ExtResource("2_l1wu7")
 sceneToGo = "PartySelector"
 
 [node name="SearchObjects" type="Button" parent="GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_1x17j")
+theme_override_font_sizes/font_size = 30
 text = "Models library"
 script = ExtResource("2_l1wu7")
 sceneToGo = "LibraryOfLoggedUser"
 
-[node name="Tutorial" type="Button" parent="GridContainer"]
-layout_mode = 2
+[node name="Tutorial" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.67
+anchor_top = 0.772
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.15997314
+offset_top = -0.25601196
+offset_right = -30.0
+offset_bottom = -38.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_1x17j")
+theme_override_font_sizes/font_size = 30
 text = "Tutorial"
 script = ExtResource("2_l1wu7")
 

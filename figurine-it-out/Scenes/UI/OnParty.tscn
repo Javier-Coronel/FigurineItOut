@@ -110,6 +110,15 @@ size_flags_vertical = 4
 alignment = 2
 script = ExtResource("3_adj23")
 
+[node name="LastSolved" type="Label" parent="UI/GuesserUI/Comments"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = 8.0
+offset_bottom = 31.0
+horizontal_alignment = 1
+
 [node name="TimeLeft" type="LineEdit" parent="UI/GuesserUI"]
 layout_mode = 1
 anchors_preset = -1
@@ -198,6 +207,14 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="SelectIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/SelectButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="AddButton" type="MenuButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -217,17 +234,49 @@ popup/item_5/id = 5
 popup/item_6/text = "Add cone"
 popup/item_6/id = 6
 
+[node name="AddIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/AddButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="MovementButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="MovementIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/MovementButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="RotateButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="RotateIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/RotateButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="ScaleButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ScaleIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/ScaleButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PaintButton" type="ColorPickerButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -253,9 +302,25 @@ texture = ExtResource("4_5efl4")
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="GeometryIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/GeometriCreatorButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="DeleteObject" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="DeleteIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/DeleteObject"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SelectionButtonsContainer" type="HBoxContainer" parent="UI/CreatorUI"]
 layout_mode = 0
@@ -310,9 +375,9 @@ anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -108.0
-offset_top = 21.0
+offset_top = 44.0
 offset_right = -24.0
-offset_bottom = 105.0
+offset_bottom = 128.0
 grow_horizontal = 0
 icon = ExtResource("4_5efl4")
 icon_alignment = 1

@@ -9,7 +9,7 @@ var creator = false
 var time := 0
 const maxTime = 10 * 60
 var timer := 0.0
-var step := 1.0
+var step := 0.1
 const meshTypes:=["box","sphere","plane","torus","cylinder","capsule","cone"]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,6 +19,18 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
+	CreatorUI.get_node("SelectionButtonsContainer/VertexButton").pressed.connect(func ():
+		%Model.actualSelection = %Model.Selection.VERTEX
+		)
+	CreatorUI.get_node("SelectionButtonsContainer/EdgeButton").pressed.connect(func ():
+		%Model.actualSelection = %Model.Selection.EDGE
+		)
+	CreatorUI.get_node("SelectionButtonsContainer/FaceButton").pressed.connect(func ():
+		%Model.actualSelection = %Model.Selection.FACE
+		)
+	CreatorUI.get_node("SelectionButtonsContainer/ObjectButton").pressed.connect(func ():
+		%Model.actualSelection = %Model.Selection.OBJECT
+		)
 	#region testing
 	CreatorUI.get_node("MeshEditionButtonsContainer/MovementButton").pressed.connect(func ():
 		%Model.processModification({"edition":"add", "meshType": "box"})
@@ -70,7 +82,8 @@ func _process(delta: float) -> void:
 			for i in progression:
 				%Model.processModification(i)
 			time = partyInfo.get("time", time)
-			
+			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = ("_".repeat(int(partyInfo["hint"])) if partyInfo.get("hint", false) else "")
+		
 		
 		var edits = ApiRequester.getPacketsOfType("editModel")
 		if edits.size() != 0:
@@ -86,8 +99,12 @@ func _process(delta: float) -> void:
 			GuesserUI.visible = true
 			CreatorUI.visible = false
 			creator = false
-			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = solved[0]["concept"]
+			GuesserUI.get_node("Comments/LastSolved").text = "Last concept: " + solved[0]["concept"] + ((", by " + solved[0]["by"]) if solved[0].has("by") else "")
 			%Model.clear()
+		
+		var hint = ApiRequester.getPacketsOfType("hint")
+		if(hint.size()!=0):
+			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = "_".repeat(int(hint[0]["hint"]))
 		
 		var beCreator = ApiRequester.getPacketsOfType("beCreator")
 		if(beCreator.size()!=0):

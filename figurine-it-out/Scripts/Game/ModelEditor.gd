@@ -11,6 +11,8 @@ var actualSelection: Selection = Selection.NONE
 
 const startingChild := 0
 
+var selected = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -98,9 +100,8 @@ func add(meshType: String):
 	model.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,mesh.get_mesh_arrays())
 	child.mesh = model
 	add_child(child)
-## Moves objects or vertex to a position, if there are multiple objects or vertex the position will be the center
+## Moves objects to a position, if there are multiple objects the position will be the center
 func moveObjects(parts, positionData):
-	
 	var tempFather = Node3D.new()
 	add_child(tempFather)
 	for object in parts:
@@ -113,16 +114,44 @@ func moveObjects(parts, positionData):
 		#child.position = globPosition
 	remove_child(tempFather)
 	tempFather.queue_free()
-
-
+	
+func calculateObjectCenter(objects: Array) -> Vector3:
+	var zero = Vector3.ZERO
+	for i in objects: zero += i
+	return Vector3(
+		zero/objects.size())
+		
 func rotateObjects(parts, rotationData):
+	
 	pass
 
 func scaleObjects(parts, scaleData):
+	var tempFather = Node3D.new()
+	add_child(tempFather)
+	for object in parts:
+		print(get_child(int(parts[0])+startingChild).name)
+		get_child(int(parts[0])).reparent(tempFather)
+	tempFather.scale = Vector3(float(scaleData["x"]),float(scaleData["y"]),float(scaleData["z"]))
+	for child in tempFather.get_children():
+		#var globPosition = child.global_position
+		child.reparent(self)
+		#child.position = globPosition
+	remove_child(tempFather)
+	tempFather.queue_free()
+	
 	pass
 
-func paintObjects(parts, color):
-	pass
+func paintObjects(parts, color: String):
+	for object in parts:
+		var model = get_child(int(object)).mesh
+		var meshDataTool = MeshDataTool.new()
+		meshDataTool.create_from_surface(model,0)
+		for i in range(meshDataTool.get_vertex_count()):
+			meshDataTool.set_vertex_color(i,Color(color))
+		get_child(int(parts[0])).mesh.clear_surfaces()
+		meshDataTool.commit_to_surface(model)
+		get_child(int(object)).mesh = model
+	
 
 func delete(positions):
 	positions.reverse()
@@ -130,12 +159,19 @@ func delete(positions):
 		get_child(int(i)).queue_free()
 
 func moveVertex(objects, vertex, positionData):
+	
 	pass
+
 func rotateVertex(objects, vertex, rotationData):
+	
 	pass
+
 func scaleVertex(objects, vertex, scaleData):
+	
 	pass
+
 func paintVertex(objects, vertex, color):
+	
 	pass
 
 ## Destroy any son that this node has.

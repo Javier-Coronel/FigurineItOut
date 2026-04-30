@@ -22,6 +22,10 @@ config/icon="res://icon.svg"
 
 ApiRequester="*res://Scripts/api/apiRequester.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg")
+
 [input]
 
 moveCloser={
