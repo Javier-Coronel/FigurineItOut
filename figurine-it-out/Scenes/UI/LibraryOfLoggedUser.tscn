@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq656suvkwbwf"]
+[gd_scene load_steps=8 format=3 uid="uid://bq656suvkwbwf"]
 
 [ext_resource type="Script" uid="uid://dfk62wwjgv388" path="res://Scripts/Game/ModelLibrary.gd" id="1_0dsjb"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="1_ki72e"]
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="2_uii86"]
+[ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="3_ejqkw"]
+[ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="3_q6qg4"]
+[ext_resource type="Texture2D" uid="uid://dvtmh0uqltwpp" path="res://Images/ArrowPrevious.svg" id="5_q6qg4"]
+[ext_resource type="Texture2D" uid="uid://0yr74hji45t1" path="res://Images/ArrowNext.svg" id="6_ejqkw"]
 
 [node name="LibraryOfLoggedUser" type="Control"]
 layout_mode = 3
@@ -22,6 +26,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_force_pass_scroll_events = false
 theme = ExtResource("2_uii86")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("3_ejqkw")
+autoplay = true
+expand = true
+loop = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -51,15 +72,13 @@ size_flags_vertical = 3
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.028
-anchor_top = 0.049000002
-anchor_right = 0.083000004
-anchor_bottom = 0.148
-offset_left = -0.25600052
-offset_top = 0.24799919
-offset_right = 0.38399506
-offset_bottom = 0.09600067
-text = "Back"
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 96.0
+icon = ExtResource("3_q6qg4")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("1_ki72e")
 sceneToGo = "LoggedUser"
 
@@ -67,30 +86,32 @@ sceneToGo = "LoggedUser"
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.028
-anchor_top = 0.85200006
-anchor_right = 0.093
-anchor_bottom = 0.95100003
-offset_left = -0.25600052
-offset_top = -0.0960083
-offset_right = -0.13600159
-offset_bottom = -0.24804688
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -96.0
+offset_right = 96.0
+offset_bottom = -32.0
 grow_vertical = 0
 disabled = true
-text = "Previous"
+icon = ExtResource("5_q6qg4")
+icon_alignment = 1
+expand_icon = true
 
 [node name="PageNext" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.91700006
-anchor_top = 0.85200006
-anchor_right = 0.97200006
-anchor_bottom = 0.95100003
-offset_left = -0.3840332
-offset_top = -0.0960083
-offset_right = 0.25598145
-offset_bottom = -0.24804688
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = -32.0
+offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Next"
+icon = ExtResource("6_ejqkw")
+icon_alignment = 1
+expand_icon = true
