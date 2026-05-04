@@ -1,3 +1,4 @@
+class_name OnParty
 extends Node3D
 
 @onready var GuesserUI = %GuesserUI
@@ -5,12 +6,18 @@ extends Node3D
 @onready var PartyCode = %PartyCode
 
 var creator = false
+ 
+@export var gizmo: Gizmo3D
+
+var _add : bool
+
 
 var time := 0
 const maxTime = 10 * 60
 var timer := 0.0
 var step := 0.1
 const meshTypes:=["box","sphere","plane","torus","cylinder","capsule","cone"]
+var currTransformValue = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	CreatorUI.get_node("MeshEditionButtonsContainer/AddButton").get_popup().index_pressed.connect(
@@ -19,6 +26,24 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
+	gizmo.transform_changed.connect(func (_mode, value):
+		currTransformValue = value
+		)
+	gizmo.transform_end.connect(func (mode):
+		var typeOfEdition = ""
+		match mode:
+			Gizmo3D.TransformMode.ROTATE:
+				typeOfEdition = "rot"
+			Gizmo3D.TransformMode.TRANSLATE:
+				typeOfEdition = "move"
+			Gizmo3D.TransformMode.SCALE:
+				typeOfEdition = "scale"
+		var objectIndex = []
+		for i in gizmo._selections.keys():
+			objectIndex.append(i.get_index())
+		objectIndex.sort()
+		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object","edition":typeOfEdition, "value":currTransformValue, "modifiedParts": objectIndex})))
+		pass)
 	CreatorUI.get_node("SelectionButtonsContainer/VertexButton").pressed.connect(func ():
 		%Model.actualSelection = %Model.Selection.VERTEX
 		)
@@ -62,6 +87,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	_add = Input.is_action_pressed("addTarget")
+	
 	timer+=delta
 	if(timer>step):
 		timer=0
@@ -115,3 +143,30 @@ func _process(delta: float) -> void:
 			time = beCreator[0]["time"]
 			
 		
+
+func _input(event: InputEvent) -> void:
+	if !creator: return
+	# Prevent object picking if user is interacting with the gizmo
+	if gizmo.hovering || gizmo.editing:
+		return;
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		# Raycast from the camera
+		var camera := get_viewport().get_camera_3d()
+		var dir := camera.project_ray_normal(event.position)
+		var from := camera.project_ray_origin(event.position)
+		var params = PhysicsRayQueryParameters3D.new()
+		params.from = from
+		params.to = from + dir * 1000.0
+		var result = get_world_3d().direct_space_state.intersect_ray(params)
+		if result.size() == 0:
+			gizmo.clear_selection()
+			return
+		# If shift is held, add/remove the node to/from the target list. Otherwise set the target to just that node.
+		var collider = result["collider"] as Node3D
+		var node = collider.get_parent()
+		if !_add:
+			gizmo.clear_selection()
+			gizmo.select(node)
+			return
+		if !gizmo.deselect(node):
+			gizmo.select(node)

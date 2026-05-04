@@ -29,13 +29,13 @@ func processModification(modification):
 		match modification["edition"]:
 			"move":
 				print("Moving")
-				moveObjects(modification["modifiedParts"], modification["position"])
+				moveObjects(modification["modifiedParts"], modification["value"])
 			"rot":
 				print("Rotation")
-				rotateObjects(modification["modifiedParts"], modification["rotation"])
+				rotateObjects(modification["modifiedParts"], modification["value"])
 			"scale":
 				print("Scaling")
-				scaleObjects(modification["modifiedParts"], modification["scale"])
+				scaleObjects(modification["modifiedParts"], modification["value"])
 			"paint":
 				print("Paint")
 				paintObjects(modification["modifiedParts"], modification["color"])
@@ -99,14 +99,18 @@ func add(meshType: String):
 	var model: ArrayMesh = ArrayMesh.new()
 	model.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,mesh.get_mesh_arrays())
 	child.mesh = model
+	child.create_trimesh_collision()
 	add_child(child)
 ## Moves objects to a position, if there are multiple objects the position will be the center
 func moveObjects(parts, positionData):
 	var tempFather = Node3D.new()
 	add_child(tempFather)
+	positionData = positionData.replace("(","").replace(")","").split(", ")
+	positionData = Vector3(float(positionData[0]),float(positionData[1]),float(positionData[2]))
 	for object in parts:
 		print(get_child(int(parts[0])+startingChild).name)
 		get_child(int(parts[0])).reparent(tempFather)
+	
 	tempFather.position = Vector3(float(positionData["x"]),float(positionData["y"]),float(positionData["z"]))
 	for child in tempFather.get_children():
 		#var globPosition = child.global_position
@@ -131,15 +135,16 @@ func scaleObjects(parts, scaleData):
 	for object in parts:
 		print(get_child(int(parts[0])+startingChild).name)
 		get_child(int(parts[0])).reparent(tempFather)
-	tempFather.scale = Vector3(float(scaleData["x"]),float(scaleData["y"]),float(scaleData["z"]))
+	scaleData = scaleData.replace("(","").replace(")","").split(", ")
+	
+	scaleData = Vector3(float(scaleData[0]),float(scaleData[1]),float(scaleData[2]))
+	tempFather.scale = tempFather.scale + Vector3(float(scaleData["x"]),float(scaleData["y"]),float(scaleData["z"]))
 	for child in tempFather.get_children():
 		#var globPosition = child.global_position
 		child.reparent(self)
 		#child.position = globPosition
 	remove_child(tempFather)
 	tempFather.queue_free()
-	
-	pass
 
 func paintObjects(parts, color: String):
 	for object in parts:

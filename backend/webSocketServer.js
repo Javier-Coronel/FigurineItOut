@@ -6,7 +6,7 @@ const fs = require("node:fs");
 const { parse } = require("csv-parse");
 const partyController = require("./controllers/partyController");
 const userController = require("./controllers/userController");
-const objectService = require("./services/objectService")
+const objectService = require("./services/objectService");
 /**
  * Each key will be the id of a room
  * Each item will contain:
@@ -28,24 +28,24 @@ function Socket() {
   const defaultTimer = 10 * 60 * 1000;
   const mainGuessList = [];
 
-  function  read(data, arrayToPush){
-      const parser = parse({
-        delimiter: ",",
-      });
-      parser.on("readable", function () {
-        let record;
-        while ((record = parser.read()) !== null) {
-          record.forEach((rec) => {
-            arrayToPush.push(rec);
-          });
-        }
-      });
-      // Catch any error
-      parser.on("error", function (err) {
-        console.error(err.message);
-      });
-      parser.write(data);
-      parser.end();
+  function read(data, arrayToPush) {
+    const parser = parse({
+      delimiter: ",",
+    });
+    parser.on("readable", function () {
+      let record;
+      while ((record = parser.read()) !== null) {
+        record.forEach((rec) => {
+          arrayToPush.push(rec);
+        });
+      }
+    });
+    // Catch any error
+    parser.on("error", function (err) {
+      console.error(err.message);
+    });
+    parser.write(data);
+    parser.end();
   }
   fs.readFile(
     "./public/Pictionary_Data_From_coffeecoders10.csv",
@@ -55,7 +55,7 @@ function Socket() {
         console.error(err);
         return;
       }
-      read(data, mainGuessList)
+      read(data, mainGuessList);
     },
   );
   const codeCharacters = [];
@@ -74,13 +74,13 @@ function Socket() {
     partys.get(partyId).currentConcept =
       conceptList[Math.floor(Math.random() * conceptList.length)];
     partys.get(partyId).objectProgression = [];
-    if(nextCreator){
-      partys.get(partyId).currentCreator = nextCreator
-    }else{
+    if (nextCreator) {
+      partys.get(partyId).currentCreator = nextCreator;
+    } else {
       partys.get(partyId).currentCreator =
-      partys.get(partyId).users[
-        Math.floor(Math.random() * partys.get(partyId).users.length)
-      ];
+        partys.get(partyId).users[
+          Math.floor(Math.random() * partys.get(partyId).users.length)
+        ];
     }
     partys.get(partyId).time = Date.now();
     partys.get(partyId).onTimeRunOut = setTimeout(() => {
@@ -101,24 +101,25 @@ function Socket() {
           time: partys.get(partyId).time,
         }),
       );
-      if(client!=partys.get(partyId).currentCreator){
+      if (client != partys.get(partyId).currentCreator) {
         client.send(
-        JSON.stringify({
-          type: "hint",
-          hint: partys.get(partyId).currentConcept.length,
-        }),
-      );
+          JSON.stringify({
+            type: "hint",
+            hint: partys.get(partyId).currentConcept.length,
+          }),
+        );
       }
     });
-
   }
   function solvedConcept(partyId, solver = false) {
-    
     objectService.createObject(
-      partys.get(partyId).usersNames[partys.get(partyId).users.indexOf(partys.get(partyId).currentCreator)], 
-      partyId, 
-      partys.get(partyId).objectProgression, 
-      partys.get(partyId).currentConcept)
+      partys.get(partyId).usersNames[
+        partys.get(partyId).users.indexOf(partys.get(partyId).currentCreator)
+      ],
+      partyId,
+      partys.get(partyId).objectProgression,
+      partys.get(partyId).currentConcept,
+    );
 
     let dataToSend = {
       type: "solved",
@@ -143,8 +144,8 @@ function Socket() {
         );
       jwt.verify(data["user"], config.secretKey, async (err, decoded) => {
         if (err) {
-          console.log(err.message)
-          if(err.message == "jwt expired") ws.close(1008, "invalid jwt");  
+          console.log(err.message);
+          if (err.message == "jwt expired") ws.close(1008, "invalid jwt");
           else ws.close(1008, "An error ocured with the login data");
           return;
         }
@@ -159,11 +160,11 @@ function Socket() {
             users: [ws],
             currentCreator: ws,
             roundsLeft: 10,
-            usersNames: []
+            usersNames: [],
           });
           partyId = partyCreated;
           player = decoded.name;
-          partys.get(partyId).usersNames.push(player)
+          partys.get(partyId).usersNames.push(player);
           partyController.addUserToParty(decoded, partyId);
           let dataToSend = { type: "partyStart", partyId: partyId };
           if (req.url.includes("private")) {
@@ -178,13 +179,21 @@ function Socket() {
             dataToSend.partyCode = code;
           }
           if (req.url.includes("custom")) {
-            let customList=decodeURI(data["custom"])
-            partys.get(partyId).list = []
-            read(customList, partys.get(partyId).list)
+            let customList = decodeURI(data["custom"]);
+            partys.get(partyId).list = [];
+            read(customList, partys.get(partyId).list);
           }
-          partys.get(partyId).objectProgression = []
+          partys.get(partyId).objectProgression = [];
           newConcept(partyId);
           ws.send(JSON.stringify(dataToSend));
+          partys.get(partyId).users.forEach(function (client) {
+            client.send(
+              JSON.stringify({
+                type: "playersName",
+                players: partys.get(partyId).usersNames,
+              }),
+            );
+          });
         } else if (data["join"]) {
           if (partys.get(Number.parseInt(data["join"]))) {
             if (partys.get(Number.parseInt(data["join"])).partyCode) {
@@ -200,7 +209,7 @@ function Socket() {
             partys.get(Number.parseInt(data["join"])).users.push(ws);
             partyId = parseInt(data["join"]);
             player = decoded.name;
-            partys.get(partyId).usersNames.push(player)
+            partys.get(partyId).usersNames.push(player);
             partyController.addUserToParty(decoded, partyId);
             let dataToSend = {
               type: "partyStart",
@@ -212,6 +221,14 @@ function Socket() {
             if (partys.get(partyId).partyCode)
               dataToSend.partyCode = partys.get(partyId).partyCode;
             ws.send(JSON.stringify(dataToSend));
+            partys.get(partyId).users.forEach(function (client) {
+              client.send(
+                JSON.stringify({
+                  type: "playersName",
+                  players: partys.get(partyId).usersNames,
+                }),
+              );
+            });
           }
         } else {
           console.error("client not stated as creating or joining");
@@ -227,70 +244,77 @@ function Socket() {
     ws.on("error", console.error);
 
     ws.on("message", function message(data, isBinary) {
-      console.log(data.toString())
+      console.log(data.toString());
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
-        switch (jsonData.type) {
-          /**
-           * comment: envia un comentario
-           * editModel: modifica el modelo
-           *
-           */
-          case "comment":
-            if (jsonData.comment == partys.get(partyId).currentConcept) {
-              clearTimeout(partys.get(partyId).onTimeRunOut)
-              solvedConcept(partyId, player); 
-              newConcept(partyId, ws);
-            } else {
-              clients.forEach(function (client) {
-                if (client != ws && client.readyState === WebSocket.OPEN)
-                  client.send(
-                    JSON.stringify({
-                      type: "comment",
-                      text: jsonData.comment,
-                      player: player,
-                    }),
-                  );
-              });
-            }
+      switch (jsonData.type) {
+        /**
+         * comment: envia un comentario
+         * editModel: modifica el modelo
+         *
+         */
+        case "comment":
+          if (jsonData.comment == partys.get(partyId).currentConcept) {
+            clearTimeout(partys.get(partyId).onTimeRunOut);
+            solvedConcept(partyId, player);
+            newConcept(partyId, ws);
+          } else {
+            clients.forEach(function (client) {
+              if (client != ws && client.readyState === WebSocket.OPEN)
+                client.send(
+                  JSON.stringify({
+                    type: "comment",
+                    text: jsonData.comment,
+                    player: player,
+                  }),
+                );
+            });
+          }
 
-            break;
-          case "editModel":
-            if (partys.get(partyId).currentCreator == ws) {
-              clients.forEach(function (client) {
-                if (client != ws && client.readyState === WebSocket.OPEN) {
-                  client.send(JSON.stringify(jsonData));
-                }
-              });
-              delete jsonData.type
-              partys.get(partyId).objectProgression.push(jsonData);
-              console.log(partys.get(partyId).objectProgression)
-            }
-            break;
-          default:
-            break;
-        }
-      
+          break;
+        case "editModel":
+          if (partys.get(partyId).currentCreator == ws) {
+            clients.forEach(function (client) {
+              if (client != ws && client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(jsonData));
+              }
+            });
+            delete jsonData.type;
+            partys.get(partyId).objectProgression.push(jsonData);
+            console.log(partys.get(partyId).objectProgression);
+          }
+          break;
+        default:
+          break;
+      }
     });
 
     ws.on("close", function close(code, reason) {
       if (partyId != -1) {
         if (partys.get(partyId)?.users.length == 1) {
-          clearTimeout(partys.get(partyId).onTimeRunOut)
+          clearTimeout(partys.get(partyId).onTimeRunOut);
           partys.delete(partyId);
-          return
-        }else if(partys.get(partyId)?.currentCreator == ws){
-          clearTimeout(partys.get(partyId).onTimeRunOut)
-          solvedConcept(partyId); 
+          return;
+        } else if (partys.get(partyId)?.currentCreator == ws) {
+          clearTimeout(partys.get(partyId).onTimeRunOut);
+          solvedConcept(partyId);
           newConcept(partyId);
         }
         partys
           .get(partyId)
           .users.splice(partys.get(partyId).users.indexOf(ws), 1);
-        
+
         partys
           .get(partyId)
           .usersNames.splice(partys.get(partyId).users.indexOf(player), 1);
+        partys.get(partyId).users.forEach(function (client) {
+          client.send(
+            JSON.stringify({
+              type: "playersName",
+              players: partys.get(partyId).usersNames,
+            }),
+          );
+        });
       }
       console.log("Socket closed with reason " + reason);
     });

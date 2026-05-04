@@ -19,9 +19,7 @@ func popupHandler(id:int):
 			print("TODO: Add settings")
 			pass
 		seePlayersIndex:
-			#TODO: Add being able to see players
-			print("TODO: Add seePlayers")
-			pass
+			get_node("../UserList").visible = true
 
 func exitRoom():
 	ApiRequester.exitRoom()

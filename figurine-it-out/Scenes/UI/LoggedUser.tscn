@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cya61jdi28ux"]
+[gd_scene load_steps=6 format=3 uid="uid://cya61jdi28ux"]
 
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_1x17j"]
 [ext_resource type="Texture2D" uid="uid://bfxlvwgoi81oq" path="res://Images/Menu.svg" id="2_1x17j"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="2_l1wu7"]
+[ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="2_lgupj"]
 [ext_resource type="Script" uid="uid://pdm0fm7ojbmq" path="res://Scripts/UI/UILogic/OutsideGameMenu.gd" id="3_f3u84"]
 
 [node name="LoggedUser" type="Control"]
@@ -12,6 +13,60 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BackGround" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_1x17j")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("2_lgupj")
+autoplay = true
+expand = true
+loop = true
+
+[node name="BackGround" type="Panel" parent="BackGround"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_1x17j")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround/BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("2_lgupj")
+autoplay = true
+expand = true
+loop = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1

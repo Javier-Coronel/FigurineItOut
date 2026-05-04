@@ -67,7 +67,7 @@ func _process(delta):
 			var code = socket.get_close_code()
 			var reason = socket.get_close_reason()
 			#TODO: add a notification what the reason was
-			if(reason == "invalid jwt"): 
+			if(reason == "invalid jwt"):
 				ApiRequester.request(
 					(func(_result, _response_code, _headers, _body):
 						var logInCookie := ConfigFile.new()
