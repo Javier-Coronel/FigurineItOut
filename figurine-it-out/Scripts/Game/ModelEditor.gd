@@ -4,6 +4,8 @@ extends Node3D
 var timer := 0.0
 var step := 1.0
 
+@export var gizmo: Gizmo3D 
+
 enum Edition {NONE, SELECT, ADD, MOVEMENT, ROTATION, SCALE, PAINT, CREATEGEOMETRY}
 var actualEdition: Edition = Edition.NONE
 enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
@@ -101,16 +103,27 @@ func add(meshType: String):
 	child.mesh = model
 	child.create_trimesh_collision()
 	add_child(child)
+
+func clearGizmo():
+	
+	gizmo._edit.mode = Gizmo3D.TransformMode.NONE
+
 ## Moves objects to a position, if there are multiple objects the position will be the center
 func moveObjects(parts, positionData):
 	var tempFather = Node3D.new()
 	add_child(tempFather)
 	positionData = positionData.replace("(","").replace(")","").split(", ")
 	positionData = Vector3(float(positionData[0]),float(positionData[1]),float(positionData[2]))
+	var toAppend = []
 	for object in parts:
-		print(get_child(int(parts[0])+startingChild).name)
-		get_child(int(parts[0])).reparent(tempFather)
+		toAppend.append(get_child(int(object)))
+	#	gizmo.select(get_child(int(object)))
+	for i in toAppend:
+		i.reparent(tempFather)
+	#gizmo._edit.mode = Gizmo3D.TransformMode.TRANSLATE
+	#gizmo._apply_transform(positionData, 0)
 	
+	#gizmo.clear_selection()
 	tempFather.position = Vector3(float(positionData["x"]),float(positionData["y"]),float(positionData["z"]))
 	for child in tempFather.get_children():
 		#var globPosition = child.global_position
@@ -118,10 +131,13 @@ func moveObjects(parts, positionData):
 		#child.position = globPosition
 	remove_child(tempFather)
 	tempFather.queue_free()
+	for object in parts:
+		print("guesser Pos", get_child(int(object)).name, (get_child(int(object)).position))
 	
+
 func calculateObjectCenter(objects: Array) -> Vector3:
 	var zero = Vector3.ZERO
-	for i in objects: zero += i
+	for i in objects: zero += i.position
 	return Vector3(
 		zero/objects.size())
 		
@@ -132,9 +148,12 @@ func rotateObjects(parts, rotationData):
 func scaleObjects(parts, scaleData):
 	var tempFather = Node3D.new()
 	add_child(tempFather)
+	var toAppend = []
 	for object in parts:
-		print(get_child(int(parts[0])+startingChild).name)
-		get_child(int(parts[0])).reparent(tempFather)
+		toAppend.append(get_child(int(object)))
+	tempFather.position = calculateObjectCenter(toAppend)
+	for i in toAppend:
+		i.reparent(tempFather)
 	scaleData = scaleData.replace("(","").replace(")","").split(", ")
 	
 	scaleData = Vector3(float(scaleData[0]),float(scaleData[1]),float(scaleData[2]))
@@ -145,6 +164,11 @@ func scaleObjects(parts, scaleData):
 		#child.position = globPosition
 	remove_child(tempFather)
 	tempFather.queue_free()
+	toAppend = get_children()
+	toAppend.sort()
+	for i in toAppend:
+		i.reparent(get_parent())
+		i.reparent(self)
 
 func paintObjects(parts, color: String):
 	for object in parts:

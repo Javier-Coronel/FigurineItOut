@@ -27,9 +27,10 @@ script = ExtResource("7_a4qir")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
 transform = Transform3D(0.9848077, 0, -0.17364818, 0, 0.99999994, 0, 0.17364818, 0, 0.9848077, 0, 0, 0)
 
-[node name="Model" type="Node3D" parent="."]
+[node name="Model" type="Node3D" parent="." node_paths=PackedStringArray("gizmo")]
 unique_name_in_owner = true
 script = ExtResource("7_c18ex")
+gizmo = NodePath("../Gizmo3D")
 
 [node name="UI" type="Control" parent="." node_paths=PackedStringArray("gizmo")]
 layout_mode = 3

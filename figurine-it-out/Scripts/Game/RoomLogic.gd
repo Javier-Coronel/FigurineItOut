@@ -17,6 +17,7 @@ const maxTime = 10 * 60
 var timer := 0.0
 var step := 0.1
 const meshTypes:=["box","sphere","plane","torus","cylinder","capsule","cone"]
+var lastTransformValue = 0
 var currTransformValue = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,6 +27,10 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
+	gizmo.transform_begin.connect(func(_mode): 
+		print(gizmo.position)
+		lastTransformValue = gizmo.position
+		)
 	gizmo.transform_changed.connect(func (_mode, value):
 		currTransformValue = value
 		)
@@ -40,6 +45,7 @@ func _ready() -> void:
 				typeOfEdition = "scale"
 		var objectIndex = []
 		for i in gizmo._selections.keys():
+			print("modeler Pos", i.name, (i.position))
 			objectIndex.append(i.get_index())
 		objectIndex.sort()
 		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object","edition":typeOfEdition, "value":currTransformValue, "modifiedParts": objectIndex})))
@@ -129,6 +135,7 @@ func _process(delta: float) -> void:
 			creator = false
 			GuesserUI.get_node("Comments/LastSolved").text = "Last concept: " + solved[0]["concept"] + ((", by " + solved[0]["by"]) if solved[0].has("by") else "")
 			%Model.clear()
+			gizmo.clear_selection()
 		
 		var hint = ApiRequester.getPacketsOfType("hint")
 		if(hint.size()!=0):
