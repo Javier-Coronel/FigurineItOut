@@ -131,6 +131,12 @@ func moveObjects(parts, positionData):
 		#child.position = globPosition
 	remove_child(tempFather)
 	tempFather.queue_free()
+	toAppend = get_children()
+	toAppend.sort_custom(func(a, b): return int(a.name.replace("@MeshInstance3D@","")) < int(b.name.replace("@MeshInstance3D@","")))
+	print(toAppend)
+	for i in toAppend:
+		i.reparent(get_parent())
+		i.reparent(self)
 	for object in parts:
 		print("guesser Pos", get_child(int(object)).name, (get_child(int(object)).position))
 	
@@ -142,7 +148,30 @@ func calculateObjectCenter(objects: Array) -> Vector3:
 		zero/objects.size())
 		
 func rotateObjects(parts, rotationData):
+	var tempFather = Node3D.new()
+	add_child(tempFather)
+	var toAppend = []
+	for object in parts:
+		toAppend.append(get_child(int(object)))
+	tempFather.position = calculateObjectCenter(toAppend)
+	for i in toAppend:
+		i.reparent(tempFather)
+	rotationData = rotationData.replace("(","").replace(")","").split(", ")
 	
+	rotationData = Vector3(float(rotationData[0]),float(rotationData[1]),float(rotationData[2]))
+	tempFather.rotation = Vector3(float(rotationData["x"]),float(rotationData["y"]),float(rotationData["z"]))
+	for child in tempFather.get_children():
+		#var globPosition = child.global_position
+		child.reparent(self)
+		#child.position = globPosition
+	remove_child(tempFather)
+	tempFather.queue_free()
+	toAppend = get_children()
+	toAppend.sort_custom(func(a, b): return int(a.name.replace("@MeshInstance3D@","")) < int(b.name.replace("@MeshInstance3D@","")))
+	print(toAppend)
+	for i in toAppend:
+		i.reparent(get_parent())
+		i.reparent(self)
 	pass
 
 func scaleObjects(parts, scaleData):
@@ -165,7 +194,8 @@ func scaleObjects(parts, scaleData):
 	remove_child(tempFather)
 	tempFather.queue_free()
 	toAppend = get_children()
-	toAppend.sort()
+	toAppend.sort_custom(func(a, b): return int(a.name.replace("@MeshInstance3D@","")) < int(b.name.replace("@MeshInstance3D@","")))
+	print(toAppend)
 	for i in toAppend:
 		i.reparent(get_parent())
 		i.reparent(self)

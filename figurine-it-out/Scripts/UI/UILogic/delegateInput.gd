@@ -4,9 +4,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	gizmo.selection_changed.connect(func(_node, selected):
-		print(gizmo._selections.size()-int(!selected))
-		if gizmo._selections.size()-int(!selected) == 0:
+	gizmo.visibility_changed.connect(func():
+		print(!gizmo.visible)
+		if !gizmo.visible:
 			mouse_filter = Control.MOUSE_FILTER_STOP
 			mouse_behavior_recursive = Control.MOUSE_BEHAVIOR_INHERITED
 			var a = InputEventMouseButton.new()
