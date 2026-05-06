@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://defeli8kopud0"]
+[gd_scene load_steps=5 format=3 uid="uid://defeli8kopud0"]
 
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_pphxq"]
 [ext_resource type="Script" uid="uid://dy8u35mqowrm" path="res://Scripts/UI/UILogic/Login.gd" id="1_qva5b"]
+[ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="2_1kx8i"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_hgoiy"]
 
 [node name="LogInUser" type="Control"]
@@ -11,6 +12,33 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BackGround" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_pphxq")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("2_1kx8i")
+autoplay = true
+expand = true
+loop = true
 
 [node name="User" type="LineEdit" parent="."]
 layout_mode = 1

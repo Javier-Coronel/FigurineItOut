@@ -36,6 +36,11 @@ func _ready() -> void:
 		)
 	gizmo.transform_end.connect(func (mode):
 		var typeOfEdition = ""
+		var objectIndex = []
+		for i in gizmo._selections.keys():
+			print("modeler Scale", i.name, (i.scale), "modeler rot",  (i.rotation), "modeler pos",  (i.position))
+			objectIndex.append(i.get_index())
+		objectIndex.sort()
 		match mode:
 			Gizmo3D.TransformMode.ROTATE:
 				typeOfEdition = "rot"
@@ -43,11 +48,8 @@ func _ready() -> void:
 				typeOfEdition = "move"
 			Gizmo3D.TransformMode.SCALE:
 				typeOfEdition = "scale"
-		var objectIndex = []
-		for i in gizmo._selections.keys():
-			print("modeler Pos", i.name, (i.position))
-			objectIndex.append(i.get_index())
-		objectIndex.sort()
+				
+				
 		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object","edition":typeOfEdition, "value":currTransformValue, "modifiedParts": objectIndex})))
 		pass)
 	CreatorUI.get_node("SelectionButtonsContainer/VertexButton").pressed.connect(func ():
@@ -63,15 +65,6 @@ func _ready() -> void:
 		%Model.actualSelection = %Model.Selection.OBJECT
 		)
 	#region testing
-	CreatorUI.get_node("MeshEditionButtonsContainer/MovementButton").pressed.connect(func ():
-		%Model.processModification({"edition":"add", "meshType": "box"})
-		)
-	CreatorUI.get_node("MeshEditionButtonsContainer/RotateButton").pressed.connect(func ():
-		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0"], "position": {"x":"5", "y":"0", "z":"0"}})
-		)
-	CreatorUI.get_node("MeshEditionButtonsContainer/ScaleButton").pressed.connect(func ():
-		%Model.processModification({"edition":"add", "meshType": "cone"})
-		)
 	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").pressed.connect(func ():
 		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0","1"], "position": {"x":"0", "y":"0", "z":"5"}})
 		)

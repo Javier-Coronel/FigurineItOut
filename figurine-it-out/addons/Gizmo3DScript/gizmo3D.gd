@@ -1304,6 +1304,27 @@ func _compute_transform(mode : TransformMode, original : Transform3D, original_l
 				if orthogonal:
 					s.basis = GizmoHelper.scaled_orthogonal(original.basis, motion + Vector3.ONE)
 			return s
+			
+			pass
+	return _compute_transform_without_scale(mode, original  , original_local , motion , extra , local , orthogonal  )
+
+func _compute_transform_without_scale(mode : TransformMode, original : Transform3D, original_local : Transform3D, motion : Vector3, extra : float, local : bool, orthogonal : bool) -> Transform3D:
+	match mode:
+		TransformMode.SCALE:
+			if snapping:
+				motion = motion.snappedf(extra)
+			var s : Transform3D
+			if local:
+				s.basis = original_local.basis * Basis.from_scale(motion + Vector3.ONE)
+				s.origin = original_local.origin
+			else:
+				s.basis = s.basis.scaled(motion + Vector3.ONE)
+				var base := Transform3D(Basis.IDENTITY, _edit.center)
+				s = base * (s * (base.inverse() * original))
+				# Recalculate orthogonalized scale without moving origin.
+				if orthogonal:
+					s.basis = GizmoHelper.scaled_orthogonal(original.basis, motion + Vector3.ONE)
+			return s
 		TransformMode.TRANSLATE:
 			if snapping:
 				motion = motion.snappedf(extra)

@@ -265,35 +265,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MovementButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+[node name="TransformButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MovementIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/MovementButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RotateButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="RotateIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/RotateButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ScaleButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ScaleIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/ScaleButton"]
+[node name="MovementIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/TransformButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -326,6 +302,18 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="GeometryIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/GeometriCreatorButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DuplicateObject" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DuplicateIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/DuplicateObject"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

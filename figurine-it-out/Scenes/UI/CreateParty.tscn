@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3bfq1uuv3f6h"]
+[gd_scene load_steps=6 format=3 uid="uid://d3bfq1uuv3f6h"]
 
 [ext_resource type="Script" uid="uid://dorgy0abp56a6" path="res://Scripts/UI/UILogic/CreateParty.gd" id="1_cg2px"]
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_w5tm4"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_7dti2"]
+[ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="3_t856e"]
 [ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="3_xtqsd"]
 
 [node name="CreateParty" type="Control"]
@@ -13,6 +14,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cg2px")
+
+[node name="BackGround" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_w5tm4")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("3_t856e")
+autoplay = true
+expand = true
+loop = true
 
 [node name="PrivateRoom" type="CheckButton" parent="."]
 unique_name_in_owner = true

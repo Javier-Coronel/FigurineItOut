@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpcttsaq0jvw4"]
+[gd_scene load_steps=7 format=3 uid="uid://dpcttsaq0jvw4"]
 
 [ext_resource type="Script" uid="uid://ciwffh15s6q0j" path="res://Scripts/UI/UILogic/GetParties.gd" id="1_ckpay"]
+[ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="2_viqs3"]
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="2_ww30q"]
 [ext_resource type="Script" uid="uid://berkodpos4xug" path="res://Scripts/UI/UILogic/ButtonJoinPartyWithACode.gd" id="3_ug6ek"]
 [ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="4_4s3gt"]
@@ -13,6 +14,33 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BackGround" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("2_ww30q")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.6271
+stretch_mode = 3
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BackGround/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("2_viqs3")
+autoplay = true
+expand = true
+loop = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1

@@ -186,7 +186,21 @@ func scaleObjects(parts, scaleData):
 	scaleData = scaleData.replace("(","").replace(")","").split(", ")
 	
 	scaleData = Vector3(float(scaleData[0]),float(scaleData[1]),float(scaleData[2]))
-	tempFather.scale = tempFather.scale + Vector3(float(scaleData["x"]),float(scaleData["y"]),float(scaleData["z"]))
+	#tempFather.global_scale(Vector3.ONE + scaleData)
+	
+	for i in toAppend:
+		var new_transform := Transform3D()
+		new_transform.basis = new_transform.basis.scaled(scaleData + Vector3.ONE)
+		var base := Transform3D(Basis.IDENTITY, tempFather.position)
+		new_transform = base * (new_transform * (base.inverse() * i.global_transform))
+		# Recalculate orthogonalized scale without moving origin.
+		
+		new_transform.basis = GizmoHelper.scaled_orthogonal(i.global_transform.basis, scaleData + Vector3.ONE)
+		
+		#_compute_transform(_edit.mode, item.target_global, item.target_original, motion, snap, is_local_coords, _edit.plane != TransformPlane.VIEW)
+		gizmo._transform_gizmo_apply(i, new_transform, false)
+		gizmo._update_transform_gizmo()
+	
 	for child in tempFather.get_children():
 		#var globPosition = child.global_position
 		child.reparent(self)
