@@ -297,6 +297,7 @@ scale = Vector2(0.14, 0.14)
 texture = ExtResource("4_5efl4")
 
 [node name="GeometriCreatorButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -392,16 +393,14 @@ grow_horizontal = 0
 icon = ExtResource("4_5efl4")
 icon_alignment = 1
 expand_icon = true
-item_count = 3
+item_count = 2
 popup/item_0/text = "See players"
 popup/item_0/id = 0
-popup/item_1/text = "Settings"
+popup/item_1/text = "Exit"
 popup/item_1/id = 1
-popup/item_2/text = "Exit"
-popup/item_2/id = 2
 script = ExtResource("5_kbsgb")
-settingsIndex = 1
-exitIndex = 2
+settingsIndex = 2
+exitIndex = 1
 
 [node name="UserList" type="Panel" parent="UI"]
 visible = false

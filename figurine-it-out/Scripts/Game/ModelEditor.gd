@@ -7,9 +7,10 @@ var step := 1.0
 @export var gizmo: Gizmo3D 
 
 const startingChild := 0
-
+var material = StandardMaterial3D.new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	material.vertex_color_use_as_albedo = true
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -98,6 +99,7 @@ func add(meshType: String):
 	for i in range(mdt.get_vertex_count()):
 		mdt.set_vertex_color(i,Color.WHITE)
 	child.mesh = model
+	child.material_override = material
 	child.create_trimesh_collision()
 	add_child(child)
 
@@ -212,12 +214,13 @@ func scaleObjects(parts, scaleData):
 		i.reparent(get_parent())
 		i.reparent(self)
 
-func paintObjects(parts, color: String):
+func paintObjects(parts, color):
 	for object in parts:
 		var model = get_child(int(object)).mesh
 		var meshDataTool = MeshDataTool.new()
 		meshDataTool.create_from_surface(model,0)
 		for i in range(meshDataTool.get_vertex_count()):
+			print(i)
 			meshDataTool.set_vertex_color(i,Color(color))
 		get_child(int(parts[0])).mesh.clear_surfaces()
 		meshDataTool.commit_to_surface(model)
@@ -229,9 +232,12 @@ func duplicateObject(position):
 	add_child(object)
 
 func delete(positions):
+	print(positions)
 	positions.reverse()
 	for i in positions:
-		get_child(int(i)).queue_free()
+		var toDelete = get_child(int(i))
+		toDelete.reparent(get_parent().get_parent())
+		toDelete.queue_free()
 
 func moveVertex(objects, vertex, positionData):
 	

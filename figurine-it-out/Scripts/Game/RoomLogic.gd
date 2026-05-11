@@ -14,7 +14,7 @@ var _add : bool
 enum Edition {NONE, SELECT, ADD, TRANSFORM, PAINT, CREATEGEOMETRY, DUPLICATE, DELETE}
 var actualEdition: Edition = Edition.NONE
 enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
-var actualSelection: Selection = Selection.NONE
+var actualSelection: Selection = Selection.OBJECT
 var selected = []
 
 var time := 0
@@ -32,12 +32,27 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
-	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color_changed.connect(func (color):
+	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").popup_closed.connect(func ():
 		passData()
+		print(tempSelection)
 		actualEdition = Edition.PAINT
 		if(actualSelection == Selection.OBJECT):
-			%Model.processModification(JSON.stringify({"mode":"object", "edition":"paint", "modifiedParts":selected, "color":color}))
-			pass
+			if(selected.size()==0):return
+			var selectedPos = []
+			for obj in selected: selectedPos.append(obj.get_index())
+			%Model.processModification({"mode":"object", "edition":"paint", "modifiedParts":selectedPos, "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color})
+			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object", "edition":"paint", "modifiedParts":selectedPos, "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color.to_html(false)})))
+			
+		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/DeleteObject").pressed.connect(func ():
+		passData()
+		actualSelection = Selection.OBJECT
+		actualEdition = Edition.DELETE
+		if(selected.size()==0):return
+		var selectedPos = []
+		for obj in selected: selectedPos.append(obj.get_index())
+		%Model.processModification({"edition":"del", "modifiedParts":selectedPos})
+		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"del", "modifiedParts":selectedPos})))
 		)
 	gizmo.transform_begin.connect(func(_mode): 
 		print(gizmo.position)
@@ -76,21 +91,6 @@ func _ready() -> void:
 	CreatorUI.get_node("SelectionButtonsContainer/ObjectButton").pressed.connect(func ():
 		%Model.actualSelection = %Model.Selection.OBJECT
 		)
-	#region testing
-	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").pressed.connect(func ():
-		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["0","1"], "position": {"x":"0", "y":"0", "z":"5"}})
-		)
-	CreatorUI.get_node("MeshEditionButtonsContainer/GeometriCreatorButton").pressed.connect(func ():
-		%Model.processModification({"edition":"add", "meshType": "torus"})
-		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["2"], "position": {"x":"-5", "y":"0", "z":"0"}})
-		%Model.processModification({"edition":"add", "meshType": "capsule"})
-		%Model.processModification({"edition": "move", "mode": "object", "modifiedParts": ["2","3"], "position": {"x":"0", "y":"0", "z":"-5"}})
-		)
-	CreatorUI.get_node("MeshEditionButtonsContainer/DeleteObject").pressed.connect(func ():
-		%Model.processModification({"edition":"del", "modifiedParts": ["1","3"]})
-		%Model.processModification({"edition":"del", "modifiedParts": ["0"]}))
-		
-	#endregion
 	PartyCode.focus_entered.connect(func ():
 		DisplayServer.clipboard_set(PartyCode.text)
 		PartyCode.release_focus()
@@ -102,8 +102,8 @@ func passData(toTransform = false):
 		for i in selected:
 			gizmo.select(i)
 	else:
-		selected = gizmo._selections.keys()
-		gizmo.clear_selection()
+		selected = tempSelection
+		#gizmo.clear_selection()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -165,6 +165,8 @@ func _process(delta: float) -> void:
 			
 		
 
+
+var tempSelection = []
 func _input(event: InputEvent) -> void:
 	if !creator: return
 	# Prevent object picking if user is interacting with the gizmo
@@ -180,14 +182,28 @@ func _input(event: InputEvent) -> void:
 		params.to = from + dir * 1000.0
 		var result = get_world_3d().direct_space_state.intersect_ray(params)
 		if result.size() == 0:
+			if(gizmo._selections.keys().size()!=0): tempSelection=gizmo._selections.keys()
 			gizmo.clear_selection()
 			return
 		# If shift is held, add/remove the node to/from the target list. Otherwise set the target to just that node.
 		var collider = result["collider"] as Node3D
 		var node = collider.get_parent()
-		if !_add:
-			gizmo.clear_selection()
-			gizmo.select(node)
-			return
-		if !gizmo.deselect(node):
-			gizmo.select(node)
+		match actualEdition:
+			Edition.NONE: pass
+			Edition.SELECT: pass
+			Edition.PAINT:
+				if(actualSelection == Selection.OBJECT):
+					%Model.processModification({"mode":"object", "edition":"paint", "modifiedParts":[node.get_index()], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color})
+					ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object", "edition":"paint", "modifiedParts":[node.get_index()], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color.to_html(false)})))
+			Edition.TRANSFORM:
+				if !_add:
+					gizmo.clear_selection()
+					gizmo.select(node)
+					return
+				if !gizmo.deselect(node):
+						gizmo.select(node)
+			Edition.DELETE:
+				%Model.processModification({"edition":"del", "modifiedParts":[node.get_index()]})
+				ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"del", "modifiedParts":[node.get_index()]})))
+				
+			

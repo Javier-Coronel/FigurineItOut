@@ -29,7 +29,11 @@ static func getToken()->String:
 	if(err!=OK): return ""
 	return data.get_value("cookie","token","")
 
-static func getSettingValue(value:String):
-
-	pass
-
+static func getSettingValue(value: String):
+	var data = ConfigFile.new()
+	var err = data.load("user://")
+	if(err!=OK): return ""
+	match value:
+		"saveDirectory":
+			return data.get_value("setting","saveDirectory","")
+	

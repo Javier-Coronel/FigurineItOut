@@ -39,7 +39,7 @@ func updatePage():
 				if currentModels % 3 == 0:
 					curContainer = HBoxContainer.new()
 					curContainer.size_flags_vertical=Control.SIZE_EXPAND_FILL
-					curContainer.size_flags_horizontal=Control.SIZE_EXPAND
+					curContainer.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 					%ModelContainer.add_child(curContainer)
 				currentModels+=1
 				var model = modelCard.instantiate()

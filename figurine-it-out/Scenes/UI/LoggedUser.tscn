@@ -85,6 +85,7 @@ script = ExtResource("2_l1wu7")
 sceneToGo = "LibraryOfLoggedUser"
 
 [node name="Tutorial" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.67

@@ -21,10 +21,11 @@ func download():
 	# The file extension in the output `path` (`.gltf` or `.glb`) determines
 	# whether the output uses text or binary format.
 	# `GLTFDocument.generate_buffer()` is also available for saving to memory.
-	var err = gltf_document_save.write_to_filesystem(gltf_state_save, "user://" + %Name.text + ".glb")
+	var saveDirectory = ResourceManager.getSettingValue("saveDirectory")
+	var err = gltf_document_save.write_to_filesystem(gltf_state_save, (saveDirectory if saveDirectory != "" else "user://") + %Name.text + ".glb")
 	var infoPopUp = InfoPopUp.create()
 	get_tree().current_scene.add_child(infoPopUp)
 	if err==0:
-		infoPopUp.load("Download succesfull")
+		infoPopUp.load("Download succesfull at: " + (saveDirectory if saveDirectory != "" else OS.get_user_data_dir()))
 	else:
 		infoPopUp.load("There was an error downloading the file")
