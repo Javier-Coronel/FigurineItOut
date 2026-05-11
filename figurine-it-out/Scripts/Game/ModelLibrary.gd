@@ -3,6 +3,7 @@ extends Control
 var currentPage := 0
 var currentModels := 0
 var modelCard = load(ResourceManager.Objects["LibraryModelCard"])
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	updatePage()
@@ -38,11 +39,10 @@ func updatePage():
 				if currentModels % 3 == 0:
 					curContainer = HBoxContainer.new()
 					curContainer.size_flags_vertical=Control.SIZE_EXPAND_FILL
-					curContainer.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+					curContainer.size_flags_horizontal=Control.SIZE_EXPAND
 					%ModelContainer.add_child(curContainer)
 				currentModels+=1
 				var model = modelCard.instantiate()
-				model.processModel(i["data"])
 				model.giveInfo(i["name"],i["room"],i["userName"])
 				print(i)
 				var container = MarginContainer.new()
@@ -62,8 +62,7 @@ func updatePage():
 				model.resized.connect(func(): 
 					modelContainer.custom_minimum_size.y = modelContainer.size.x
 					)
-					
-			
+				model.processModel(i["data"])
 			if (currentModels < 30):
 				%PageNext.disabled = true
 			else:

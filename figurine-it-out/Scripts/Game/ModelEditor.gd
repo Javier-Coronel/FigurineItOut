@@ -6,14 +6,7 @@ var step := 1.0
 
 @export var gizmo: Gizmo3D 
 
-enum Edition {NONE, SELECT, ADD, MOVEMENT, ROTATION, SCALE, PAINT, CREATEGEOMETRY}
-var actualEdition: Edition = Edition.NONE
-enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
-var actualSelection: Selection = Selection.NONE
-
 const startingChild := 0
-
-var selected = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -100,6 +93,10 @@ func add(meshType: String):
 	
 	var model: ArrayMesh = ArrayMesh.new()
 	model.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,mesh.get_mesh_arrays())
+	var mdt = MeshDataTool.new()
+	mdt.create_from_surface(model, 0)
+	for i in range(mdt.get_vertex_count()):
+		mdt.set_vertex_color(i,Color.WHITE)
 	child.mesh = model
 	child.create_trimesh_collision()
 	add_child(child)
@@ -119,6 +116,7 @@ func moveObjects(parts, positionData):
 		toAppend.append(get_child(int(object)))
 	#	gizmo.select(get_child(int(object)))
 	for i in toAppend:
+		i.get_tree()
 		i.reparent(tempFather)
 	#gizmo._edit.mode = Gizmo3D.TransformMode.TRANSLATE
 	#gizmo._apply_transform(positionData, 0)
@@ -225,6 +223,10 @@ func paintObjects(parts, color: String):
 		meshDataTool.commit_to_surface(model)
 		get_child(int(object)).mesh = model
 	
+func duplicateObject(position):
+	var object = MeshInstance3D.new()
+	object.mesh = get_child(int(position)).mesh.duplicate()
+	add_child(object)
 
 func delete(positions):
 	positions.reverse()

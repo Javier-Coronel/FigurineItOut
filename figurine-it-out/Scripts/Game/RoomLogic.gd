@@ -11,6 +11,11 @@ var creator = false
 
 var _add : bool
 
+enum Edition {NONE, SELECT, ADD, TRANSFORM, PAINT, CREATEGEOMETRY, DUPLICATE, DELETE}
+var actualEdition: Edition = Edition.NONE
+enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
+var actualSelection: Selection = Selection.NONE
+var selected = []
 
 var time := 0
 const maxTime = 10 * 60
@@ -27,6 +32,13 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
+	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color_changed.connect(func (color):
+		passData()
+		actualEdition = Edition.PAINT
+		if(actualSelection == Selection.OBJECT):
+			%Model.processModification(JSON.stringify({"mode":"object", "edition":"paint", "modifiedParts":selected, "color":color}))
+			pass
+		)
 	gizmo.transform_begin.connect(func(_mode): 
 		print(gizmo.position)
 		lastTransformValue = gizmo.position
@@ -83,6 +95,15 @@ func _ready() -> void:
 		DisplayServer.clipboard_set(PartyCode.text)
 		PartyCode.release_focus()
 		pass)
+
+func passData(toTransform = false):
+	if(toTransform):
+		gizmo.clear_selection()
+		for i in selected:
+			gizmo.select(i)
+	else:
+		selected = gizmo._selections.keys()
+		gizmo.clear_selection()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

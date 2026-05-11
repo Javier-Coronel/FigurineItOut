@@ -1,7 +1,6 @@
 extends Camera3D
 
 var editing = false
-var typeOfSelected: ModelEditor.Selection = ModelEditor.Selection.VERTEX
 
 
 

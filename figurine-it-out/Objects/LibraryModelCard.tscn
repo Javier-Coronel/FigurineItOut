@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bivmutxa8jfvy"]
+[gd_scene load_steps=9 format=3 uid="uid://bivmutxa8jfvy"]
 
 [ext_resource type="Script" uid="uid://rej3n56b2hor" path="res://Scripts/Game/LibraryCard.gd" id="1_li8sx"]
 [ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="2_vmykk"]
 [ext_resource type="Script" uid="uid://cx7h0s4xhg6qb" path="res://Scripts/Game/Controller.gd" id="3_vmykk"]
+[ext_resource type="Script" uid="uid://e3f1ox6y6cvg" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="4_66nio"]
+[ext_resource type="Theme" uid="uid://cqk2yade71rio" path="res://Scripts/UI/Theme/ModelCardThemeTexture.tres" id="5_o267s"]
+[ext_resource type="Theme" uid="uid://c4gom7x1pnmsy" path="res://Scripts/UI/Theme/ModelCardTheme.tres" id="6_ly45w"]
 
 [sub_resource type="Environment" id="Environment_66nio"]
 background_mode = 1
@@ -31,24 +34,47 @@ size = Vector2i(900, 702)
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
+[node name="Gizmo" type="Node3D" parent="SubViewport/Node3D"]
+script = ExtResource("4_66nio")
+
 [node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
-transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.5, 0.5, 1, 1, 1)
+transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.5, 0.5, 3, 3, 3)
 environment = SubResource("Environment_66nio")
 script = ExtResource("3_vmykk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D/Camera3D"]
 transform = Transform3D(0.9848077, 0, -0.17364818, 0, 0.99999994, 0, 0.17364818, 0, 0.9848077, 0, 0, 0)
 
-[node name="Model" type="Node3D" parent="SubViewport/Node3D"]
+[node name="Model" type="Node3D" parent="SubViewport/Node3D" node_paths=PackedStringArray("gizmo")]
 unique_name_in_owner = true
 script = ExtResource("2_vmykk")
+gizmo = NodePath("../Gizmo")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Panel2" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.78000003
+theme = ExtResource("5_o267s")
+
+[node name="Panel3" type="Panel" parent="Panel2"]
+clip_children = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
 offset_bottom = -1.5258789e-05
+theme = ExtResource("5_o267s")
+
+[node name="TextureRect" type="TextureRect" parent="Panel2/Panel3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 51.47998
 texture = SubResource("ViewportTexture_vmykk")
 expand_mode = 5
 
@@ -60,6 +86,7 @@ anchor_right = 0.78000003
 anchor_bottom = 1.0
 offset_top = -1.5258789e-05
 offset_right = -1.5258789e-05
+theme = ExtResource("6_ly45w")
 
 [node name="Name" type="Label" parent="Panel"]
 unique_name_in_owner = true
@@ -103,18 +130,22 @@ offset_left = -1.5258789e-05
 offset_top = -1.5258789e-05
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("6_ly45w")
 text = "Save"
 
 [node name="PartyCode" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.703
+anchor_top = 0.693
 anchor_right = 1.0
-anchor_bottom = 0.78000003
+anchor_bottom = 0.77000004
+offset_left = 6.0
 offset_top = 0.099990845
+offset_right = -6.0
 offset_bottom = -1.5258789e-05
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("5_o267s")
 text = "Party code"
 horizontal_alignment = 2

@@ -16,6 +16,7 @@ static var Objects:={
 	"OwnComment":"res://Objects/OwnComment.tscn",
 	"InstantiableButton":"res://Objects/InstantiableButton.tscn",
 	"LibraryModelCard":"res://Objects/LibraryModelCard.tscn",
+	"PopUp":"res://Objects/InfoPopUp.tscn"
 }
 static func getTokenLocalization()->String:
 	if(OS.is_debug_build()):
@@ -27,3 +28,8 @@ static func getToken()->String:
 	var err = data.load(getTokenLocalization())
 	if(err!=OK): return ""
 	return data.get_value("cookie","token","")
+
+static func getSettingValue(value:String):
+
+	pass
+

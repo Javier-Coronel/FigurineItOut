@@ -1,0 +1,27 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c4gom7x1pnmsy"]
+
+[ext_resource type="StyleBox" uid="uid://dp83rnwgk73pm" path="res://Scripts/UI/Theme/ModelCardButtonPressed.tres" id="1_ljbeq"]
+[ext_resource type="StyleBox" uid="uid://bwng3ubfu7pck" path="res://Scripts/UI/Theme/ModelCardButtonNormal.tres" id="2_ir5dw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ay17x"]
+bg_color = Color(0.6117647, 0.63529414, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.3764706, 0.3764706, 0.3764706, 1)
+corner_radius_bottom_left = 33
+expand_margin_right = 3.0
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+Button/colors/font_focus_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+Button/colors/font_hover_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+Button/styles/focus = ExtResource("1_ljbeq")
+Button/styles/hover = ExtResource("2_ir5dw")
+Button/styles/hover_pressed = ExtResource("1_ljbeq")
+Button/styles/normal = ExtResource("2_ir5dw")
+Button/styles/pressed = ExtResource("1_ljbeq")
+Label/colors/font_color = Color(0.23137255, 0.23137255, 0.23137255, 0.7411765)
+Panel/styles/panel = SubResource("StyleBoxFlat_ay17x")
