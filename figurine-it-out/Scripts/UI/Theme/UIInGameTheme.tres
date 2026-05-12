@@ -1,13 +1,26 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dlnasitjitlca"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://dlnasitjitlca"]
 
+[ext_resource type="StyleBox" uid="uid://dwpilf7a5q44q" path="res://Scripts/UI/Theme/UIInGameButtonNormal.tres" id="1_32u03"]
 [ext_resource type="StyleBox" uid="uid://crkwl8npew32c" path="res://Scripts/UI/Theme/UIInGameLineEditFocused.tres" id="1_jc3ma"]
 [ext_resource type="StyleBox" uid="uid://b8vi1ewrr1jci" path="res://Scripts/UI/Theme/UIInGameLineEdit.tres" id="1_loqfk"]
 [ext_resource type="StyleBox" uid="uid://doxriioqgk4fp" path="res://Scripts/UI/Theme/UIInGameLineEditReadOnly.tres" id="3_jc3ma"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwhnm"]
+bg_color = Color(0.20706198, 3.465414e-06, 0.97537476, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.3764706, 0.3764706, 0.3764706, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jc3ma"]
 bg_color = Color(0.20392157, 0.20392157, 0.20392157, 0.39215687)
 
 [resource]
+Button/styles/normal = ExtResource("1_32u03")
+Button/styles/pressed = SubResource("StyleBoxFlat_gwhnm")
 LineEdit/colors/caret_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 LineEdit/colors/font_color = Color(0.06469673, 0.06469645, 0.06469651, 1)
 LineEdit/colors/font_placeholder_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)

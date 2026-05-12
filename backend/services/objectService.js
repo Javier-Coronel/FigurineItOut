@@ -15,7 +15,7 @@ const Moderator = models.moderator;
 const PlayedParty = models.PlayedParty;
 const fs = require("node:fs");
 const path = "./public/models/";
-const requestLimit = 30;
+const requestLimit = 15;
 class ObjectService {
   async createObject(player, party, data, name) {
     if (data.length == 0) return;

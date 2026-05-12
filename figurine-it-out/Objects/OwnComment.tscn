@@ -9,6 +9,7 @@ offset_right = 0.23999023
 offset_bottom = 11.119999
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 
 [node name="Comment" type="RichTextLabel" parent="."]
 layout_mode = 1

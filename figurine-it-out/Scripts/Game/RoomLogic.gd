@@ -13,7 +13,7 @@ var _add : bool
 
 enum Edition {NONE, SELECT, ADD, TRANSFORM, PAINT, CREATEGEOMETRY, DUPLICATE, DELETE}
 var actualEdition: Edition = Edition.NONE
-enum Selection {NONE, VERTEX, EDGE, FACE, OBJECT}
+enum Selection {NONE = 0, VERTEX = 1, EDGE = 2, FACE = 4, OBJECT = 8}
 var actualSelection: Selection = Selection.OBJECT
 var selected = []
 
@@ -32,8 +32,16 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel","edition":"add", "meshType":meshTypes[i]})))
 			pass
 	)
+	CreatorUI.get_node("MeshEditionButtonsContainer/TransformButton").pressed.connect(func ():
+		showSelections(Selection.OBJECT)
+		actualEdition = Edition.TRANSFORM
+		
+		pass
+		)
+		
 	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").popup_closed.connect(func ():
 		passData()
+		showSelections(Selection.OBJECT|Selection.FACE|Selection.EDGE|Selection.VERTEX)
 		print(tempSelection)
 		actualEdition = Edition.PAINT
 		if(actualSelection == Selection.OBJECT):
@@ -46,6 +54,7 @@ func _ready() -> void:
 		)
 	CreatorUI.get_node("MeshEditionButtonsContainer/DeleteObject").pressed.connect(func ():
 		passData()
+		showSelections(Selection.OBJECT)
 		actualSelection = Selection.OBJECT
 		actualEdition = Edition.DELETE
 		if(selected.size()==0):return
@@ -105,6 +114,12 @@ func passData(toTransform = false):
 		selected = tempSelection
 		#gizmo.clear_selection()
 
+func showSelections(value):
+	CreatorUI.get_node("SelectionButtonsContainer/VertexButton").disabled = !(value & Selection.VERTEX)
+	CreatorUI.get_node("SelectionButtonsContainer/EdgeButton").disabled = !(value & Selection.EDGE)
+	CreatorUI.get_node("SelectionButtonsContainer/FaceButton").disabled = !(value & Selection.FACE)
+	CreatorUI.get_node("SelectionButtonsContainer/ObjectButton").disabled = !(value & Selection.OBJECT)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
@@ -147,7 +162,8 @@ func _process(delta: float) -> void:
 			GuesserUI.visible = true
 			CreatorUI.visible = false
 			creator = false
-			GuesserUI.get_node("Comments/LastSolved").text = "Last concept: " + solved[0]["concept"] + ((", by " + solved[0]["by"]) if solved[0].has("by") else "")
+			var solveComment =  ("Last winner " + solved[0]["by"] + " (Concept: " + solved[0]["concept"] + ")") if solved[0].has("by") else ("Last concept: " + solved[0]["concept"])
+			GuesserUI.get_node("Comments/LastSolved").text = solveComment
 			%Model.clear()
 			gizmo.clear_selection()
 		

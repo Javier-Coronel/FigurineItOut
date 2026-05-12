@@ -63,7 +63,7 @@ func updatePage():
 					modelContainer.custom_minimum_size.y = modelContainer.size.x
 					)
 				model.processModel(i["data"])
-			if (currentModels < 30):
+			if (currentModels < 15):
 				%PageNext.disabled = true
 			else:
 				%PageNext.disabled = false

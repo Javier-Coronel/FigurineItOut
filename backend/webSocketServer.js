@@ -298,7 +298,20 @@ function Socket() {
         } else if (partys.get(partyId)?.currentCreator == ws) {
           clearTimeout(partys.get(partyId).onTimeRunOut);
           solvedConcept(partyId);
-          newConcept(partyId);
+          let nextCreator;
+          if(partys.get(partyId).users.indexOf(ws)==0){
+            nextCreator = partys.get(partyId).users[1]
+          }
+          else{
+            nextCreator = partys.get(partyId).users[0]
+          }
+          newConcept(partyId, nextCreator);
+
+          partys.get(partyId).currentCreator =
+          partys.get(partyId).users[
+            Math.floor(Math.random() * partys.get(partyId).users.length)
+          ];
+
         }
         partys
           .get(partyId)
