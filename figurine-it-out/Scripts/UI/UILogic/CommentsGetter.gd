@@ -11,5 +11,5 @@ func _process(delta):
 		for i in comments:
 			var commentToPost = comment.instantiate()
 			commentToPost.get_node("Comment").text = i["text"]
-			commentToPost.get_node("Comment/User").text = i["player"]
+			commentToPost.get_node("User").text = i["player"]
 			%CommentContainer.add_child(commentToPost)

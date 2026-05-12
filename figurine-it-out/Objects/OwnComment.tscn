@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://2pdm07xjj37e"]
 
-[node name="Comment" type="Control"]
+[node name="Comment" type="MarginContainer"]
 custom_minimum_size = Vector2(0, 50)
-layout_mode = 3
+anchors_preset = -1
 anchor_right = 0.13000001
 anchor_bottom = 0.060000002
 offset_right = 0.23999023
@@ -12,12 +12,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 
 [node name="Comment" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_left = 57.0
-offset_right = -1.0
-offset_bottom = 42.061993
+layout_mode = 2
 text = "Text"
 fit_content = true
 scroll_active = false

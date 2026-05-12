@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bivvdtfd58jxi"]
+[gd_scene load_steps=14 format=3 uid="uid://bivvdtfd58jxi"]
 
 [ext_resource type="Script" uid="uid://bu7j100it1ky1" path="res://Scripts/Game/RoomLogic.gd" id="1_c18ex"]
 [ext_resource type="Theme" uid="uid://dlnasitjitlca" path="res://Scripts/UI/Theme/UIInGameTheme.tres" id="1_xtk6r"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://cx7h0s4xhg6qb" path="res://Scripts/Game/Controller.gd" id="7_a4qir"]
 [ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="7_c18ex"]
 [ext_resource type="Script" uid="uid://l46udup315tv" path="res://Scripts/UI/UILogic/getPlayers.gd" id="7_ox8fk"]
+[ext_resource type="Texture2D" uid="uid://dpir5vait3epu" path="res://Images/AddObject.png" id="9_muw2p"]
+[ext_resource type="Texture2D" uid="uid://dmlkbot3wglg5" path="res://Images/Transform.png" id="10_o4y36"]
 [ext_resource type="Script" uid="uid://e3f1ox6y6cvg" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="10_voofp"]
 
 [node name="OnParty" type="Node3D" node_paths=PackedStringArray("gizmo")]
@@ -235,8 +237,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 1
 
 [node name="AddButton" type="MenuButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -263,8 +270,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("9_muw2p")
+expand_mode = 1
 
 [node name="TransformButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -275,8 +288,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("10_o4y36")
+expand_mode = 1
 
 [node name="PaintButton" type="ColorPickerButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -291,12 +310,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 3.9999998
 offset_top = 3.9999998
-offset_right = 339.99997
-offset_bottom = 340.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.14, 0.14)
 texture = ExtResource("4_5efl4")
+expand_mode = 1
 
 [node name="GeometriCreatorButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 visible = false
@@ -320,8 +339,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 1
 
 [node name="DeleteObject" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -332,8 +356,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 1
 
 [node name="SelectionButtonsContainer" type="HBoxContainer" parent="UI/CreatorUI"]
 layout_mode = 0

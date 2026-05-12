@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dtd28mlfxygbk"]
 
-[node name="Comment" type="Control"]
+[node name="Comment" type="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
-layout_mode = 3
+anchors_preset = -1
 anchor_right = 0.13000001
 anchor_bottom = 0.060000002
 offset_right = 0.23999023
@@ -13,24 +13,14 @@ size_flags_vertical = 3
 
 [node name="Comment" type="RichTextLabel" parent="."]
 clip_contents = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_right = -43.0
-offset_bottom = 34.0
-text = "Textjnfjngjngjfgnjfnjggfgfgfgfgfgf"
+layout_mode = 2
+text = "Text"
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
-[node name="User" type="RichTextLabel" parent="Comment"]
-layout_mode = 1
-anchors_preset = -1
-anchor_bottom = 1.0
-offset_left = 13.0
-offset_top = 29.0
-offset_right = 50.0
-offset_bottom = 9.938007
+[node name="User" type="RichTextLabel" parent="."]
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 9
 text = "User"
 fit_content = true
