@@ -44,7 +44,6 @@ func updatePage():
 				currentModels+=1
 				var model = modelCard.instantiate()
 				model.giveInfo(i["name"],i["room"],i["userName"])
-				print(i)
 				var container = MarginContainer.new()
 				
 				container.size_flags_vertical=Control.SIZE_EXPAND_FILL

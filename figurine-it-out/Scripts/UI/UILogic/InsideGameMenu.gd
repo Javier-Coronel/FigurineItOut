@@ -14,10 +14,6 @@ func popupHandler(id:int):
 	match id:
 		exitIndex:
 			exitRoom()
-		settingsIndex:
-			#TODO: Add settings
-			print("TODO: Add settings")
-			pass
 		seePlayersIndex:
 			get_node("../UserList").visible = true
 

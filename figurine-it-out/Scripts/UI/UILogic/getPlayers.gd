@@ -1,6 +1,6 @@
 extends VBoxContainer
 var timer := 0.0
-var step := 0.1
+var step := 1
 
 func _ready() -> void:
 	get_parent().get_parent().focus_entered.connect(close)
@@ -26,4 +26,3 @@ func _process(delta: float) -> void:
 				text.editable = false
 				text.focus_mode = Control.FOCUS_NONE
 				add_child(text)
-				print(user)

@@ -101,14 +101,6 @@ function Socket() {
           time: partys.get(partyId).time,
         }),
       );
-      if (client != partys.get(partyId).currentCreator) {
-        client.send(
-          JSON.stringify({
-            type: "hint",
-            hint: partys.get(partyId).currentConcept.length,
-          }),
-        );
-      }
     });
   }
   function solvedConcept(partyId, solver = false) {
@@ -216,7 +208,6 @@ function Socket() {
               objectProgression: partys.get(partyId).objectProgression,
               partyId: partyId,
               time: partys.get(partyId).time,
-              hint: partys.get(partyId).currentConcept.length,
             };
             if (partys.get(partyId).partyCode)
               dataToSend.partyCode = partys.get(partyId).partyCode;
@@ -229,6 +220,10 @@ function Socket() {
                 }),
               );
             });
+          } else {
+            console.error("No such room exists");
+            ws.close(1008, "No such room exists");
+            return;
           }
         } else {
           console.error("client not stated as creating or joining");
@@ -244,6 +239,7 @@ function Socket() {
     ws.on("error", console.error);
 
     ws.on("message", function message(data, isBinary) {
+      if(partyId == -1) return
       console.log(data.toString());
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());

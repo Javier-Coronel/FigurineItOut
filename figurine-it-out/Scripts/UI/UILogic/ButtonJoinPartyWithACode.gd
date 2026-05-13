@@ -9,10 +9,15 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func tryJoin() -> void:
-	if !(checkRoom() || checkPassword()): return
+	if !(checkRoom()): 
+		var infoPopUp = InfoPopUp.create()
+		infoPopUp.velocity = 0.5
+		get_tree().current_scene.add_child(infoPopUp)
+		infoPopUp.load("Error, the info is empty")
+		return
 	disabled = true
-	text = "Espera"
-	ApiRequester.joinRoom(int(room.text), password.text.to_upper())
+	text = "Wait"
+	ApiRequester.joinRoom(int(room.text.split("|")[0].strip_edges()), (room.text.split("|")[1].strip_edges().to_upper()) if room.text.contains("|") else "")
 	disabled = false
 	text = ""
 
@@ -21,8 +26,3 @@ func checkRoom() -> bool:
 	validRoom = validRoom && !room.text.is_empty()
 	if !validRoom: print("Sala no valida")
 	return validRoom
-
-func checkPassword() -> bool:
-	var validPassword = true
-	if !validPassword: print("Contraseña no valida")
-	return validPassword

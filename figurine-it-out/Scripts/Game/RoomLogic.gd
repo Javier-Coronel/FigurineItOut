@@ -4,7 +4,7 @@ extends Node3D
 @onready var GuesserUI = %GuesserUI
 @onready var CreatorUI = %CreatorUI
 @onready var PartyCode = %PartyCode
-
+@onready var commentContainer = %CommentContainer.get_parent()
 var creator = false
  
 @export var gizmo: Gizmo3D
@@ -63,7 +63,7 @@ func _ready() -> void:
 		%Model.processModification({"edition":"del", "modifiedParts":selectedPos})
 		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"del", "modifiedParts":selectedPos})))
 		)
-	gizmo.transform_begin.connect(func(_mode): 
+	gizmo.transform_begin.connect(func(mode): 
 		print(gizmo.position)
 		lastTransformValue = gizmo.position
 		)
@@ -87,6 +87,7 @@ func _ready() -> void:
 				
 				
 		ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object","edition":typeOfEdition, "value":currTransformValue, "modifiedParts": objectIndex})))
+		currTransformValue = Vector3.ZERO
 		pass)
 	CreatorUI.get_node("SelectionButtonsContainer/VertexButton").pressed.connect(func ():
 		%Model.actualSelection = %Model.Selection.VERTEX
@@ -145,8 +146,6 @@ func _process(delta: float) -> void:
 			for i in progression:
 				%Model.processModification(i)
 			time = partyInfo.get("time", time)
-			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = ("_".repeat(int(partyInfo["hint"])) if partyInfo.get("hint", false) else "")
-		
 		
 		var edits = ApiRequester.getPacketsOfType("editModel")
 		if edits.size() != 0:
@@ -163,13 +162,13 @@ func _process(delta: float) -> void:
 			CreatorUI.visible = false
 			creator = false
 			var solveComment =  ("Last winner " + solved[0]["by"] + " (Concept: " + solved[0]["concept"] + ")") if solved[0].has("by") else ("Last concept: " + solved[0]["concept"])
-			GuesserUI.get_node("Comments/LastSolved").text = solveComment
+			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = solveComment
 			%Model.clear()
 			gizmo.clear_selection()
+			commentContainer.size.y = 410.0
+			commentContainer.position.y = 112.0
+			commentContainer.vertical_scroll_mode = 1
 		
-		var hint = ApiRequester.getPacketsOfType("hint")
-		if(hint.size()!=0):
-			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = "_".repeat(int(hint[0]["hint"]))
 		
 		var beCreator = ApiRequester.getPacketsOfType("beCreator")
 		if(beCreator.size()!=0):
@@ -177,6 +176,9 @@ func _process(delta: float) -> void:
 			CreatorUI.visible = true
 			creator = true
 			CreatorUI.get_node("ObjectToGuessInfo").text = beCreator[0]["concept"]
+			commentContainer.size.y = 230.0
+			commentContainer.position.y = 292.0
+			commentContainer.vertical_scroll_mode = 3
 			time = beCreator[0]["time"]
 			
 		

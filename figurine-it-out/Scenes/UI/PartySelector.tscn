@@ -67,42 +67,29 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -180.0
+offset_left = -149.0
 offset_top = 64.0
-offset_right = -52.0
+offset_right = -21.0
 offset_bottom = 96.0
 grow_horizontal = 2
 theme = ExtResource("2_ww30q")
-placeholder_text = "Room"
-
-[node name="Password" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -29.0
-offset_top = 64.0
-offset_right = 99.0
-offset_bottom = 96.0
-grow_horizontal = 2
-theme = ExtResource("2_ww30q")
-placeholder_text = "Password"
-emoji_menu_enabled = false
+placeholder_text = "Room | Password"
 
 [node name="ButtonGoToParty" type="Button" parent="." node_paths=PackedStringArray("room", "password")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 121.0
+offset_left = 32.0
 offset_top = 64.0
-offset_right = 174.0
+offset_right = 92.0
 offset_bottom = 96.0
 grow_horizontal = 2
 theme = ExtResource("2_ww30q")
+text = "Join"
 script = ExtResource("3_ug6ek")
 room = NodePath("../Room")
-password = NodePath("../Password")
+password = NodePath("")
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 0

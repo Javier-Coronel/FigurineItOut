@@ -133,7 +133,7 @@ func moveObjects(parts, positionData):
 	tempFather.queue_free()
 	toAppend = get_children()
 	toAppend.sort_custom(func(a, b): return int(a.name.replace("@MeshInstance3D@","")) < int(b.name.replace("@MeshInstance3D@","")))
-	print(toAppend)
+	
 	for i in toAppend:
 		i.reparent(get_parent())
 		i.reparent(self)
@@ -168,7 +168,7 @@ func rotateObjects(parts, rotationData):
 	tempFather.queue_free()
 	toAppend = get_children()
 	toAppend.sort_custom(func(a, b): return int(a.name.replace("@MeshInstance3D@","")) < int(b.name.replace("@MeshInstance3D@","")))
-	print(toAppend)
+	
 	for i in toAppend:
 		i.reparent(get_parent())
 		i.reparent(self)
@@ -220,7 +220,6 @@ func paintObjects(parts, color):
 		var meshDataTool = MeshDataTool.new()
 		meshDataTool.create_from_surface(model,0)
 		for i in range(meshDataTool.get_vertex_count()):
-			print(i)
 			meshDataTool.set_vertex_color(i,Color(color))
 		get_child(int(parts[0])).mesh.clear_surfaces()
 		meshDataTool.commit_to_surface(model)
@@ -232,7 +231,6 @@ func duplicateObject(position):
 	add_child(object)
 
 func delete(positions):
-	print(positions)
 	positions.reverse()
 	for i in positions:
 		var toDelete = get_child(int(i))

@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 static var baseURL: String = "localhost"
 
@@ -83,7 +83,9 @@ func _process(delta):
 					""
 				)
 			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+			
 			get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
+			
 			socket = WebSocketPeer.new()
 
 func getPacketsOfType(type:String)->Array[Variant]:
