@@ -35,6 +35,7 @@ func tryLogin() -> void:
 			
 			var infoPopUp = InfoPopUp.create()
 			get_tree().current_scene.add_child(infoPopUp)
+			infoPopUp.velocity = 0.25
 			infoPopUp.load("Error: " + data.data["message"])
 			user.text = ""
 			password.text = ""
