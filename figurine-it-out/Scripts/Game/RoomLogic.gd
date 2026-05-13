@@ -52,6 +52,13 @@ func _ready() -> void:
 			ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object", "edition":"paint", "modifiedParts":selectedPos, "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color.to_html(false)})))
 			
 		)
+	CreatorUI.get_node("MeshEditionButtonsContainer/DuplicateObject").pressed.connect(func ():
+		
+		actualSelection = Selection.OBJECT
+		actualEdition = Edition.DUPLICATE
+		
+		
+		pass)
 	CreatorUI.get_node("MeshEditionButtonsContainer/DeleteObject").pressed.connect(func ():
 		passData()
 		showSelections(Selection.OBJECT)
@@ -201,18 +208,21 @@ func _input(event: InputEvent) -> void:
 		var result = get_world_3d().direct_space_state.intersect_ray(params)
 		if result.size() == 0:
 			if(gizmo._selections.keys().size()!=0): tempSelection=gizmo._selections.keys()
+			if(tempSelection.size()!=0): tempSelection.clear()
 			gizmo.clear_selection()
 			return
+		tempSelection.clear()
 		# If shift is held, add/remove the node to/from the target list. Otherwise set the target to just that node.
 		var collider = result["collider"] as Node3D
 		var node = collider.get_parent()
+		var nodePosition = node.get_index()
 		match actualEdition:
 			Edition.NONE: pass
 			Edition.SELECT: pass
 			Edition.PAINT:
 				if(actualSelection == Selection.OBJECT):
-					%Model.processModification({"mode":"object", "edition":"paint", "modifiedParts":[node.get_index()], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color})
-					ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object", "edition":"paint", "modifiedParts":[node.get_index()], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color.to_html(false)})))
+					%Model.processModification({"mode":"object", "edition":"paint", "modifiedParts":[nodePosition], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color})
+					ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "mode":"object", "edition":"paint", "modifiedParts":[nodePosition], "color":CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").color.to_html(false)})))
 			Edition.TRANSFORM:
 				if !_add:
 					gizmo.clear_selection()
@@ -220,8 +230,11 @@ func _input(event: InputEvent) -> void:
 					return
 				if !gizmo.deselect(node):
 						gizmo.select(node)
+			Edition.DUPLICATE:
+				%Model.processModification({"edition":"copy", "modifiedParts":nodePosition})
+				ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"copy", "modifiedParts":nodePosition})))
 			Edition.DELETE:
-				%Model.processModification({"edition":"del", "modifiedParts":[node.get_index()]})
-				ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"del", "modifiedParts":[node.get_index()]})))
+				%Model.processModification({"edition":"del", "modifiedParts":[nodePosition]})
+				ApiRequester.socket.send_text(str(JSON.stringify({"type":"editModel", "edition":"del", "modifiedParts":[nodePosition]})))
 				
 			

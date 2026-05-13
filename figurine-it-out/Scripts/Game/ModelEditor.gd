@@ -63,6 +63,9 @@ func processModification(modification):
 			"add":
 				print("Addition")
 				add(modification["meshType"])
+			"copy":
+				print("Duplicating objects")
+				duplicateObject(modification["modifiedParts"])
 			"del":
 				print("Deleting objects")
 				delete(modification["modifiedParts"])
@@ -225,9 +228,11 @@ func paintObjects(parts, color):
 		meshDataTool.commit_to_surface(model)
 		get_child(int(object)).mesh = model
 	
-func duplicateObject(position):
-	var object = MeshInstance3D.new()
-	object.mesh = get_child(int(position)).mesh.duplicate()
+func duplicateObject(objPosition):
+	print(objPosition)
+	var object = get_child(int(objPosition)).duplicate()
+	
+	object.position += Vector3(1,1,-1)
 	add_child(object)
 
 func delete(positions):
