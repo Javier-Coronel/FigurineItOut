@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bnunxta17xhyo"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bnunxta17xhyo"]
+
+[ext_resource type="FontFile" uid="uid://djdb2dixrmin5" path="res://Fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf" id="1_62su8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kn5"]
 bg_color = Color(0.18431373, 0, 0.8901961, 1)
@@ -11,3 +13,4 @@ expand_margin_left = 15.0
 
 [resource]
 Panel/styles/panel = SubResource("StyleBoxFlat_v0kn5")
+RichTextLabel/fonts/normal_font = ExtResource("1_62su8")

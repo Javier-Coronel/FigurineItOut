@@ -20,6 +20,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 autowrap_trim_flags = 0
+vertical_alignment = 1
 script = ExtResource("2_uq1m1")
 
 [node name="Panel" type="Panel" parent="."]

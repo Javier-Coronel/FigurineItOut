@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bivvdtfd58jxi"]
+[gd_scene load_steps=19 format=3 uid="uid://bivvdtfd58jxi"]
 
 [ext_resource type="Script" uid="uid://bu7j100it1ky1" path="res://Scripts/Game/RoomLogic.gd" id="1_c18ex"]
 [ext_resource type="Theme" uid="uid://dlnasitjitlca" path="res://Scripts/UI/Theme/UIInGameTheme.tres" id="1_xtk6r"]
@@ -9,17 +9,26 @@
 [ext_resource type="Script" uid="uid://cork6osdhqfc" path="res://Scripts/UI/UILogic/delegateInput.gd" id="5_ympy6"]
 [ext_resource type="Script" uid="uid://cx7h0s4xhg6qb" path="res://Scripts/Game/Controller.gd" id="7_a4qir"]
 [ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="7_c18ex"]
+[ext_resource type="Texture2D" uid="uid://bjppcp6lhktdy" path="res://Images/Send.svg" id="7_nagpv"]
 [ext_resource type="Script" uid="uid://l46udup315tv" path="res://Scripts/UI/UILogic/getPlayers.gd" id="7_ox8fk"]
-[ext_resource type="Texture2D" uid="uid://dpir5vait3epu" path="res://Images/AddObject.png" id="9_muw2p"]
-[ext_resource type="Texture2D" uid="uid://dmlkbot3wglg5" path="res://Images/Transform.png" id="10_o4y36"]
+[ext_resource type="Texture2D" uid="uid://ddbyuyuluhy3v" path="res://Images/Watch.svg" id="9_swxvh"]
+[ext_resource type="Texture2D" uid="uid://cxa62uquw00d6" path="res://Images/AddObject.svg" id="10_7o8o8"]
+[ext_resource type="Texture2D" uid="uid://dxondoqls62xl" path="res://Images/Transform.svg" id="10_muw2p"]
 [ext_resource type="Script" uid="uid://e3f1ox6y6cvg" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="10_voofp"]
+[ext_resource type="Texture2D" uid="uid://pagp3m7ssp5k" path="res://Images/Paint.svg" id="12_8pntd"]
+[ext_resource type="Texture2D" uid="uid://7i7uvv3dufm7" path="res://Images/Duplicate.svg" id="13_8pntd"]
+[ext_resource type="Texture2D" uid="uid://cea7dcg17iuo5" path="res://Images/Delete.svg" id="14_nagpv"]
 
-[node name="OnParty" type="Node3D" node_paths=PackedStringArray("gizmo")]
+[node name="OnParty" type="Node3D" node_paths=PackedStringArray("gizmo", "camera")]
 script = ExtResource("1_c18ex")
 gizmo = NodePath("Gizmo3D")
+camera = NodePath("Camera3D")
 
 [node name="Gizmo3D" type="Node3D" parent="."]
 script = ExtResource("10_voofp")
+rotate_snap = 0.0
+translate_snap = 0.0
+scale_snap = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.7071067, -0.4999999, 0.49999994, 0, 0.70710677, 0.7071067, -0.7071067, -0.4999999, 0.49999994, 3, 3, 3)
@@ -66,7 +75,7 @@ grow_vertical = 2
 focus_mode = 2
 theme = ExtResource("1_xtk6r")
 
-[node name="ObjectToGuessInfo" type="LineEdit" parent="UI/GuesserUI/Comments"]
+[node name="ObjectToGuessInfo" type="RichTextLabel" parent="UI/GuesserUI/Comments"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -79,8 +88,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("1_xtk6r")
 text = "Is..."
-alignment = 1
-editable = false
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CommentInput" type="LineEdit" parent="UI/GuesserUI/Comments"]
 unique_name_in_owner = true
@@ -111,8 +122,7 @@ offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_xtk6r")
-text = "Send"
-alignment = 0
+icon = ExtResource("7_nagpv")
 expand_icon = true
 script = ExtResource("2_ur5e5")
 
@@ -149,7 +159,7 @@ anchor_left = 0.67200005
 anchor_right = 0.96700007
 anchor_bottom = 1.0
 offset_left = -0.14404297
-offset_top = 112.0
+offset_top = 140.0
 offset_right = 0.01586914
 offset_bottom = -126.0
 grow_horizontal = 2
@@ -232,11 +242,11 @@ offset_bottom = 436.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SelectButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
+[node name="ViewButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SelectIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/SelectButton"]
+[node name="ViewIcon" type="TextureRect" parent="UI/CreatorUI/MeshEditionButtonsContainer/ViewButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -247,7 +257,9 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("9_swxvh")
 expand_mode = 1
+stretch_mode = 5
 
 [node name="AddButton" type="MenuButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
 layout_mode = 2
@@ -280,7 +292,7 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_muw2p")
+texture = ExtResource("10_7o8o8")
 expand_mode = 1
 
 [node name="TransformButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
@@ -298,7 +310,7 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_o4y36")
+texture = ExtResource("10_muw2p")
 expand_mode = 1
 
 [node name="PaintButton" type="ColorPickerButton" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
@@ -312,13 +324,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 3.9999998
-offset_top = 3.9999998
-offset_right = -4.0
-offset_bottom = -4.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_5efl4")
+texture = ExtResource("12_8pntd")
 expand_mode = 1
 
 [node name="GeometriCreatorButton" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
@@ -349,6 +361,7 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("13_8pntd")
 expand_mode = 1
 
 [node name="DeleteObject" type="Button" parent="UI/CreatorUI/MeshEditionButtonsContainer"]
@@ -366,6 +379,7 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("14_nagpv")
 expand_mode = 1
 
 [node name="SelectionButtonsContainer" type="HBoxContainer" parent="UI/CreatorUI"]

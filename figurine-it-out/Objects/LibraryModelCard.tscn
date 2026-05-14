@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bivmutxa8jfvy"]
+[gd_scene load_steps=10 format=3 uid="uid://bivmutxa8jfvy"]
 
 [ext_resource type="Script" uid="uid://rej3n56b2hor" path="res://Scripts/Game/LibraryCard.gd" id="1_li8sx"]
 [ext_resource type="Script" uid="uid://bb40l20gf6sxc" path="res://Scripts/Game/ModelEditor.gd" id="2_vmykk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://e3f1ox6y6cvg" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="4_66nio"]
 [ext_resource type="Theme" uid="uid://cqk2yade71rio" path="res://Scripts/UI/Theme/ModelCardThemeTexture.tres" id="5_o267s"]
 [ext_resource type="Theme" uid="uid://c4gom7x1pnmsy" path="res://Scripts/UI/Theme/ModelCardTheme.tres" id="6_ly45w"]
+[ext_resource type="Texture2D" uid="uid://dyt6511mqpjn3" path="res://Images/Download.svg" id="7_ly45w"]
 
 [sub_resource type="Environment" id="Environment_66nio"]
 background_mode = 1
@@ -131,7 +132,22 @@ offset_top = -1.5258789e-05
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("6_ly45w")
-text = "Save"
+expand_icon = true
+
+[node name="DuplicateIcon" type="TextureRect" parent="Save"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 10.0
+offset_right = -13.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_ly45w")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="PartyCode" type="Label" parent="."]
 unique_name_in_owner = true

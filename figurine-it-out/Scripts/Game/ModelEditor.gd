@@ -105,6 +105,7 @@ func add(meshType: String):
 	child.material_override = material
 	child.create_trimesh_collision()
 	add_child(child)
+	child.name = str(get_child_count())
 
 func clearGizmo():
 	
@@ -231,9 +232,10 @@ func paintObjects(parts, color):
 func duplicateObject(objPosition):
 	print(objPosition)
 	var object = get_child(int(objPosition)).duplicate()
-	
+	object.mesh = object.mesh.duplicate()
 	object.position += Vector3(1,1,-1)
 	add_child(object)
+	object.name = str(get_child_count())
 
 func delete(positions):
 	positions.reverse()

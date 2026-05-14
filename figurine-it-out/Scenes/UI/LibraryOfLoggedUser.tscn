@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq656suvkwbwf"]
+[gd_scene load_steps=9 format=3 uid="uid://bq656suvkwbwf"]
 
 [ext_resource type="Script" uid="uid://dfk62wwjgv388" path="res://Scripts/Game/ModelLibrary.gd" id="1_0dsjb"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="1_ki72e"]
@@ -6,7 +6,8 @@
 [ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="3_ejqkw"]
 [ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="3_q6qg4"]
 [ext_resource type="Texture2D" uid="uid://dvtmh0uqltwpp" path="res://Images/ArrowPrevious.svg" id="5_q6qg4"]
-[ext_resource type="Texture2D" uid="uid://0yr74hji45t1" path="res://Images/ArrowNext.svg" id="6_ejqkw"]
+[ext_resource type="Texture2D" uid="uid://c031002kdiblv" path="res://Images/ArrowNext.svg" id="7_ejqkw"]
+[ext_resource type="FontFile" uid="uid://t1v8gk7fhw4v" path="res://Fonts/Anton/Anton-Regular.ttf" id="8_ea41h"]
 
 [node name="LibraryOfLoggedUser" type="Control"]
 layout_mode = 3
@@ -110,6 +111,24 @@ offset_right = -32.0
 offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 0
-icon = ExtResource("6_ejqkw")
+icon = ExtResource("7_ejqkw")
 icon_alignment = 1
 expand_icon = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.347
+offset_left = -300.0
+offset_right = 300.0
+offset_bottom = -74.856
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("8_ea41h")
+theme_override_font_sizes/normal_font_size = 50
+text = "LIST OF OBJECTS"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

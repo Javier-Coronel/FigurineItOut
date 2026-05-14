@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dtd28mlfxygbk"]
+[gd_scene load_steps=2 format=3 uid="uid://dtd28mlfxygbk"]
+
+[ext_resource type="Theme" uid="uid://qr6ylwhh627x" path="res://Scripts/UI/Theme/Comments.tres" id="1_s8htk"]
 
 [node name="Comment" type="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -10,6 +12,7 @@ offset_bottom = 11.119999
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+theme = ExtResource("1_s8htk")
 
 [node name="Comment" type="RichTextLabel" parent="."]
 clip_contents = false

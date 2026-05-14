@@ -8,6 +8,7 @@ extends Node3D
 var creator = false
  
 @export var gizmo: Gizmo3D
+@export var camera: Camera3D
 
 var _add : bool
 
@@ -26,6 +27,11 @@ var lastTransformValue = 0
 var currTransformValue = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	CreatorUI.get_node("MeshEditionButtonsContainer/ViewButton").pressed.connect(func ():
+		camera.position = Vector3(3, 3, 3)
+		camera.rotation_degrees = Vector3(-45, 45, 0)
+		)
 	CreatorUI.get_node("MeshEditionButtonsContainer/AddButton").get_popup().index_pressed.connect(
 		func (i):
 			%Model.processModification({"edition":"add", "meshType":meshTypes[i]})
@@ -38,7 +44,6 @@ func _ready() -> void:
 		
 		pass
 		)
-		
 	CreatorUI.get_node("MeshEditionButtonsContainer/PaintButton").popup_closed.connect(func ():
 		passData()
 		showSelections(Selection.OBJECT|Selection.FACE|Selection.EDGE|Selection.VERTEX)
@@ -168,12 +173,12 @@ func _process(delta: float) -> void:
 			GuesserUI.visible = true
 			CreatorUI.visible = false
 			creator = false
-			var solveComment =  ("Last winner " + solved[0]["by"] + " (Concept: " + solved[0]["concept"] + ")") if solved[0].has("by") else ("Last concept: " + solved[0]["concept"])
+			var solveComment =  ("Last winner " + solved[0]["by"] + "\n(Concept: " + solved[0]["concept"] + ")") if solved[0].has("by") else ("Last concept: " + solved[0]["concept"])
 			GuesserUI.get_node("Comments/ObjectToGuessInfo").text = solveComment
 			%Model.clear()
 			gizmo.clear_selection()
-			commentContainer.size.y = 410.0
-			commentContainer.position.y = 112.0
+			commentContainer.size.y = 382.0
+			commentContainer.position.y = 140.0
 			commentContainer.vertical_scroll_mode = 1
 		
 		

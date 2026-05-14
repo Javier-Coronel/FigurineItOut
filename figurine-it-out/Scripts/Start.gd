@@ -1,11 +1,20 @@
 extends Node
 
-func _process(_delta: float) -> void:
+@export var enterButton:Button
+@export var exitButton:Button
 
-	if(checkValidToken()):
-		get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
-	else:
-		get_tree().change_scene_to_file(ResourceManager.Scenes["LogInUser"])
+func _ready():
+	enterButton.pressed.connect(func():
+		if(checkValidToken()):
+			get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
+		else:
+			get_tree().change_scene_to_file(ResourceManager.Scenes["LogInUser"]))
+	exitButton.pressed.connect(func():
+		get_tree().quit()
+		)
+
+func _process(_delta: float) -> void:
+	pass
 
 func checkValidToken() -> bool:
 	var logInCookie := ConfigFile.new()

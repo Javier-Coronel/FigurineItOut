@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c4gom7x1pnmsy"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c4gom7x1pnmsy"]
 
+[ext_resource type="FontFile" uid="uid://djdb2dixrmin5" path="res://Fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf" id="1_ir5dw"]
 [ext_resource type="StyleBox" uid="uid://dp83rnwgk73pm" path="res://Scripts/UI/Theme/ModelCardButtonPressed.tres" id="1_ljbeq"]
 [ext_resource type="StyleBox" uid="uid://bwng3ubfu7pck" path="res://Scripts/UI/Theme/ModelCardButtonNormal.tres" id="2_ir5dw"]
 
@@ -18,10 +19,12 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_disabled_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 Button/colors/font_focus_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 Button/colors/font_hover_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
+Button/fonts/font = ExtResource("1_ir5dw")
 Button/styles/focus = ExtResource("1_ljbeq")
 Button/styles/hover = ExtResource("2_ir5dw")
 Button/styles/hover_pressed = ExtResource("1_ljbeq")
 Button/styles/normal = ExtResource("2_ir5dw")
 Button/styles/pressed = ExtResource("1_ljbeq")
 Label/colors/font_color = Color(0.23137255, 0.23137255, 0.23137255, 0.7411765)
+Label/fonts/font = ExtResource("1_ir5dw")
 Panel/styles/panel = SubResource("StyleBoxFlat_ay17x")

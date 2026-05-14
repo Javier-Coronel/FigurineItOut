@@ -1,7 +1,8 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c86spvbvmqcjp"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c86spvbvmqcjp"]
 
 [ext_resource type="StyleBox" uid="uid://m4jijy0eidp1" path="res://Scripts/UI/Theme/UIOutsideGameLineEditFocused.tres" id="1_h063j"]
 [ext_resource type="StyleBox" uid="uid://c85y3yju822tl" path="res://Scripts/UI/Theme/UIOutsideGameLineEditPressed.tres" id="1_r400c"]
+[ext_resource type="FontFile" uid="uid://djdb2dixrmin5" path="res://Fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf" id="1_vrmvs"]
 [ext_resource type="StyleBox" uid="uid://dlxxnb623ylt1" path="res://Scripts/UI/Theme/UIOutsideGameLineEdit.tres" id="2_r400c"]
 [ext_resource type="StyleBox" uid="uid://kqeghmp7mg27" path="res://Scripts/UI/Theme/UIOutsideGameBackGround.tres" id="4_423ye"]
 
@@ -12,6 +13,7 @@ Button/colors/font_focus_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 Button/colors/font_hover_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 Button/colors/font_hover_pressed_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 Button/colors/font_pressed_color = Color(0.1254902, 0.1254902, 0.1254902, 0.89411765)
+Button/fonts/font = ExtResource("1_vrmvs")
 Button/styles/disabled = ExtResource("2_r400c")
 Button/styles/focus = ExtResource("1_r400c")
 Button/styles/hover = ExtResource("1_h063j")
@@ -23,8 +25,10 @@ LineEdit/colors/font_color = Color(0.06469673, 0.06469645, 0.06469651, 1)
 LineEdit/colors/font_placeholder_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
 LineEdit/colors/font_selected_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 LineEdit/colors/selection_color = Color(0.105882354, 0.46666667, 1, 0.7647059)
+LineEdit/fonts/font = ExtResource("1_vrmvs")
 LineEdit/styles/focus = ExtResource("1_h063j")
 LineEdit/styles/normal = ExtResource("2_r400c")
 LineEdit/styles/read_only = ExtResource("2_r400c")
 Panel/styles/panel = ExtResource("4_423ye")
 PopupMenu/colors/font_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+PopupMenu/fonts/font = ExtResource("1_vrmvs")

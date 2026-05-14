@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://qr6ylwhh627x"]
+
+[ext_resource type="FontFile" uid="uid://ch8i2cuynnfma" path="res://Fonts/Cause/static/Cause-Regular.ttf" id="1_422xp"]
+
+[resource]
+RichTextLabel/fonts/mono_font = ExtResource("1_422xp")
+RichTextLabel/fonts/normal_font = ExtResource("1_422xp")
