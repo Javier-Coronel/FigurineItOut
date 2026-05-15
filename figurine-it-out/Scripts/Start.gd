@@ -4,11 +4,14 @@ extends Node
 @export var exitButton:Button
 
 func _ready():
+	var valid = checkValidToken()
 	enterButton.pressed.connect(func():
-		if(checkValidToken()):
+		if(valid):
 			get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
 		else:
 			get_tree().change_scene_to_file(ResourceManager.Scenes["LogInUser"]))
+	
+	enterButton.text = "Play" if valid else "Log in"
 	exitButton.pressed.connect(func():
 		get_tree().quit()
 		)

@@ -30,9 +30,9 @@ func tryLogin() -> void:
 				cookie.set_value("cookie", "httpOnly", data.data["data"]["cookie"]["httpOnly"])
 				cookie.set_value("cookie", "secure", data.data["data"]["cookie"]["secure"])
 				cookie.set_value("cookie", "sameSite", data.data["data"]["cookie"]["sameSite"])
-				cookie.save(ResourceManager.getTokenLocalization())#"user://logincookie.ini")
+				cookie.save(ResourceManager.getTokenLocalization())
 				get_tree().change_scene_to_file(ResourceManager.Scenes["LoggedUser"])
-			
+				return
 			var infoPopUp = InfoPopUp.create()
 			get_tree().current_scene.add_child(infoPopUp)
 			infoPopUp.velocity = 0.25

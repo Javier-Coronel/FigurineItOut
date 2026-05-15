@@ -1,0 +1,6 @@
+#USUARIOS:
+
+
+
+#A TOMAR EN CUENTA
+Las credenciales anteriormente escritas en este archivo son para probar la aplicación en AWS, todos ellos tienen las mismas funcionalidades disponibles.

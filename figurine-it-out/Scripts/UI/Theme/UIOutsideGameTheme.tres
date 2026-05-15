@@ -1,10 +1,11 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c86spvbvmqcjp"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c86spvbvmqcjp"]
 
 [ext_resource type="StyleBox" uid="uid://m4jijy0eidp1" path="res://Scripts/UI/Theme/UIOutsideGameLineEditFocused.tres" id="1_h063j"]
 [ext_resource type="StyleBox" uid="uid://c85y3yju822tl" path="res://Scripts/UI/Theme/UIOutsideGameLineEditPressed.tres" id="1_r400c"]
 [ext_resource type="FontFile" uid="uid://djdb2dixrmin5" path="res://Fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf" id="1_vrmvs"]
 [ext_resource type="StyleBox" uid="uid://dlxxnb623ylt1" path="res://Scripts/UI/Theme/UIOutsideGameLineEdit.tres" id="2_r400c"]
 [ext_resource type="StyleBox" uid="uid://kqeghmp7mg27" path="res://Scripts/UI/Theme/UIOutsideGameBackGround.tres" id="4_423ye"]
+[ext_resource type="StyleBox" uid="uid://hq3fssxfwh47" path="res://Scripts/UI/Theme/UIPopupMenu.tres" id="6_toyk7"]
 
 [resource]
 Button/colors/font_color = Color(0.1254902, 0.1254902, 0.1254902, 0.6)
@@ -32,3 +33,4 @@ LineEdit/styles/read_only = ExtResource("2_r400c")
 Panel/styles/panel = ExtResource("4_423ye")
 PopupMenu/colors/font_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 PopupMenu/fonts/font = ExtResource("1_vrmvs")
+PopupMenu/styles/panel = ExtResource("6_toyk7")

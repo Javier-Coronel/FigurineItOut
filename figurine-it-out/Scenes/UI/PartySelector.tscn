@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpcttsaq0jvw4"]
+[gd_scene load_steps=8 format=3 uid="uid://dpcttsaq0jvw4"]
 
 [ext_resource type="Script" uid="uid://ciwffh15s6q0j" path="res://Scripts/UI/UILogic/GetParties.gd" id="1_ckpay"]
 [ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="2_viqs3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://berkodpos4xug" path="res://Scripts/UI/UILogic/ButtonJoinPartyWithACode.gd" id="3_ug6ek"]
 [ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="4_4s3gt"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="4_57l3l"]
+[ext_resource type="FontFile" uid="uid://t1v8gk7fhw4v" path="res://Fonts/Anton/Anton-Regular.ttf" id="7_5ben0"]
 
 [node name="PartySelector" type="Control"]
 layout_mode = 3
@@ -49,13 +50,12 @@ anchor_left = 0.28300002
 anchor_right = 0.717
 anchor_bottom = 1.0
 offset_left = -0.016021729
-offset_top = 117.0
+offset_top = 152.0
 offset_right = 0.015991211
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 draw_focus_border = true
-vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -67,29 +67,28 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -149.0
-offset_top = 64.0
+offset_left = -164.0
+offset_top = 105.0
 offset_right = -21.0
-offset_bottom = 96.0
+offset_bottom = 137.0
 grow_horizontal = 2
 theme = ExtResource("2_ww30q")
 placeholder_text = "Room | Password"
 
-[node name="ButtonGoToParty" type="Button" parent="." node_paths=PackedStringArray("room", "password")]
+[node name="ButtonGoToParty" type="Button" parent="." node_paths=PackedStringArray("room")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = 32.0
-offset_top = 64.0
+offset_top = 105.0
 offset_right = 92.0
-offset_bottom = 96.0
+offset_bottom = 137.0
 grow_horizontal = 2
 theme = ExtResource("2_ww30q")
 text = "Join"
 script = ExtResource("3_ug6ek")
 room = NodePath("../Room")
-password = NodePath("")
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 0
@@ -102,3 +101,20 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("4_57l3l")
 sceneToGo = "LoggedUser"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_right = 300.0
+offset_bottom = 121.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("7_5ben0")
+theme_override_font_sizes/normal_font_size = 50
+text = "PARTIES"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
