@@ -1,6 +1,6 @@
 extends Control
 
-static var baseURL: String = "localhost"
+static var baseURL: String = "52.44.194.124"
 
 #region APIRest part
 

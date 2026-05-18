@@ -14,14 +14,14 @@ class PlayerService {
   async createPlayer(player, res) {
     try {
       // Validar si todos los campos fueron proporcionados
-      if (player == undefined || !player.name || !player.email || !player.password) {
+      if (player == undefined || !player.name || !player.password) {
         return res
           .status(400)
           .json(response.error("Faltan campos por informar"));
       }
 
       // Verificar si el usuario ya existe
-      const existingUser = await User.findOne({ where: {[Op.or]: [{ email: player.email },{ name: player.name }]} });
+      const existingUser = await User.findOne({ where: {name: player.name} });
       if (existingUser) {
         return res
           .status(400)

@@ -1,6 +1,9 @@
-#USUARIOS:
-
-
+#Credenciales de usuarios:
+Defensor de proyecto: Usuario: user | Contraseña: user
+Primer miembro del tribunal: Usuario: TestUser1 | Contraseña: TestUser1
+Segundo miembro del tribunal: Usuario: TestUser2 | Contraseña: TestUser2
+Tercer miembro del tribunal: Usuario: TestUser3 | Contraseña: TestUser3
 
 #A TOMAR EN CUENTA
-Las credenciales anteriormente escritas en este archivo son para probar la aplicación en AWS, todos ellos tienen las mismas funcionalidades disponibles.
+Las credenciales anteriormente escritas en este archivo son para probar la aplicación de Godot con el servidor desplegado en AWS, todos ellos tienen las mismas funcionalidades disponibles.
+En caso de no haber credenciales suficientes para todos los miembros del tribunal, estos podran crear un usuario por ellos mismos.

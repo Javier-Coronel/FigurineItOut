@@ -24,6 +24,7 @@ mouse_force_pass_scroll_events = false
 theme = ExtResource("2_lj24t")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="BackGround"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -57,7 +58,7 @@ theme = ExtResource("2_lj24t")
 placeholder_text = "User"
 max_length = 50
 
-[node name="Email" type="LineEdit" parent="."]
+[node name="Password" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -71,10 +72,13 @@ offset_bottom = -43.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_lj24t")
-placeholder_text = "Email"
+placeholder_text = "Password"
 max_length = 50
+virtual_keyboard_type = 6
+secret = true
+secret_character = "*"
 
-[node name="Password" type="LineEdit" parent="."]
+[node name="ConfirmPassword" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -88,13 +92,13 @@ offset_bottom = 57.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_lj24t")
-placeholder_text = "Password"
+placeholder_text = "Confirm password"
 max_length = 50
 virtual_keyboard_type = 6
 secret = true
 secret_character = "*"
 
-[node name="Confirm" type="Button" parent="." node_paths=PackedStringArray("user", "email", "password")]
+[node name="Confirm" type="Button" parent="." node_paths=PackedStringArray("user", "password", "confirmPassword")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -111,8 +115,8 @@ theme = ExtResource("2_lj24t")
 text = "Crear usuario"
 script = ExtResource("1_b7y8g")
 user = NodePath("../User")
-email = NodePath("../Email")
 password = NodePath("../Password")
+confirmPassword = NodePath("../ConfirmPassword")
 
 [node name="ToRegister" type="LinkButton" parent="."]
 layout_mode = 1

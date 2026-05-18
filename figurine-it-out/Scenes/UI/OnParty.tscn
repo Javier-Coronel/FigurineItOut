@@ -87,7 +87,6 @@ grow_horizontal = 0
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("1_xtk6r")
-text = "Is..."
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1

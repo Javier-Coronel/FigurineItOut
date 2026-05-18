@@ -24,6 +24,7 @@ const objectService = require("./services/objectService");
 //TODO if I have time left, add a minimun of 2 players for concepts to start appearing
 const partys = new Map();
 function Socket() {
+  console.log("WebSocketStart")
   const port = process.env.WSPORT || 8090;
   const defaultTimer = 10 * 60 * 1000;
   const mainGuessList = [];
@@ -123,6 +124,7 @@ function Socket() {
     });
   }
   wss.on("connection", async function connection(ws, req) {
+    console.log("UserConnected")
     let partyId = -1;
     let player = "";
     if (req.url.includes("user")) {
@@ -240,7 +242,6 @@ function Socket() {
 
     ws.on("message", function message(data, isBinary) {
       if(partyId == -1) return
-      console.log(data.toString());
       const clients = partys.get(partyId).users;
       let jsonData = JSON.parse(data.toString());
       switch (jsonData.type) {
@@ -250,7 +251,7 @@ function Socket() {
          *
          */
         case "comment":
-          if (jsonData.comment == partys.get(partyId).currentConcept) {
+          if (jsonData.comment.toLowerCase() == partys.get(partyId).currentConcept.toLowerCase()) {
             clearTimeout(partys.get(partyId).onTimeRunOut);
             solvedConcept(partyId, player);
             newConcept(partyId, ws);
@@ -277,7 +278,6 @@ function Socket() {
             });
             delete jsonData.type;
             partys.get(partyId).objectProgression.push(jsonData);
-            console.log(partys.get(partyId).objectProgression);
           }
           break;
         default:
@@ -286,6 +286,7 @@ function Socket() {
     });
 
     ws.on("close", function close(code, reason) {
+      console.log("closed")
       if (partyId != -1) {
         if (partys.get(partyId)?.users.length == 1) {
           clearTimeout(partys.get(partyId).onTimeRunOut);
@@ -303,10 +304,6 @@ function Socket() {
           }
           newConcept(partyId, nextCreator);
 
-          partys.get(partyId).currentCreator =
-          partys.get(partyId).users[
-            Math.floor(Math.random() * partys.get(partyId).users.length)
-          ];
 
         }
         partys

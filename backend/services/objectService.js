@@ -23,14 +23,7 @@ class ObjectService {
     player = await Player.findOne({ where: { id_user: user.id_user } });
     let nameInfo = [name, user.name, party, Date.now()].join("_");
     let route = path + nameInfo;
-    console.log(
-      JSON.stringify({
-        name: nameInfo,
-        route: route,
-        id_party: party,
-        id_player: player.id_player,
-      }),
-    );
+    
     try {
       await fs.writeFile(route, JSON.stringify(data, null, 2), (err) => {
         if (err) throw err;

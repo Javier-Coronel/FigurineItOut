@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3bfq1uuv3f6h"]
+[gd_scene load_steps=7 format=3 uid="uid://d3bfq1uuv3f6h"]
 
 [ext_resource type="Script" uid="uid://dorgy0abp56a6" path="res://Scripts/UI/UILogic/CreateParty.gd" id="1_cg2px"]
 [ext_resource type="Theme" uid="uid://c86spvbvmqcjp" path="res://Scripts/UI/Theme/UIOutsideGameTheme.tres" id="1_w5tm4"]
 [ext_resource type="Script" uid="uid://di6p1yiv5nmre" path="res://Scripts/UI/UILogic/ChangeScene.gd" id="3_7dti2"]
 [ext_resource type="VideoStream" uid="uid://dr504lfloglm5" path="res://Animations/0000-0048.ogv" id="3_t856e"]
 [ext_resource type="Texture2D" uid="uid://bxh5h0hqttwt7" path="res://Images/ArrowBack.svg" id="3_xtqsd"]
+[ext_resource type="Theme" uid="uid://dlnasitjitlca" path="res://Scripts/UI/Theme/UIInGameTheme.tres" id="4_qi2fo"]
 
 [node name="CreateParty" type="Control"]
 layout_mode = 3
@@ -76,7 +77,7 @@ theme = ExtResource("1_w5tm4")
 theme_override_font_sizes/font_size = 36
 text = "Custom dataset"
 
-[node name="SelectedFile" type="Label" parent="CustomDataset"]
+[node name="SelectedFile" type="LineEdit" parent="CustomDataset"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -84,13 +85,19 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -133.0
-offset_top = -26.5
+offset_top = 25.5
 offset_right = 133.0
-offset_bottom = -3.5
+offset_bottom = 48.5
 grow_horizontal = 2
 grow_vertical = 0
+focus_mode = 0
+theme = ExtResource("4_qi2fo")
 theme_override_colors/font_color = Color(0.4745098, 0.4745098, 0.4745098, 1)
-horizontal_alignment = 1
+alignment = 1
+editable = false
+expand_to_text_length = true
+context_menu_enabled = false
+emoji_menu_enabled = false
 
 [node name="Start" type="Button" parent="."]
 unique_name_in_owner = true

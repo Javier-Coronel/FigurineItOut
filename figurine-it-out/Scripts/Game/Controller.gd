@@ -2,7 +2,7 @@ extends Camera3D
 
 @export var onParty = false
 var moving = true
-var movementVelocity = 1
+var movementVelocity = 3
 var rotationalVelocity = 1
 
 func _ready() -> void:

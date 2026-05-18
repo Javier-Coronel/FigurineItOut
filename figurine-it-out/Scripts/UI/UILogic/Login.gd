@@ -11,7 +11,7 @@ func _ready() -> void:
 func tryLogin() -> void:
 	if !(checkUser() || checkPassword()): return
 	disabled = true
-	text = "Espera"
+	text = "Wait"
 	var createUser = JSON.stringify({"name": user.text, "password": password.text})
 	
 	print(createUser)
